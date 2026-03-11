@@ -1,0 +1,115 @@
+/* =========================
+   COLORS
+========================= */
+
+$color-white: #ffffff;
+$color-black: #111111;
+
+$color-primary: #2563eb;
+$color-primary-hover: #1d4ed8;
+$color-secondary: #0f766e;
+
+$color-gray-50: #f9fafb;
+$color-gray-100: #f3f4f6;
+$color-gray-200: #e5e7eb;
+$color-gray-300: #d1d5db;
+$color-gray-400: #9ca3af;
+$color-gray-500: #6b7280;
+$color-gray-600: #4b5563;
+$color-gray-700: #374151;
+$color-gray-800: #1f2937;
+$color-gray-900: #111827;
+
+$color-border: #e5e7eb;
+$color-danger: #dc2626;
+$color-success: #16a34a;
+
+/* =========================
+   BACKGROUND
+========================= */
+
+$bg-main: #ffffff;
+$bg-subtle: #f8fafc;
+$bg-section: #f3f6fb;
+
+/* =========================
+   TEXT
+========================= */
+
+$text-main: #111827;
+$text-sub: #4b5563;
+$text-muted: #6b7280;
+$text-white: #ffffff;
+
+/* =========================
+   LAYOUT
+========================= */
+
+$container-width: 1200px;
+$container-padding-x: 20px;
+$section-padding-y: 100px;
+$section-padding-y-tablet: 80px;
+$section-padding-y-mobile: 56px;
+
+/* =========================
+   RADIUS
+========================= */
+
+$radius-sm: 8px;
+$radius-md: 12px;
+$radius-lg: 20px;
+$radius-xl: 28px;
+
+/* =========================
+   SHADOW
+========================= */
+
+$shadow-sm: 0 4px 12px rgba(17, 24, 39, 0.04);
+$shadow-md: 0 10px 30px rgba(17, 24, 39, 0.08);
+$shadow-lg: 0 20px 50px rgba(17, 24, 39, 0.12);
+
+/* =========================
+   TRANSITION
+========================= */
+
+$transition-base: all 0.25s ease;
+
+/* =========================
+   TYPOGRAPHY
+========================= */
+
+$font-family-base:
+  'Pretendard',
+  'Noto Sans KR',
+  -apple-system,
+  BlinkMacSystemFont,
+  'Apple SD Gothic Neo',
+  sans-serif;
+
+$font-size-hero: 56px;
+$font-size-h1: 44px;
+$font-size-h2: 36px;
+$font-size-h3: 28px;
+$font-size-h4: 22px;
+$font-size-body-lg: 18px;
+$font-size-body: 16px;
+$font-size-sm: 14px;
+$font-size-xs: 12px;
+
+/* =========================
+   SPACING
+========================= */
+
+$space-4: 4px;
+$space-8: 8px;
+$space-12: 12px;
+$space-16: 16px;
+$space-20: 20px;
+$space-24: 24px;
+$space-32: 32px;
+$space-40: 40px;
+$space-48: 48px;
+$space-56: 56px;
+$space-64: 64px;
+$space-80: 80px;
+$space-100: 100px;
