@@ -29,11 +29,11 @@
                 <ul class="schedule-list">
                   <li>
                     <span class="schedule-list__day">월~금</span>
-                    <span class="schedule-list__time">09:00 ~ 18:00</span>
+                    <span class="schedule-list__time">09:00 ~ 18:00 (17:30 마감)</span>
                   </li>
                   <li>
                     <span class="schedule-list__day">토요일</span>
-                    <span class="schedule-list__time">09:00 ~ 15:00</span>
+                    <span class="schedule-list__time">09:00 ~ 18:00 (17:30 마감)</span>
                   </li>
                   <li class="schedule-list__notice">(매달 세번째주 토요일 진료)</li>
                   <li class="schedule-list__notice">(일요일, 공휴일 휴진)</li>
