@@ -41,6 +41,18 @@
   }
 }
 
+@mixin laptop-down {
+  @media (max-width: #{$breakpoint-laptop}) {
+    @content;
+  }
+}
+
+@mixin desktop-down {
+  @media (max-width: #{$breakpoint-desktop}) {
+    @content;
+  }
+}
+
 /* =========================
    LAYOUT
 ========================= */
