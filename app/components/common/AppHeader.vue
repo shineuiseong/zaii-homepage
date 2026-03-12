@@ -119,25 +119,24 @@ type MenuItem = {
 const menu: MenuItem[] = [
   {
     label: '자이비뇨의학과 병원',
-    link: '/',
+    link: '/hospital/history',
     children: [
-      { label: '자이비뇨의학과병원 발자취', link: '/' },
-      { label: '유로리프트를 만나다', link: '/' },
-      { label: '자이 브랜드스토리', link: '/' },
-      { label: '의료진소개', link: '/' },
-      { label: '진료안내', link: '/' },
-      { label: '둘러보기', link: '/' },
-      { label: '찾아오시는길', link: '/' }
+      { label: '자이비뇨의학과병원 발자취', link: '/hospital/history' },
+      { label: '유로리프트를 만나다', link: '/hospital/urolift' },
+      { label: '자이 브랜드스토리', link: '/hospital/brand' },
+      { label: '의료진소개', link: '/hospital/medical-team' },
+      { label: '진료안내', link: '/hospital/guide' },
+      { label: '둘러보기', link: '/hospital/tour' },
+      { label: '찾아오시는길', link: '/hospital/location' }
     ]
   },
-  { label: '유로리프트', link: '/', hot: true },
-  { label: '전립선비대증', link: '/' },
-  { label: '리줌수술', link: '/' },
-  { label: '전립선암 신속검사', link: '/' },
-  { label: '온라인상담', link: '/' },
-  { label: '커뮤니티', link: '/' }
+  { label: '유로리프트', link: '/urolift', hot: true },
+  { label: '전립선비대증', link: '/bph' },
+  { label: '리줌수술', link: '/rezum' },
+  { label: '전립선암 신속검사', link: '/prostate-cancer-test' },
+  { label: '온라인상담', link: '/consultation' },
+  { label: '커뮤니티', link: '/community' }
 ]
-
 const active = ref<number | null>(null)
 const mobileMenuOpen = ref(false)
 const mobileSubmenuOpen = ref<number | null>(null)
