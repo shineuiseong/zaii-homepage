@@ -114,7 +114,7 @@
   display: grid;
   grid-template-columns: 140px minmax(0, 1fr);
   gap: 18px;
-  align-items: start;
+  align-items: baseline;
 }
 
 .contact-row__label {
