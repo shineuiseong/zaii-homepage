@@ -10,6 +10,7 @@
     <HospitalSubTabs :tabs="tabs" />
 
     <UroliftStartSection />
+    <UroliftDomesticSection />
     <UroliftExpertsSection />
     <UroliftDirectorSection />
     <UroliftAchievementSection />
@@ -23,6 +24,7 @@ import UroliftStartSection from '~/components/hospital/UroliftStartSection.vue'
 import UroliftExpertsSection from '~/components/hospital/UroliftExpertsSection.vue'
 import UroliftDirectorSection from '~/components/hospital/UroliftDirectorSection.vue'
 import UroliftAchievementSection from '~/components/hospital/UroliftAchievementSection.vue'
+import UroliftDomesticSection from '~/components/hospital/UroliftDomesticSection.vue'
 
 const tabs = [
   { label: '자이비뇨의학과병원 발자취', to: '/hospital/history', current: false },

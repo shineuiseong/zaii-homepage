@@ -11,7 +11,10 @@
             v-for="(item, i) in menu"
             :key="item.label"
             class="gnb-item"
-            :class="{ 'is-open': active === i }"
+            :class="{
+              'is-open': active === i,
+              'is-current': isMenuCurrent(item)
+            }"
             @mouseenter="active = i"
             @mouseleave="active = null"
           >
@@ -23,7 +26,11 @@
             <div v-if="item.children" class="dropdown">
               <ul>
                 <li v-for="sub in item.children" :key="sub.label">
-                  <NuxtLink :to="sub.link" class="dropdown-link">
+                  <NuxtLink
+                    :to="sub.link"
+                    class="dropdown-link"
+                    :class="{ 'is-current': isSubCurrent(sub.link) }"
+                  >
                     {{ sub.label }}
                   </NuxtLink>
                 </li>
@@ -70,10 +77,18 @@
             v-for="(item, i) in menu"
             :key="item.label"
             class="mobile-menu-item"
-            :class="{ 'is-open': mobileSubmenuOpen === i }"
+            :class="{
+              'is-open': mobileSubmenuOpen === i,
+              'is-current': isMenuCurrent(item)
+            }"
           >
             <div class="mobile-menu-row">
-              <NuxtLink :to="item.link" class="mobile-menu-link" @click="closeMobileMenu">
+              <NuxtLink
+                :to="item.link"
+                class="mobile-menu-link"
+                :class="{ 'is-current': isMenuCurrent(item) }"
+                @click="closeMobileMenu"
+              >
                 <span>{{ item.label }}</span>
                 <span v-if="item.hot" class="badge-hot">Hot</span>
               </NuxtLink>
@@ -92,7 +107,12 @@
             <transition name="mobile-submenu-slide">
               <ul v-if="item.children && mobileSubmenuOpen === i" class="mobile-submenu">
                 <li v-for="sub in item.children" :key="sub.label">
-                  <NuxtLink :to="sub.link" class="mobile-submenu-link" @click="closeMobileMenu">
+                  <NuxtLink
+                    :to="sub.link"
+                    class="mobile-submenu-link"
+                    :class="{ 'is-current': isSubCurrent(sub.link) }"
+                    @click="closeMobileMenu"
+                  >
                     {{ sub.label }}
                   </NuxtLink>
                 </li>
@@ -106,15 +126,19 @@
 </template>
 
 <script setup lang="ts">
+type MenuChild = {
+  label: string
+  link: string
+}
+
 type MenuItem = {
   label: string
   link: string
   hot?: boolean
-  children?: {
-    label: string
-    link: string
-  }[]
+  children?: MenuChild[]
 }
+
+const route = useRoute()
 
 const menu: MenuItem[] = [
   {
@@ -137,9 +161,38 @@ const menu: MenuItem[] = [
   { label: '온라인상담', link: '/consultation' },
   { label: '커뮤니티', link: '/community' }
 ]
+
 const active = ref<number | null>(null)
 const mobileMenuOpen = ref(false)
 const mobileSubmenuOpen = ref<number | null>(null)
+
+const normalizePath = (path: string) => {
+  if (!path) return '/'
+  if (path === '/') return '/'
+  return path.replace(/\/+$/, '')
+}
+
+const isSameOrChildPath = (target: string, current: string) => {
+  const normalizedTarget = normalizePath(target)
+  const normalizedCurrent = normalizePath(current)
+
+  if (normalizedTarget === '/') return normalizedCurrent === '/'
+  return (
+    normalizedCurrent === normalizedTarget || normalizedCurrent.startsWith(`${normalizedTarget}/`)
+  )
+}
+
+const isSubCurrent = (link: string) => {
+  return isSameOrChildPath(link, route.path)
+}
+
+const isMenuCurrent = (item: MenuItem) => {
+  if (item.children?.some((sub) => isSubCurrent(sub.link))) {
+    return true
+  }
+
+  return isSameOrChildPath(item.link, route.path)
+}
 
 const toggleMobileMenu = () => {
   mobileMenuOpen.value = !mobileMenuOpen.value
@@ -157,6 +210,21 @@ const closeMobileMenu = () => {
 const toggleMobileSubmenu = (index: number) => {
   mobileSubmenuOpen.value = mobileSubmenuOpen.value === index ? null : index
 }
+
+watch(
+  () => route.path,
+  () => {
+    mobileMenuOpen.value = false
+    mobileSubmenuOpen.value = null
+  }
+)
+
+watchEffect(() => {
+  if (!mobileMenuOpen.value) return
+
+  const foundIndex = menu.findIndex((item) => item.children?.some((sub) => isSubCurrent(sub.link)))
+  mobileSubmenuOpen.value = foundIndex >= 0 ? foundIndex : null
+})
 </script>
 
 <style scoped lang="scss">
@@ -241,7 +309,8 @@ const toggleMobileSubmenu = (index: number) => {
   }
 }
 
-.gnb-item.is-open .gnb-link {
+.gnb-item.is-open .gnb-link,
+.gnb-item.is-current .gnb-link {
   color: $color-primary;
 
   &::after {
@@ -309,6 +378,12 @@ const toggleMobileSubmenu = (index: number) => {
     background: $bg-subtle;
     color: $color-primary;
     padding-left: 24px;
+  }
+
+  &.is-current {
+    background: $bg-subtle;
+    color: $color-primary;
+    font-weight: 700;
   }
 }
 
@@ -419,6 +494,10 @@ const toggleMobileSubmenu = (index: number) => {
   border-bottom: 1px solid $color-border;
 }
 
+.mobile-menu-item.is-current .mobile-menu-row {
+  background: rgba($color-primary, 0.04);
+}
+
 .mobile-menu-row {
   display: flex;
   align-items: center;
@@ -443,6 +522,10 @@ const toggleMobileSubmenu = (index: number) => {
     color: $color-primary;
   }
 
+  &.is-current {
+    color: $color-primary;
+  }
+
   span:first-child {
     word-break: keep-all;
   }
@@ -462,7 +545,8 @@ const toggleMobileSubmenu = (index: number) => {
     transform 0.2s ease;
 }
 
-.mobile-menu-item.is-open .mobile-submenu-toggle {
+.mobile-menu-item.is-open .mobile-submenu-toggle,
+.mobile-menu-item.is-current .mobile-submenu-toggle {
   color: $color-primary;
   transform: rotate(180deg);
 }
@@ -484,6 +568,11 @@ const toggleMobileSubmenu = (index: number) => {
   &:hover {
     color: $color-primary;
     padding-left: 32px;
+  }
+
+  &.is-current {
+    color: $color-primary;
+    font-weight: 700;
   }
 }
 
