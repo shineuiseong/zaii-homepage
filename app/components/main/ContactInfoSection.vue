@@ -11,8 +11,23 @@
           <div class="contact-info__list">
             <div class="contact-row">
               <div class="contact-row__label">대표번호</div>
+
               <div class="contact-row__value">
-                <a href="tel:0262075678" class="contact-row__phone">02-6207-5678</a>
+                <div class="contact-row__phones">
+                  <a href="tel:0262075678" class="contact-phone-card">
+                    <div class="contact-phone-card__main">
+                      <span class="contact-phone-card__number">02-6207-5678</span>
+                      <span class="contact-phone-card__badge">전화연결</span>
+                    </div>
+                  </a>
+
+                  <a href="tel:01026386034" class="contact-phone-card">
+                    <div class="contact-phone-card__main">
+                      <span class="contact-phone-card__number">010-2638-6034</span>
+                      <span class="contact-phone-card__badge">전화연결</span>
+                    </div>
+                  </a>
+                </div>
               </div>
             </div>
 
@@ -128,14 +143,62 @@
   min-width: 0;
 }
 
-.contact-row__phone {
-  display: inline-block;
-  font-size: 34px;
+.contact-row__phones {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.contact-phone-card {
+  display: block;
+  padding: 16px 18px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.04);
+  text-decoration: none;
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.contact-phone-card:hover {
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.16);
+}
+
+.contact-phone-card__main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.contact-phone-card__number {
+  font-size: 30px;
   font-weight: 900;
   line-height: 1.1;
   color: #ffffff;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.02em;
   font-variant-numeric: tabular-nums;
+}
+
+.contact-phone-card__badge {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 34px;
+  padding: 0 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.86);
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1;
 }
 
 .contact-row__link {
@@ -208,12 +271,13 @@
   border-radius: 16px;
   background: #2e3137;
   box-shadow: 0 14px 34px rgba(0, 0, 0, 0.18);
+  height: 320px;
 }
 
 .contact-info__map-frame iframe {
   display: block;
   width: 100%;
-  height: 320px;
+  height: 100%;
   border: 0;
 }
 
@@ -246,15 +310,15 @@
     font-size: 30px;
   }
 
-  .contact-row__phone {
-    font-size: 30px;
+  .contact-phone-card__number {
+    font-size: 27px;
   }
 
   .schedule-list__time {
     font-size: 17px;
   }
 
-  .contact-info__map-frame iframe {
+  .contact-info__map-frame {
     height: 300px;
   }
 }
@@ -281,11 +345,11 @@
     gap: 8px;
   }
 
-  .contact-row__phone {
-    font-size: 28px;
+  .contact-phone-card__number {
+    font-size: 25px;
   }
 
-  .contact-info__map-frame iframe {
+  .contact-info__map-frame {
     height: 300px;
   }
 }
@@ -312,8 +376,24 @@
     font-size: 15px;
   }
 
-  .contact-row__phone {
-    font-size: 24px;
+  .contact-phone-card {
+    padding: 14px 14px;
+    border-radius: 12px;
+  }
+
+  .contact-phone-card__main {
+    gap: 10px;
+    align-items: center;
+  }
+
+  .contact-phone-card__number {
+    font-size: 20px;
+  }
+
+  .contact-phone-card__badge {
+    min-height: 30px;
+    padding: 0 10px;
+    font-size: 11px;
   }
 
   .contact-row__link {
@@ -342,11 +422,8 @@
   }
 
   .contact-info__map-frame {
-    border-radius: 14px;
-  }
-
-  .contact-info__map-frame iframe {
     height: 260px;
+    border-radius: 14px;
   }
 
   .contact-info__address-text {

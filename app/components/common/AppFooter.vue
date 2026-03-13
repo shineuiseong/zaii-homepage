@@ -2,7 +2,7 @@
   <footer class="footer">
     <div class="container">
       <nav class="footer__links" aria-label="푸터 메뉴">
-        <a href="/privacy" class="footer__link footer__link--strong">개인정보처리방침</a>
+        <a href="/privacy" class="footer__link">개인정보처리방침</a>
         <a href="/terms" class="footer__link">이용약관</a>
         <a href="/non-benefit-fee" class="footer__link">비급여수가표</a>
       </nav>
@@ -47,12 +47,12 @@
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 40px;
-  margin-bottom: 32px;
+  gap: 36px;
+  margin-bottom: 28px;
 }
 
 .footer__link {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 700;
   color: rgba(255, 255, 255, 0.74);
   transition: color 0.2s ease;
@@ -69,26 +69,26 @@
 .footer__info {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
 }
 
 .footer__line {
   margin: 0;
-  font-size: 17px;
-  line-height: 1.8;
+  font-size: 15px;
+  line-height: 1.7;
   color: rgba(255, 255, 255, 0.62);
   word-break: keep-all;
 }
 
 .footer__divider {
   display: inline-block;
-  margin: 0 10px;
+  margin: 0 8px;
   color: rgba(255, 255, 255, 0.32);
 }
 
 .footer__copyright {
-  margin: 28px 0 0;
-  font-size: 15px;
+  margin: 24px 0 0;
+  font-size: 13px;
   font-weight: 700;
   color: rgba(255, 255, 255, 0.5);
 }
@@ -100,15 +100,18 @@
   }
 
   .footer__links {
-    gap: 32px;
-    margin-bottom: 28px;
+    gap: 28px;
+    margin-bottom: 24px;
   }
 
   .footer__link {
-    font-size: 17px;
+    font-size: 15px;
   }
 
-  .footer__line,
+  .footer__line {
+    font-size: 14px;
+  }
+
   .footer__copyright {
     font-size: 12px;
   }
@@ -121,38 +124,8 @@
   }
 
   .footer__links {
-    gap: 24px;
-    margin-bottom: 24px;
-  }
-
-  .footer__link {
-    font-size: 16px;
-  }
-
-  .footer__line {
-    font-size: 15px;
-    line-height: 1.7;
-  }
-
-  .footer__divider {
-    margin: 0 8px;
-  }
-
-  .footer__copyright {
-    margin-top: 24px;
-    font-size: 15px;
-  }
-}
-
-@include mobile {
-  .footer .container {
-    padding-top: 28px;
-    padding-bottom: 28px;
-  }
-
-  .footer__links {
-    gap: 18px 20px;
-    margin-bottom: 20px;
+    gap: 22px;
+    margin-bottom: 22px;
   }
 
   .footer__link {
@@ -161,7 +134,7 @@
 
   .footer__line {
     font-size: 14px;
-    line-height: 1.65;
+    line-height: 1.7;
   }
 
   .footer__divider {
@@ -169,7 +142,37 @@
   }
 
   .footer__copyright {
-    margin-top: 20px;
+    margin-top: 22px;
+    font-size: 12px;
+  }
+}
+
+@include mobile {
+  .footer .container {
+    padding-top: 26px;
+    padding-bottom: 26px;
+  }
+
+  .footer__links {
+    gap: 16px 18px;
+    margin-bottom: 18px;
+  }
+
+  .footer__link {
+    font-size: 14px;
+  }
+
+  .footer__line {
+    font-size: 12px;
+    line-height: 1.6;
+  }
+
+  .footer__divider {
+    margin: 0 5px;
+  }
+
+  .footer__copyright {
+    margin-top: 18px;
     font-size: 10px;
     line-height: 1.5;
   }
