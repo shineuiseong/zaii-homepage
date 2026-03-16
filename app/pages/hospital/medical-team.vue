@@ -3,8 +3,8 @@
     <HospitalPageHero
       image-src="/images/history-hero.png"
       eyebrow="BRAND STORY"
-      title="브랜드스토리"
-      description="자이비뇨의학과병원이 전립선 질환을 어떻게 깊이 있게 진료하고 있는지, 병원의 진료 철학과 특화 클리닉을 소개합니다."
+      title="의료진 소개"
+      description="믿을 수 있는 자이비뇨의학과 병원 의료진 오늘도 더 나은 결과를 위하여 최선을 다합니다."
     />
 
     <HospitalSubTabs :tabs="tabs" />
