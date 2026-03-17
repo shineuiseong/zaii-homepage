@@ -15,6 +15,7 @@
     <UroliftFeatureSection />
     <UroliftProcedureSection />
     <UroliftResultSection />
+    <UroliftCasesSection />
   </div>
 </template>
 
