@@ -157,7 +157,7 @@ const menu: MenuItem[] = [
   { label: '유로리프트', link: '/urolift', hot: true },
   { label: '전립선비대증', link: '/prostate' },
   { label: '리줌수술', link: '/rezum' },
-  { label: '전립선암 신속검사', link: '/prostate-cancer-test' },
+  { label: '전립선암 신속검사', link: '/prostate-cancer' },
   { label: '온라인상담', link: '/consultation' },
   { label: '커뮤니티', link: '/community' }
 ]
