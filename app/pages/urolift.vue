@@ -34,13 +34,3 @@ const sectionItems = [
   { id: 'urolift-cases', label: '유로리프트 치료케이스' }
 ]
 </script>
-
-<style scoped lang="scss">
-.urolift-page {
-  background: #fff;
-}
-
-.urolift-placeholder-section {
-  min-height: 1px;
-}
-</style>
