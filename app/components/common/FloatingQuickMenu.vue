@@ -1,0 +1,488 @@
+<template>
+  <aside class="quick-menu" aria-label="빠른 메뉴">
+    <!-- desktop -->
+    <div class="quick-menu__desktop">
+      <div class="quick-menu__panel" :class="{ 'quick-menu__panel--collapsed': isCollapsed }">
+        <div class="quick-menu__desktop-head">
+          <p class="quick-menu__eyebrow">ZAII UROLOGY</p>
+          <strong class="quick-menu__title">빠른 상담 메뉴</strong>
+        </div>
+
+        <div class="quick-menu__body-wrap">
+          <div class="quick-menu__desktop-body">
+            <a href="/urolift" class="quick-menu__card quick-menu__card--featured">
+              <span class="quick-menu__icon-wrap">
+                <Icon name="lucide:flame" class="quick-menu__icon" />
+              </span>
+              <span class="quick-menu__content">
+                <span class="quick-menu__name-row">
+                  <span class="quick-menu__name">유로리프트</span>
+                  <span class="quick-menu__badge">HOT</span>
+                </span>
+                <span class="quick-menu__desc">대표 시술 바로가기</span>
+              </span>
+            </a>
+
+            <a href="/rezum" class="quick-menu__card">
+              <span class="quick-menu__icon-wrap">
+                <Icon name="lucide:activity" class="quick-menu__icon" />
+              </span>
+              <span class="quick-menu__content">
+                <span class="quick-menu__name">리줌시술</span>
+                <span class="quick-menu__desc">최소침습 치료 안내</span>
+              </span>
+            </a>
+
+            <a href="/contact" class="quick-menu__card">
+              <span class="quick-menu__icon-wrap">
+                <Icon name="lucide:message-circle" class="quick-menu__icon" />
+              </span>
+              <span class="quick-menu__content">
+                <span class="quick-menu__name">온라인상담</span>
+                <span class="quick-menu__desc">문의 남기기</span>
+              </span>
+            </a>
+
+            <a href="tel:0262075678" class="quick-menu__card quick-menu__card--contact">
+              <span class="quick-menu__icon-wrap">
+                <Icon name="lucide:phone" class="quick-menu__icon" />
+              </span>
+              <span class="quick-menu__content">
+                <span class="quick-menu__meta">진료문의</span>
+                <span class="quick-menu__number">02-6207-5678</span>
+              </span>
+            </a>
+
+            <a href="tel:01026386034" class="quick-menu__card quick-menu__card--contact">
+              <span class="quick-menu__icon-wrap">
+                <Icon name="lucide:smartphone" class="quick-menu__icon" />
+              </span>
+              <span class="quick-menu__content">
+                <span class="quick-menu__meta">상담문의</span>
+                <span class="quick-menu__number">010-2638-6034</span>
+              </span>
+            </a>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          class="quick-menu__bottom-toggle"
+          :aria-expanded="(!isCollapsed).toString()"
+          :aria-label="isCollapsed ? '빠른 메뉴 펼치기' : '빠른 메뉴 접기'"
+          @click="toggleMenu"
+        >
+          <span class="quick-menu__bottom-toggle-line" />
+          <span class="quick-menu__bottom-toggle-text">
+            {{ isCollapsed ? '상담 메뉴 펼치기' : '빠른 메뉴 접기' }}
+          </span>
+          <Icon
+            name="lucide:chevron-down"
+            class="quick-menu__bottom-toggle-icon"
+            :class="{ 'quick-menu__bottom-toggle-icon--rotated': isCollapsed }"
+          />
+        </button>
+      </div>
+    </div>
+
+    <!-- mobile -->
+    <nav class="quick-menu__mobile" aria-label="모바일 빠른 메뉴">
+      <a
+        href="/urolift"
+        class="quick-menu__mobile-item"
+        :class="{ 'quick-menu__mobile-item--active': isActive('/urolift') }"
+      >
+        <Icon name="lucide:flame" class="quick-menu__mobile-icon" />
+        <span>유로리프트</span>
+      </a>
+
+      <a
+        href="/rezum"
+        class="quick-menu__mobile-item"
+        :class="{ 'quick-menu__mobile-item--active': isActive('/rezum') }"
+      >
+        <Icon name="lucide:activity" class="quick-menu__mobile-icon" />
+        <span>리줌</span>
+      </a>
+
+      <a
+        href="/contact"
+        class="quick-menu__mobile-item"
+        :class="{ 'quick-menu__mobile-item--active': isActive('/contact') }"
+      >
+        <Icon name="lucide:message-circle" class="quick-menu__mobile-icon" />
+        <span>상담</span>
+      </a>
+
+      <a href="tel:0262075678" class="quick-menu__mobile-item">
+        <Icon name="lucide:phone" class="quick-menu__mobile-icon" />
+        <span>진료문의</span>
+      </a>
+
+      <a href="tel:01026386034" class="quick-menu__mobile-item">
+        <Icon name="lucide:smartphone" class="quick-menu__mobile-icon" />
+        <span>상담전화</span>
+      </a>
+    </nav>
+  </aside>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const route = useRoute()
+const isCollapsed = ref(false)
+
+function toggleMenu() {
+  isCollapsed.value = !isCollapsed.value
+}
+
+function isActive(path: string) {
+  return route.path === path || route.path.startsWith(`${path}/`)
+}
+</script>
+
+<style scoped lang="scss">
+.quick-menu {
+  position: fixed;
+  z-index: 1200;
+}
+
+/* desktop */
+.quick-menu__desktop {
+  position: fixed;
+  top: 46%;
+  right: 20px;
+  transform: translateY(-50%);
+  width: 216px;
+}
+
+.quick-menu__panel {
+  width: 216px;
+  border-radius: 24px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(13, 87, 198, 0.1);
+  box-shadow:
+    0 14px 36px rgba(15, 23, 42, 0.12),
+    0 4px 12px rgba(15, 23, 42, 0.06);
+  backdrop-filter: blur(12px);
+}
+
+.quick-menu__desktop-head {
+  padding: 14px 16px 13px;
+  background: linear-gradient(135deg, #0d57c6 0%, #1f6fe8 100%);
+  color: #fff;
+}
+
+.quick-menu__eyebrow {
+  margin: 0 0 4px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.quick-menu__title {
+  display: block;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.2;
+  color: #fff;
+}
+
+.quick-menu__body-wrap {
+  max-height: 620px;
+  overflow: hidden;
+  transition:
+    max-height 0.34s ease,
+    opacity 0.24s ease,
+    transform 0.28s ease;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.quick-menu__panel--collapsed .quick-menu__body-wrap {
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-8px);
+}
+
+.quick-menu__desktop-body {
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.quick-menu__card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  border-radius: 16px;
+  text-decoration: none;
+  color: #111827;
+  background: #fff;
+  border: 1px solid #eef2f7;
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    border-color 0.18s ease,
+    background-color 0.18s ease;
+}
+
+.quick-menu__card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(13, 87, 198, 0.18);
+  box-shadow: 0 8px 18px rgba(13, 87, 198, 0.09);
+  background: #f8fbff;
+}
+
+.quick-menu__card--featured {
+  background: linear-gradient(135deg, rgba(13, 87, 198, 0.08), rgba(29, 116, 239, 0.12));
+  border-color: rgba(13, 87, 198, 0.14);
+}
+
+.quick-menu__card--contact .quick-menu__number {
+  color: #0d57c6;
+}
+
+.quick-menu__icon-wrap {
+  flex: 0 0 auto;
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #eff6ff;
+  color: #0d57c6;
+}
+
+.quick-menu__card--featured .quick-menu__icon-wrap {
+  background: #0d57c6;
+  color: #fff;
+}
+
+.quick-menu__icon {
+  width: 18px;
+  height: 18px;
+}
+
+.quick-menu__content {
+  min-width: 0;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.quick-menu__name-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  flex-wrap: wrap;
+}
+
+.quick-menu__name {
+  display: block;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.2;
+  word-break: keep-all;
+}
+
+.quick-menu__desc {
+  display: block;
+  font-size: 11px;
+  line-height: 1.3;
+  color: #6b7280;
+}
+
+.quick-menu__meta {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  color: #6b7280;
+  line-height: 1.2;
+}
+
+.quick-menu__number {
+  display: block;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  word-break: keep-all;
+}
+
+.quick-menu__badge {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 20px;
+  padding: 0 7px;
+  border-radius: 999px;
+  background: #ffd84d;
+  color: #111827;
+  font-size: 10px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.quick-menu__bottom-toggle {
+  width: 100%;
+  border: 0;
+  border-top: 1px solid rgba(13, 87, 198, 0.08);
+  background: #fff;
+  color: #4b5563;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 14px 12px;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.quick-menu__bottom-toggle:hover {
+  background: #f8fbff;
+  color: #0d57c6;
+}
+
+.quick-menu__bottom-toggle-line {
+  width: 28px;
+  height: 3px;
+  border-radius: 999px;
+  background: #d1d5db;
+  flex: 0 0 auto;
+}
+
+.quick-menu__bottom-toggle-text {
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.quick-menu__bottom-toggle-icon {
+  width: 15px;
+  height: 15px;
+  transition: transform 0.28s ease;
+}
+
+.quick-menu__bottom-toggle-icon--rotated {
+  transform: rotate(180deg);
+}
+
+/* mobile */
+.quick-menu__mobile {
+  display: none;
+}
+
+@media (max-width: 1280px) {
+  .quick-menu__desktop {
+    right: 14px;
+  }
+
+  .quick-menu__panel {
+    width: 204px;
+  }
+
+  .quick-menu__title {
+    font-size: 14px;
+  }
+
+  .quick-menu__number {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .quick-menu__desktop {
+    top: 45%;
+  }
+
+  .quick-menu__panel {
+    width: 196px;
+  }
+
+  .quick-menu__card {
+    padding: 11px;
+  }
+
+  .quick-menu__icon-wrap {
+    width: 36px;
+    height: 36px;
+  }
+
+  .quick-menu__name {
+    font-size: 13px;
+  }
+
+  .quick-menu__desc,
+  .quick-menu__meta {
+    font-size: 10px;
+  }
+
+  .quick-menu__number {
+    font-size: 12px;
+  }
+
+  .quick-menu__bottom-toggle-text {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 768px) {
+  .quick-menu__desktop {
+    display: none;
+  }
+
+  .quick-menu__mobile {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1200;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    background: rgba(255, 255, 255, 0.98);
+    border-top: 1px solid #e5e7eb;
+    box-shadow: 0 -8px 24px rgba(15, 23, 42, 0.08);
+    backdrop-filter: blur(10px);
+  }
+
+  .quick-menu__mobile-item {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 10px 4px calc(10px + env(safe-area-inset-bottom));
+    text-decoration: none;
+    color: #111827;
+    font-size: 11px;
+    font-weight: 700;
+    text-align: center;
+    transition:
+      color 0.2s ease,
+      background-color 0.2s ease;
+  }
+
+  .quick-menu__mobile-item--active {
+    background: #eff6ff;
+    color: #0d57c6;
+  }
+
+  .quick-menu__mobile-icon {
+    width: 18px;
+    height: 18px;
+  }
+}
+</style>
