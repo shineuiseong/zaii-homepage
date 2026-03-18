@@ -1,7 +1,7 @@
 <template>
   <div class="brand-page">
     <HospitalPageHero
-      image-src="/images/history-hero.webp"
+      image-src="/images/main/history-hero.webp"
       eyebrow="BRAND STORY"
       title="브랜드스토리"
       description="자이비뇨의학과병원이 전립선 질환을 어떻게 깊이 있게 진료하고 있는지, 병원의 진료 철학과 특화 클리닉을 소개합니다."

@@ -1,7 +1,7 @@
 <template>
   <div class="history-page">
     <HospitalPageHero
-      image-src="/images/history-hero.webp"
+      image-src="/images/main/history-hero.webp"
       eyebrow="THE FIRST AND THE BEST"
       title="자이비뇨의학과병원 발자취"
       description="전립선 질환만을 깊이 있게 연구하고 치료해온 자이비뇨의학과병원의 여정입니다. 축적된 경험을 바탕으로 국내 유일의 비뇨의학과 병원으로 성장해왔습니다."

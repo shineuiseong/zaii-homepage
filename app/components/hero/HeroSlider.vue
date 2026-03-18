@@ -36,27 +36,27 @@ import 'swiper/css/pagination'
 
 const slides = [
   {
-    pc: '/images/home-01.webp',
-    md: '/images/home-01-md.webp',
-    sm: '/images/home-01-sm.webp',
+    pc: '/images/main/home-01.webp',
+    md: '/images/main/home-01-md.webp',
+    sm: '/images/main/home-01-sm.webp',
     alt: '자이비뇨의학과 메인 배너 1'
   },
   {
-    pc: '/images/home-02.webp',
-    md: '/images/home-02-md.webp',
-    sm: '/images/home-02-sm.webp',
+    pc: '/images/main/home-02.webp',
+    md: '/images/main/home-02-md.webp',
+    sm: '/images/main/home-02-sm.webp',
     alt: '자이비뇨의학과 메인 배너 2'
   },
   {
-    pc: '/images/home-03.webp',
-    md: '/images/home-03-md.webp',
-    sm: '/images/home-03-sm.webp',
+    pc: '/images/main/home-03.webp',
+    md: '/images/main/home-03-md.webp',
+    sm: '/images/main/home-03-sm.webp',
     alt: '자이비뇨의학과 메인 배너 3'
   },
   {
-    pc: '/images/home-04.webp',
-    md: '/images/home-04-md.webp',
-    sm: '/images/home-04-sm.webp',
+    pc: '/images/main/home-04.webp',
+    md: '/images/main/home-04-md.webp',
+    sm: '/images/main/home-04-sm.webp',
     alt: '자이비뇨의학과 메인 배너 4'
   }
 ]

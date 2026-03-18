@@ -15,7 +15,7 @@
       <article class="doctor-card doctor-card--director">
         <div class="doctor-card__media">
           <div class="doctor-card__image-wrap">
-            <img src="/images/director-profile.webp" alt="병원장 변재상" />
+            <img src="/images/main/director-profile.webp" alt="병원장 변재상" />
           </div>
         </div>
 
@@ -85,7 +85,7 @@
 
         <div class="doctor-card__media">
           <div class="doctor-card__image-wrap">
-            <img src="/images/vice-director-profile.webp" alt="원장 이홍우" />
+            <img src="/images/main/vice-director-profile.webp" alt="원장 이홍우" />
           </div>
         </div>
       </article>

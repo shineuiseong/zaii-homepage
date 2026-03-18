@@ -11,7 +11,7 @@
 
       <div class="urolift-section__media">
         <img
-          src="/images/main_photo.webp"
+          src="/images/main/main_photo.webp"
           alt="유로리프트 시술 사례 이미지"
           class="urolift-section__image"
         />

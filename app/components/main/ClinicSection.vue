@@ -8,7 +8,7 @@
 
       <div class="clinic-section__grid">
         <article class="clinic-card clinic-card--dark">
-          <img src="/images/clinic-01.webp" alt="전립선 비대증" class="clinic-card__image" />
+          <img src="/images/main/clinic-01.webp" alt="전립선 비대증" class="clinic-card__image" />
           <div class="clinic-card__overlay">
             <p class="clinic-card__desc">
               전립선 비대증을<br />
@@ -19,7 +19,7 @@
         </article>
 
         <article class="clinic-card clinic-card--blue">
-          <img src="/images/clinic-02.webp" alt="전립선염" class="clinic-card__image" />
+          <img src="/images/main/clinic-02.webp" alt="전립선염" class="clinic-card__image" />
           <div class="clinic-card__overlay">
             <p class="clinic-card__desc">
               황산화요법의 결합<br />
@@ -30,7 +30,7 @@
         </article>
 
         <article class="clinic-card clinic-card--dark">
-          <img src="/images/clinic-03.webp" alt="전립선암" class="clinic-card__image" />
+          <img src="/images/main/clinic-03.webp" alt="전립선암" class="clinic-card__image" />
           <div class="clinic-card__overlay">
             <p class="clinic-card__desc">
               정기적인 진단으로 조기발견<br />

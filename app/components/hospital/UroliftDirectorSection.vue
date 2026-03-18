@@ -3,7 +3,7 @@
     <div class="container">
       <div class="urolift-director__grid">
         <div class="urolift-director__image">
-          <img src="/images/director-profile.webp" alt="변재상 병원장" />
+          <img src="/images/main/director-profile.webp" alt="변재상 병원장" />
         </div>
 
         <div class="urolift-director__content">
