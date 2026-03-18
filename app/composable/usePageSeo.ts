@@ -32,7 +32,7 @@ export function usePageSeo({
 
   const normalizedPath = path ? (path.startsWith('/') ? path : `/${path}`) : ''
 
-  const defaultImage = siteUrl ? `${siteUrl}/images/og-image.png` : '/images/og-image.png'
+  const defaultImage = siteUrl ? `${siteUrl}/og-image.png` : '/og-image.png'
 
   const resolvedOgImage = ogImage || defaultImage
   const resolvedTwitterImage = twitterImage || resolvedOgImage
