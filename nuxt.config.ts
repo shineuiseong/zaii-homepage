@@ -5,6 +5,10 @@ export default defineNuxtConfig({
   css: ['@/assets/scss/main.scss'],
   modules: ['@nuxt/eslint', '@nuxt/icon'],
   runtimeConfig: {
+    googleClientEmail: '',
+    googlePrivateKey: '',
+    googleSpreadsheetId: '',
+    googleSheetName: '',
     public: {
       siteUrl: ''
     }

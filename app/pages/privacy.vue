@@ -13,7 +13,7 @@
           병원은 관련 법령에 따라 개인정보를 적법하게 수집·이용하고 안전하게 관리하며,
           개인정보처리방침 변경 시 홈페이지를 통해 공지합니다.
         </p>
-        <p class="policy-hero__effective">시행일자 : 2018 년 01 월 01일</p>
+        <p class="policy-hero__effective">시행일자 : 2026년 03월 18일</p>
       </div>
     </section>
 
@@ -41,12 +41,22 @@
                 병원은 진료, 상담, 예약, 문의 응대 등 서비스 제공을 위하여 필요한 최소한의
                 개인정보를 수집합니다.
               </p>
+              <p>
+                온라인상담 등 홈페이지 이용 과정에서 입력되는 상담내용에는 증상, 병력, 검사 관련
+                정보 등 건강에 관한 내용이 포함될 수 있으며, 이는 관계 법령상 민감정보에 해당할 수
+                있습니다. 병원은 해당 정보를 상담 목적 범위 내에서만 최소한으로 처리합니다.
+              </p>
 
               <h3>가. 온라인 상담 / 예약 / 문의 시</h3>
               <p>
                 병원은 홈페이지의 온라인상담, 예약문의, 비용문의 등 이용 과정에서 다음 정보를 수집할
                 수 있습니다.
               </p>
+              <p class="policy-note-inline">
+                ※ 필수항목 : 이름, 연락처<br />
+                ※ 선택항목 : 나이, 실비보험 유무, 지역, 상담내용, 예약희망일시
+              </p>
+
               <div class="policy-table-wrap">
                 <table class="policy-table">
                   <colgroup>
@@ -64,7 +74,10 @@
                   <tbody>
                     <tr>
                       <td>온라인 상담 / 예약</td>
-                      <td>이름, 연락처, 상담내용, 예약희망일시</td>
+                      <td>
+                        이름, 연락처, 나이(선택), 실비보험 유무(선택), 지역(선택), 상담내용(선택),
+                        예약희망일시(선택)
+                      </td>
                       <td>홈페이지 입력폼</td>
                     </tr>
                     <tr>
@@ -155,13 +168,15 @@
                   <tbody>
                     <tr>
                       <td>온라인 상담 / 문의 응대</td>
-                      <td>이름, 연락처, 상담내용</td>
-                      <td>수집 목적 달성 후 지체 없이 파기</td>
+                      <td>
+                        이름, 연락처, 나이(선택), 실비보험 유무(선택), 지역(선택), 상담내용(선택)
+                      </td>
+                      <td>상담 완료 후 3개월 이내 파기</td>
                     </tr>
                     <tr>
                       <td>예약 관리</td>
                       <td>이름, 연락처, 예약희망정보</td>
-                      <td>예약 처리 완료 후 지체 없이 파기</td>
+                      <td>예약 처리 완료 후 3개월 이내 파기</td>
                     </tr>
                     <tr>
                       <td>진료 관련 기록</td>
@@ -261,6 +276,7 @@
               <div class="policy-contact-box">
                 <p><strong>개인정보관리책임자</strong> : 변재상</p>
                 <p><strong>전화번호</strong> : 02-6207-5678</p>
+                <p><strong>이메일</strong> : privacy@zaiiuro.com</p>
                 <p><strong>주소</strong> : 서울특별시 서초구 서운로 220 4층</p>
               </div>
             </section>
@@ -450,6 +466,12 @@ const tocItems = [
   color: $text-muted !important;
 }
 
+.policy-note-inline {
+  margin-top: 12px !important;
+  font-size: 15px !important;
+  color: $text-muted !important;
+}
+
 .policy-table-wrap {
   margin-top: 18px;
   overflow: hidden;
@@ -623,7 +645,7 @@ const tocItems = [
   }
 
   .policy-table {
-    min-width: 720px;
+    min-width: 760px;
   }
 
   .policy-table th,

@@ -10,7 +10,11 @@
 
         <div class="quick-menu__body-wrap">
           <div class="quick-menu__desktop-body">
-            <a href="/urolift" class="quick-menu__card quick-menu__card--featured">
+            <a
+              href="/urolift"
+              class="quick-menu__card"
+              :class="{ 'quick-menu__card--active': isActive('/urolift') }"
+            >
               <span class="quick-menu__icon-wrap">
                 <Icon name="lucide:flame" class="quick-menu__icon" />
               </span>
@@ -23,7 +27,11 @@
               </span>
             </a>
 
-            <a href="/rezum" class="quick-menu__card">
+            <a
+              href="/rezum"
+              class="quick-menu__card"
+              :class="{ 'quick-menu__card--active': isActive('/rezum') }"
+            >
               <span class="quick-menu__icon-wrap">
                 <Icon name="lucide:activity" class="quick-menu__icon" />
               </span>
@@ -33,7 +41,11 @@
               </span>
             </a>
 
-            <a href="/contact" class="quick-menu__card">
+            <a
+              href="/consultation"
+              class="quick-menu__card"
+              :class="{ 'quick-menu__card--active': isActive('/consultation') }"
+            >
               <span class="quick-menu__icon-wrap">
                 <Icon name="lucide:message-circle" class="quick-menu__icon" />
               </span>
@@ -68,7 +80,7 @@
         <button
           type="button"
           class="quick-menu__bottom-toggle"
-          :aria-expanded="(!isCollapsed).toString()"
+          :aria-expanded="!isCollapsed"
           :aria-label="isCollapsed ? '빠른 메뉴 펼치기' : '빠른 메뉴 접기'"
           @click="toggleMenu"
         >
@@ -106,9 +118,9 @@
       </a>
 
       <a
-        href="/contact"
+        href="/consultation"
         class="quick-menu__mobile-item"
-        :class="{ 'quick-menu__mobile-item--active': isActive('/contact') }"
+        :class="{ 'quick-menu__mobile-item--active': isActive('/consultation') }"
       >
         <Icon name="lucide:message-circle" class="quick-menu__mobile-icon" />
         <span>상담</span>
@@ -229,7 +241,8 @@ function isActive(path: string) {
     transform 0.18s ease,
     box-shadow 0.18s ease,
     border-color 0.18s ease,
-    background-color 0.18s ease;
+    background-color 0.18s ease,
+    color 0.18s ease;
 }
 
 .quick-menu__card:hover {
@@ -239,9 +252,25 @@ function isActive(path: string) {
   background: #f8fbff;
 }
 
-.quick-menu__card--featured {
+.quick-menu__card--active {
   background: linear-gradient(135deg, rgba(13, 87, 198, 0.08), rgba(29, 116, 239, 0.12));
-  border-color: rgba(13, 87, 198, 0.14);
+  border-color: rgba(13, 87, 198, 0.2);
+  box-shadow: 0 8px 18px rgba(13, 87, 198, 0.08);
+}
+
+.quick-menu__card--active .quick-menu__icon-wrap {
+  background: #0d57c6;
+  color: #fff;
+}
+
+.quick-menu__card--active .quick-menu__name,
+.quick-menu__card--active .quick-menu__number {
+  color: #0d57c6;
+}
+
+.quick-menu__card--active .quick-menu__desc,
+.quick-menu__card--active .quick-menu__meta {
+  color: #5b6472;
 }
 
 .quick-menu__card--contact .quick-menu__number {
@@ -258,11 +287,9 @@ function isActive(path: string) {
   justify-content: center;
   background: #eff6ff;
   color: #0d57c6;
-}
-
-.quick-menu__card--featured .quick-menu__icon-wrap {
-  background: #0d57c6;
-  color: #fff;
+  transition:
+    background-color 0.18s ease,
+    color 0.18s ease;
 }
 
 .quick-menu__icon {
@@ -292,6 +319,7 @@ function isActive(path: string) {
   font-weight: 800;
   line-height: 1.2;
   word-break: keep-all;
+  transition: color 0.18s ease;
 }
 
 .quick-menu__desc {
@@ -299,6 +327,7 @@ function isActive(path: string) {
   font-size: 11px;
   line-height: 1.3;
   color: #6b7280;
+  transition: color 0.18s ease;
 }
 
 .quick-menu__meta {
@@ -307,6 +336,7 @@ function isActive(path: string) {
   font-weight: 700;
   color: #6b7280;
   line-height: 1.2;
+  transition: color 0.18s ease;
 }
 
 .quick-menu__number {
@@ -316,6 +346,7 @@ function isActive(path: string) {
   line-height: 1.25;
   letter-spacing: -0.02em;
   word-break: keep-all;
+  transition: color 0.18s ease;
 }
 
 .quick-menu__badge {
