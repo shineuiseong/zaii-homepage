@@ -1,7 +1,7 @@
 <template>
   <div class="prostate-page">
     <ProstatePageHero
-      image-src="/images/prostate/prostate-hero.png"
+      image-src="/images/prostate/prostate-hero.webp"
       top-text="단순히 노화 때문이 아닙니다. 고위험군도 충분히 치료 가능한 전립선질환"
       brand-text="ZAII UROLOGY HOSPITAL"
       title="전립선비대증"

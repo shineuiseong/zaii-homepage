@@ -1,7 +1,7 @@
 <template>
   <div class="rezum-page">
     <RezumPageHero
-      image-src="/images/rezum/rezum-hero.png"
+      image-src="/images/rezum/rezum-hero.webp"
       brand-text="ZAII UROLOGY HOSPITAL"
       title="리줌수술"
     />

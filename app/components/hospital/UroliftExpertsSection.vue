@@ -45,8 +45,8 @@ const experts = [
     affiliation: 'Wollongong Private Hospital · University of Wollongong 의과대학',
     description:
       '초기 유로리프트 시술과 임상 연구 경험을 갖춘 비뇨의학과 전문의와의 교류를 통해 시술 방향과 테크닉을 심화했습니다.',
-    mainImage: '/images/urolift/urolift-founder-01.png',
-    subImage: '/images/urolift/urolift-founder-02.png',
+    mainImage: '/images/urolift/urolift-founder-01.webp',
+    subImage: '/images/urolift/urolift-founder-02.webp',
     subCaption: '초기 유로리프트 프로토타입 및 관련 자료'
   },
   {
@@ -55,8 +55,8 @@ const experts = [
     affiliation: 'Campbelltown Private Hospital 비뇨기과 전문의',
     description:
       '호주 현지에서 유로리프트를 활발히 시행하는 의료진과의 연수를 통해 실제 수술 환경과 환자 적용 경험을 넓혔습니다.',
-    mainImage: '/images/urolift/urolift-founder-03.png',
-    subImage: '/images/urolift/urolift-founder-04.png',
+    mainImage: '/images/urolift/urolift-founder-03.webp',
+    subImage: '/images/urolift/urolift-founder-04.webp',
     subCaption: '현지 병원 수술실 및 시술 환경'
   },
   {
@@ -65,8 +65,8 @@ const experts = [
     affiliation: 'National Canberra Private · 비뇨의학과 전문의',
     description:
       '다양한 비뇨의학과 시술 경험을 갖춘 전문의와의 교류를 통해 유로리프트의 적용 범위와 임상적 해석을 공유했습니다.',
-    mainImage: '/images/urolift/urolift-founder-05.png',
-    subImage: '/images/urolift/urolift-founder-06.png',
+    mainImage: '/images/urolift/urolift-founder-05.webp',
+    subImage: '/images/urolift/urolift-founder-06.webp',
     subCaption: '호주 현지 시술 및 진료 현장'
   },
   {
@@ -75,8 +75,8 @@ const experts = [
     affiliation: 'Kingsway Day Surgery · 비뇨의학과 전문의',
     description:
       '다기관 임상 경험과 실제 케이스 분석을 통해 시술 안정성과 환자 선택 기준에 대한 이해를 더했습니다.',
-    mainImage: '/images/urolift/urolift-founder-08.png',
-    subImage: '/images/urolift/urolift-founder-07.png',
+    mainImage: '/images/urolift/urolift-founder-08.webp',
+    subImage: '/images/urolift/urolift-founder-07.webp',
     subCaption: '현장 토론 및 임상 교류'
   }
 ]

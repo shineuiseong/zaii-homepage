@@ -1,7 +1,7 @@
 <template>
   <section class="brand-highrisk">
     <div class="brand-highrisk__bg">
-      <img src="/images/brand/brand-highrisk-bg.png" alt="고위험군 시술 클리닉" />
+      <img src="/images/brand/brand-highrisk-bg.webp" alt="고위험군 시술 클리닉" />
     </div>
 
     <div class="brand-highrisk__overlay" />

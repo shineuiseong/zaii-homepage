@@ -3,7 +3,7 @@
     <div class="container">
       <div class="urolift-achievement__image">
         <img
-          src="/images/urolift/urolift-achievement-banner.png"
+          src="/images/urolift/urolift-achievement-banner.webp"
           alt="자이비뇨의학과병원 전립선 치료 10000례"
         />
       </div>

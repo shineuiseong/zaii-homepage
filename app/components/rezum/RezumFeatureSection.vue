@@ -3,7 +3,7 @@
     <!-- 1. 상단 특징 -->
     <div class="rezum-feature__hero">
       <div class="rezum-feature__hero-bg">
-        <img src="/images/rezum/rezum-feature-bg.png" alt="리줌 특징 배경" />
+        <img src="/images/rezum/rezum-feature-bg.webp" alt="리줌 특징 배경" />
       </div>
       <div class="rezum-feature__hero-overlay" />
 
@@ -104,13 +104,13 @@
 
         <div class="rezum-feature__stats-top">
           <div class="rezum-feature__stats-card">
-            <img src="/images/rezum/rezum-stats-01.png" alt="리줌 5년 통계 그래프 1" />
+            <img src="/images/rezum/rezum-stats-01.webp" alt="리줌 5년 통계 그래프 1" />
           </div>
         </div>
 
         <div class="rezum-feature__stats-middle">
           <div class="rezum-feature__stats-card">
-            <img src="/images/rezum/rezum-stats-02.png" alt="리줌 5년 통계 그래프 2" />
+            <img src="/images/rezum/rezum-stats-02.webp" alt="리줌 5년 통계 그래프 2" />
           </div>
           <div class="rezum-feature__stats-summary">
             시술 후 5년 경과 관찰 결과 증상과 최대 요속이 시술 전에 비해
@@ -122,7 +122,7 @@
 
         <div class="rezum-feature__stats-bottom">
           <div class="rezum-feature__stats-card">
-            <img src="/images/rezum/rezum-stats-03.png" alt="리줌 5년 통계 그래프 3" />
+            <img src="/images/rezum/rezum-stats-03.webp" alt="리줌 5년 통계 그래프 3" />
           </div>
           <div class="rezum-feature__stats-summary">
             시술 후 5년 관찰한 결과,

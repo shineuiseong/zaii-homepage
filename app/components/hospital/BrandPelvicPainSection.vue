@@ -11,7 +11,7 @@
 
       <div class="brand-pelvic__body">
         <div class="brand-pelvic__image">
-          <img src="/images/brand/brand-story-patient.png" alt="만성골반통증 및 전립선염" />
+          <img src="/images/brand/brand-story-patient.webp" alt="만성골반통증 및 전립선염" />
         </div>
 
         <div class="brand-pelvic__content">

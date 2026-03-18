@@ -1,7 +1,7 @@
 <template>
   <div class="urolift-page">
     <HospitalPageHero
-      image-src="/images/history-hero.png"
+      image-src="/images/history-hero.webp"
       eyebrow="UROLIFT STORY"
       title="유로리프트를 만나다"
       description="유로리프트의 개발 배경부터 국내 도입, 그리고 해외 의료진과의 교류를 통해 쌓아온 자이비뇨의학과병원의 경험을 소개합니다."

@@ -28,7 +28,7 @@
 
         <div class="urolift-feature__bottom">
           <div class="urolift-feature__image">
-            <img src="/images/urolift/urolift-implant.png" alt="Urolift Implant" />
+            <img src="/images/urolift/urolift-implant.webp" alt="Urolift Implant" />
           </div>
 
           <div class="urolift-feature__list">
@@ -51,11 +51,11 @@
         </div>
 
         <div class="urolift-feature__study-chart">
-          <img src="/images/urolift/urolift-section-02-01.png" alt="학회 자료 그래프" />
+          <img src="/images/urolift/urolift-section-02-01.webp" alt="학회 자료 그래프" />
         </div>
 
         <div class="urolift-feature__study-bottom">
-          <img src="/images/urolift/urolift-section-02-02.png" alt="학회 비교 자료" />
+          <img src="/images/urolift/urolift-section-02-02.webp" alt="학회 비교 자료" />
         </div>
       </div>
     </div>

@@ -33,15 +33,15 @@
 
 <script setup lang="ts">
 const topSteps = [
-  { step: '01', image: '/images/urolift/urolift-step-01.png' },
-  { step: '02', image: '/images/urolift/urolift-step-02.png' },
-  { step: '03', image: '/images/urolift/urolift-step-03.png' }
+  { step: '01', image: '/images/urolift/urolift-step-01.webp' },
+  { step: '02', image: '/images/urolift/urolift-step-02.webp' },
+  { step: '03', image: '/images/urolift/urolift-step-03.webp' }
 ]
 
 const bottomSteps = [
-  { step: '04', image: '/images/urolift/urolift-step-04.png' },
-  { step: '05', image: '/images/urolift/urolift-step-05.png' },
-  { step: '06', image: '/images/urolift/urolift-step-06.png' }
+  { step: '04', image: '/images/urolift/urolift-step-04.webp' },
+  { step: '05', image: '/images/urolift/urolift-step-05.webp' },
+  { step: '06', image: '/images/urolift/urolift-step-06.webp' }
 ]
 </script>
 

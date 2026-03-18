@@ -2,7 +2,7 @@
   <section id="urolift-intro" class="urolift-intro section">
     <div class="urolift-intro__top">
       <div class="urolift-intro__top-bg">
-        <img src="/images/urolift/urolift-bg.png" alt="유로리프트 소개 배경" />
+        <img src="/images/urolift/urolift-bg.webp" alt="유로리프트 소개 배경" />
       </div>
 
       <div class="urolift-intro__top-overlay" />
@@ -39,7 +39,7 @@
         <div class="urolift-intro__body">
           <div class="urolift-intro__image">
             <img
-              src="/images/urolift/urolift-section-01-01.png"
+              src="/images/urolift/urolift-section-01-01.webp"
               alt="전립선비대증 구조 설명 이미지"
             />
           </div>
@@ -68,7 +68,7 @@
 
           <div class="urolift-intro__circle">
             <img
-              src="/images/urolift/urolift-section-01-02.png"
+              src="/images/urolift/urolift-section-01-02.webp"
               alt="유로리프트 전립선 구조 설명 이미지"
             />
           </div>
@@ -88,7 +88,7 @@
         <div class="urolift-intro__study-top">
           <div class="urolift-intro__study-chart">
             <img
-              src="/images/urolift/urolift-section-01-03.png"
+              src="/images/urolift/urolift-section-01-03.webp"
               alt="미국 비뇨기과 학회 발표자료 도표"
             />
           </div>
@@ -112,7 +112,7 @@
 
         <div class="urolift-intro__study-bottom">
           <img
-            src="/images/urolift/urolift-section-01-04.png"
+            src="/images/urolift/urolift-section-01-04.webp"
             alt="유로리프트 위치 및 치료 단계 설명"
           />
         </div>

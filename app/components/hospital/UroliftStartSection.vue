@@ -12,7 +12,7 @@
 
       <div class="urolift-start__body">
         <div class="urolift-start__image">
-          <img src="/images/urolift/urolift-device.png" alt="유로리프트 기기" />
+          <img src="/images/urolift/urolift-device.webp" alt="유로리프트 기기" />
         </div>
 
         <div class="urolift-start__content">

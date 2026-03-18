@@ -44,10 +44,10 @@
 
 <script setup lang="ts">
 const steps = [
-  { step: '01', image: '/images/urolift/procedure-01.png' },
-  { step: '02', image: '/images/urolift/procedure-02.png' },
-  { step: '03', image: '/images/urolift/procedure-03.png' },
-  { step: '04', image: '/images/urolift/procedure-04.png' }
+  { step: '01', image: '/images/urolift/procedure-01.webp' },
+  { step: '02', image: '/images/urolift/procedure-02.webp' },
+  { step: '03', image: '/images/urolift/procedure-03.webp' },
+  { step: '04', image: '/images/urolift/procedure-04.webp' }
 ]
 </script>
 

@@ -1,7 +1,7 @@
 <template>
   <div class="urolift-page">
     <UroliftPageHero
-      image-src="/images/urolift/urolift-hero.png"
+      image-src="/images/urolift/urolift-hero.webp"
       top-text="전립선비대증을 빠르게 해결하는 방법 다양한 전립선비대증 유로리프트 시술로 쌓은 임상경험을 바탕으로 하다"
       brand-text="ZAII UROLOGY HOSPITAL"
       title="자이"

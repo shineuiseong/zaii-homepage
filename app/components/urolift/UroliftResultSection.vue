@@ -11,7 +11,7 @@
       <div class="urolift-result__compare">
         <div class="urolift-result__item">
           <div class="circle">
-            <img src="/images/urolift/procedure-before.png" alt="Before" />
+            <img src="/images/urolift/procedure-before.webp" alt="Before" />
           </div>
           <div class="label">Before</div>
         </div>
@@ -20,7 +20,7 @@
 
         <div class="urolift-result__item">
           <div class="circle">
-            <img src="/images/urolift/procedure-after.png" alt="After" />
+            <img src="/images/urolift/procedure-after.webp" alt="After" />
           </div>
           <div class="label">After</div>
         </div>
@@ -40,20 +40,23 @@
         </div>
 
         <div class="study-image">
-          <img src="/images/urolift/urolift-section-05-01.png" alt="미국 비뇨기과 학회 발표자료" />
+          <img src="/images/urolift/urolift-section-05-01.webp" alt="미국 비뇨기과 학회 발표자료" />
         </div>
       </div>
 
       <!-- Founder -->
       <div class="urolift-result__founder">
         <div class="founder-item">
-          <img src="/images/urolift/urolift-founder-01.png" alt="유로리프트 장비 개발자 Dr. Chin" />
+          <img
+            src="/images/urolift/urolift-founder-01.webp"
+            alt="유로리프트 장비 개발자 Dr. Chin"
+          />
           <p>유로리프트 시술 장비를 개발한 Dr. chin과 함께</p>
         </div>
 
         <div class="founder-item">
           <img
-            src="/images/urolift/urolift-founder-02.png"
+            src="/images/urolift/urolift-founder-02.webp"
             alt="초기에 제작된 유로리프트 시술 장비"
           />
           <p>초기에 제작된 유로리프트 시술 장비</p>

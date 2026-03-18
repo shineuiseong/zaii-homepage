@@ -8,7 +8,7 @@
       <div class="prostate-neglect__main">
         <div class="prostate-neglect__media">
           <div class="prostate-neglect__image">
-            <img src="/images/prostate/prostate-neglect.png" alt="전립선비대증 증상 이미지" />
+            <img src="/images/prostate/prostate-neglect.webp" alt="전립선비대증 증상 이미지" />
           </div>
 
           <div class="prostate-neglect__bubble">

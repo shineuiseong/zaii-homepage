@@ -28,17 +28,17 @@
 <script setup lang="ts">
 const cards = [
   {
-    image: '/images/road-01.png',
+    image: '/images/road-01.webp',
     title: '고위험군<br>전립선비대증',
     description: '유로리프트, 플라즈마기화술'
   },
   {
-    image: '/images/road-02.png',
+    image: '/images/road-02.webp',
     title: '만성전립선염,<br>만성골반통증',
     description: '템프로, 체외충격파 ESWT'
   },
   {
-    image: '/images/road-03.png',
+    image: '/images/road-03.webp',
     title: '전립선암 조직<br>검사',
     description: '상급병원 진료와 치료를 좀 더 빠르게'
   }

@@ -71,7 +71,7 @@
           <div class="rezum-process__steps">
             <div class="rezum-step">
               <div class="rezum-step__image">
-                <img src="/images/rezum/rezum-step-01.png" alt="리줌 시술 STEP 01" />
+                <img src="/images/rezum/rezum-step-01.webp" alt="리줌 시술 STEP 01" />
               </div>
               <div class="rezum-step__badge">STEP 01</div>
               <p class="rezum-step__text">
@@ -85,7 +85,7 @@
 
             <div class="rezum-step">
               <div class="rezum-step__image">
-                <img src="/images/rezum/rezum-step-02.png" alt="리줌 시술 STEP 02" />
+                <img src="/images/rezum/rezum-step-02.webp" alt="리줌 시술 STEP 02" />
               </div>
               <div class="rezum-step__badge">STEP 02</div>
               <p class="rezum-step__text">
@@ -99,7 +99,7 @@
 
             <div class="rezum-step">
               <div class="rezum-step__image">
-                <img src="/images/rezum/rezum-step-03.png" alt="리줌 시술 STEP 03" />
+                <img src="/images/rezum/rezum-step-03.webp" alt="리줌 시술 STEP 03" />
               </div>
               <div class="rezum-step__badge">STEP 03</div>
               <p class="rezum-step__text">

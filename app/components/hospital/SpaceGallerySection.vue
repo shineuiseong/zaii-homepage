@@ -110,7 +110,7 @@ type SwiperInstance = any
 
 const images = Array.from(
   { length: 13 },
-  (_, i) => `/images/space/space-${String(i + 1).padStart(2, '0')}.png`
+  (_, i) => `/images/space/space-${String(i + 1).padStart(2, '0')}.webp`
 )
 
 const totalCount = images.length

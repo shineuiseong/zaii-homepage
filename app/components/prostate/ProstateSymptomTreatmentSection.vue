@@ -37,14 +37,14 @@
 
         <div class="prostate-symptom-treatment__study-chart">
           <img
-            src="/images/urolift/urolift-section-02-01.png"
+            src="/images/urolift/urolift-section-02-01.webp"
             alt="미국 비뇨기과 학회 발표자료 그래프"
           />
         </div>
 
         <div class="prostate-symptom-treatment__study-bottom">
           <img
-            src="/images/urolift/urolift-section-02-02.png"
+            src="/images/urolift/urolift-section-02-02.webp"
             alt="전립선비대증 치료 관련 비교 자료"
           />
         </div>

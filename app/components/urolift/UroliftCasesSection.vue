@@ -52,7 +52,7 @@
           <div class="urolift-case__media-grid">
             <figure class="urolift-case__figure">
               <img
-                src="/images/urolift/urolift-case-02-01.png"
+                src="/images/urolift/urolift-case-02-01.webp"
                 alt="51세 남성 케이스 시술 전 내시경 이미지"
               />
               <figcaption>
@@ -62,7 +62,7 @@
 
             <figure class="urolift-case__figure">
               <img
-                src="/images/urolift/urolift-case-02-02.png"
+                src="/images/urolift/urolift-case-02-02.webp"
                 alt="51세 남성 케이스 시술 후 내시경 이미지"
               />
               <figcaption>전립선요도 폐색 사라져 관찰되지 않고 정상소견 관찰됨</figcaption>
