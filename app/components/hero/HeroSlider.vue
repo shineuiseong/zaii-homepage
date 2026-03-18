@@ -119,7 +119,7 @@ const slides = [
     height: auto;
     aspect-ratio: 1 / 1;
     min-height: 520px;
-    max-height: calc(100svh - 76px);
+    max-height: calc(120svh - 76px);
   }
 
   .hero-slide img {
@@ -142,7 +142,7 @@ const slides = [
   .hero-swiper {
     aspect-ratio: 2 / 3;
     min-height: 380px;
-    max-height: calc(100svh - 72px);
+    max-height: calc(120svh - 72px);
   }
 
   .hero-slide img {
