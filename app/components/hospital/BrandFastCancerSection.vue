@@ -1,7 +1,7 @@
 <template>
   <section class="brand-fast-cancer section">
     <div class="brand-fast-cancer__bg">
-      <img src="/images/brand/brand-fast-cancer-bg.png" alt="전립선암 신속검사" />
+      <img src="/images/brand/brand-fast-cancer-bg.webp" alt="전립선암 신속검사" />
     </div>
 
     <div class="brand-fast-cancer__overlay" />
