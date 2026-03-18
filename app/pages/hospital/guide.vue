@@ -1,7 +1,7 @@
 <template>
   <div class="guide-page">
     <HospitalPageHero
-      image-src="/images/history-hero.png"
+      image-src="/images/history-hero.webp"
       eyebrow="MEDICAL GUIDE"
       title="진료안내"
       description="자이비뇨의학과병원의 예약 및 상담, 진료시간, 진료과목을 안내해드립니다."

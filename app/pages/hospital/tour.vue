@@ -1,7 +1,7 @@
 <template>
   <div>
     <HospitalPageHero
-      image-src="/images/history-hero.png"
+      image-src="/images/history-hero.webp"
       eyebrow="ZAII UROLOGY HOSPITAL"
       title="공간소개"
       description="자이비뇨의학과병원의 내부 공간을 소개합니다."

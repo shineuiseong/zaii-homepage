@@ -1,7 +1,7 @@
 <template>
   <div class="brand-page">
     <HospitalPageHero
-      image-src="/images/history-hero.png"
+      image-src="/images/history-hero.webp"
       eyebrow="BRAND STORY"
       title="의료진 소개"
       description="믿을 수 있는 자이비뇨의학과 병원 의료진 오늘도 더 나은 결과를 위하여 최선을 다합니다."
