@@ -19,6 +19,7 @@
 <script setup lang="ts">
 import ConsultationForm from '~/components/forms/ConsultationForm.vue'
 import { usePageSeo } from '~/composable/usePageSeo'
+
 usePageSeo({
   title: '온라인상담 | 자이비뇨의학과',
   description:
@@ -79,7 +80,7 @@ usePageSeo({
   box-shadow: 0 18px 50px rgba(15, 23, 42, 0.06);
 }
 
-@media (max-width: 768px) {
+@include mobile {
   .consultation-page {
     padding: 48px 0 100px;
   }
@@ -104,8 +105,11 @@ usePageSeo({
   }
 
   .consultation-page__card {
-    padding: 20px;
-    border-radius: 22px;
+    padding: 0;
+    border-radius: 0;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
   }
 }
 </style>

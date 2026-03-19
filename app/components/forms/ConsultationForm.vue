@@ -571,7 +571,7 @@ async function handleSubmit() {
   line-height: 1.4;
 }
 
-@media (max-width: 768px) {
+@include mobile {
   .consultation-form__intro {
     margin-bottom: 18px;
     padding: 18px 16px;
@@ -587,12 +587,28 @@ async function handleSubmit() {
   }
 
   .consultation-form__section {
-    padding: 18px 16px;
-    border-radius: 20px;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
   }
 
   .consultation-form__section + .consultation-form__section {
-    margin-top: 14px;
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid #e5ebf3;
+  }
+
+  .consultation-form__section-head {
+    margin-bottom: 16px;
+  }
+
+  .consultation-form__section-title {
+    font-size: 17px;
+  }
+
+  .consultation-form__section-desc {
+    font-size: 14px;
   }
 
   .consultation-form__grid {
@@ -642,7 +658,7 @@ async function handleSubmit() {
   }
 
   .consultation-form__agree-list {
-    margin-top: 18px;
+    margin-top: 20px;
     gap: 10px;
   }
 
