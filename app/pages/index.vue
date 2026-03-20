@@ -1,4 +1,5 @@
 <template>
+  <MainPopupBanner />
   <HeroSlider />
   <UroliftSection />
   <ClinicSection />
@@ -7,6 +8,7 @@
 </template>
 
 <script setup lang="ts">
+import MainPopupBanner from '~/components/common/MainPopupBanner.vue'
 import HeroSlider from '~/components/hero/HeroSlider.vue'
 import ClinicSection from '~/components/main/ClinicSection.vue'
 import ContactInfoSection from '~/components/main/ContactInfoSection.vue'
