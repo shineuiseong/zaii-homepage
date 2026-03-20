@@ -1,6 +1,6 @@
 <template>
   <ClientOnly>
-    <div v-if="hasVisiblePopup" class="popup-layer" aria-live="polite">
+    <div v-if="showPopup" class="popup-layer" aria-live="polite">
       <div class="popup-stack">
         <section
           v-for="popup in visiblePopups"
@@ -11,6 +11,7 @@
           :aria-label="popup.title"
         >
           <button
+            v-if="isMobile && hasVisiblePopup"
             type="button"
             class="popup-card__close"
             :aria-label="`${popup.title} 팝업 닫기`"
@@ -85,6 +86,8 @@ const isMobile = ref(false)
 const visiblePopups = computed(() => popups.filter((popup) => !closedIds.value.includes(popup.id)))
 
 const hasVisiblePopup = computed(() => visiblePopups.value.length > 0)
+
+const showPopup = computed(() => !isMobile.value && hasVisiblePopup.value)
 
 function getTodayEndTimestamp() {
   const now = new Date()
