@@ -42,6 +42,20 @@
             </a>
 
             <a
+              href="/filler-penis-enlargement"
+              class="quick-menu__card"
+              :class="{ 'quick-menu__card--active': isActive('/filler-penis-enlargement') }"
+            >
+              <span class="quick-menu__icon-wrap">
+                <Icon name="lucide:sparkles" class="quick-menu__icon" />
+              </span>
+              <span class="quick-menu__content">
+                <span class="quick-menu__name">필러 음경확대술</span>
+                <span class="quick-menu__desc">필러 확대 시술 안내</span>
+              </span>
+            </a>
+
+            <a
               href="/consultation"
               class="quick-menu__card"
               :class="{ 'quick-menu__card--active': isActive('/consultation') }"
@@ -115,6 +129,15 @@
       >
         <Icon name="lucide:activity" class="quick-menu__mobile-icon" />
         <span>리줌</span>
+      </a>
+
+      <a
+        href="/filler-penis-enlargement"
+        class="quick-menu__mobile-item"
+        :class="{ 'quick-menu__mobile-item--active': isActive('/filler-penis-enlargement') }"
+      >
+        <Icon name="lucide:sparkles" class="quick-menu__mobile-icon" />
+        <span>필러확대</span>
       </a>
 
       <a
@@ -204,7 +227,7 @@ function isActive(path: string) {
 }
 
 .quick-menu__body-wrap {
-  max-height: 620px;
+  max-height: 700px;
   overflow: hidden;
   transition:
     max-height 0.34s ease,
@@ -481,7 +504,7 @@ function isActive(path: string) {
     bottom: 0;
     z-index: 1200;
     display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns: repeat(6, minmax(0, 1fr));
     background: rgba(255, 255, 255, 0.98);
     border-top: 1px solid #e5e7eb;
     box-shadow: 0 -8px 24px rgba(15, 23, 42, 0.08);
