@@ -150,7 +150,7 @@
 @include mobile {
   .footer .container {
     padding-top: 26px;
-    padding-bottom: 26px;
+    padding-bottom: 140px;
   }
 
   .footer__links {

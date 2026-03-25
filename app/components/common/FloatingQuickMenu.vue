@@ -113,51 +113,65 @@
 
     <!-- mobile -->
     <nav class="quick-menu__mobile" aria-label="모바일 빠른 메뉴">
-      <a
-        href="/urolift"
-        class="quick-menu__mobile-item"
-        :class="{ 'quick-menu__mobile-item--active': isActive('/urolift') }"
-      >
-        <Icon name="lucide:flame" class="quick-menu__mobile-icon" />
-        <span>유로리프트</span>
-      </a>
+      <div class="quick-menu__mobile-top">
+        <a
+          href="/urolift"
+          class="quick-menu__mobile-item"
+          :class="{ 'quick-menu__mobile-item--active': isActive('/urolift') }"
+        >
+          <Icon name="lucide:flame" class="quick-menu__mobile-icon" />
+          <span>유로리프트</span>
+        </a>
 
-      <a
-        href="/rezum"
-        class="quick-menu__mobile-item"
-        :class="{ 'quick-menu__mobile-item--active': isActive('/rezum') }"
-      >
-        <Icon name="lucide:activity" class="quick-menu__mobile-icon" />
-        <span>리줌</span>
-      </a>
+        <a
+          href="/rezum"
+          class="quick-menu__mobile-item"
+          :class="{ 'quick-menu__mobile-item--active': isActive('/rezum') }"
+        >
+          <Icon name="lucide:activity" class="quick-menu__mobile-icon" />
+          <span>리줌</span>
+        </a>
 
-      <a
-        href="/filler-penis-enlargement"
-        class="quick-menu__mobile-item"
-        :class="{ 'quick-menu__mobile-item--active': isActive('/filler-penis-enlargement') }"
-      >
-        <Icon name="lucide:sparkles" class="quick-menu__mobile-icon" />
-        <span>필러확대</span>
-      </a>
+        <a
+          href="/filler-penis-enlargement"
+          class="quick-menu__mobile-item"
+          :class="{ 'quick-menu__mobile-item--active': isActive('/filler-penis-enlargement') }"
+        >
+          <Icon name="lucide:sparkles" class="quick-menu__mobile-icon" />
+          <span>필러확대</span>
+        </a>
 
-      <a
-        href="/consultation"
-        class="quick-menu__mobile-item"
-        :class="{ 'quick-menu__mobile-item--active': isActive('/consultation') }"
-      >
-        <Icon name="lucide:message-circle" class="quick-menu__mobile-icon" />
-        <span>상담</span>
-      </a>
+        <a
+          href="/consultation"
+          class="quick-menu__mobile-item"
+          :class="{ 'quick-menu__mobile-item--active': isActive('/consultation') }"
+        >
+          <Icon name="lucide:message-circle" class="quick-menu__mobile-icon" />
+          <span>온라인상담</span>
+        </a>
+      </div>
 
-      <a href="tel:0262075678" class="quick-menu__mobile-item">
-        <Icon name="lucide:phone" class="quick-menu__mobile-icon" />
-        <span>진료문의</span>
-      </a>
+      <div class="quick-menu__mobile-bottom">
+        <a href="tel:0262075678" class="quick-menu__mobile-call quick-menu__mobile-call--clinic">
+          <span class="quick-menu__mobile-call-icon-wrap">
+            <Icon name="lucide:phone" class="quick-menu__mobile-call-icon" />
+          </span>
+          <span class="quick-menu__mobile-call-text">
+            <span class="quick-menu__mobile-call-label">진료문의</span>
+            <span class="quick-menu__mobile-call-number">02-6207-5678</span>
+          </span>
+        </a>
 
-      <a href="tel:01026386034" class="quick-menu__mobile-item">
-        <Icon name="lucide:smartphone" class="quick-menu__mobile-icon" />
-        <span>상담전화</span>
-      </a>
+        <a href="tel:01026386034" class="quick-menu__mobile-call quick-menu__mobile-call--consult">
+          <span class="quick-menu__mobile-call-icon-wrap">
+            <Icon name="lucide:smartphone" class="quick-menu__mobile-call-icon" />
+          </span>
+          <span class="quick-menu__mobile-call-text">
+            <span class="quick-menu__mobile-call-label">상담전화</span>
+            <span class="quick-menu__mobile-call-number">010-2638-6034</span>
+          </span>
+        </a>
+      </div>
     </nav>
   </aside>
 </template>
@@ -503,48 +517,133 @@ function isActive(path: string) {
     right: 10px;
     bottom: calc(env(safe-area-inset-bottom) + 12px);
     z-index: 1200;
-    display: grid;
-    grid-template-columns: repeat(6, minmax(0, 1fr));
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 12px;
+    border-radius: 20px;
     background: rgba(255, 255, 255, 0.98);
-    border: 1px solid #e5e7eb;
-    border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.14);
-    backdrop-filter: blur(10px);
-    overflow: hidden;
+    border: 1px solid rgba(13, 87, 198, 0.08);
+    box-shadow:
+      0 12px 32px rgba(15, 23, 42, 0.18),
+      0 2px 6px rgba(15, 23, 42, 0.06);
+    backdrop-filter: blur(12px);
+  }
+
+  .quick-menu__mobile-top {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
   }
 
   .quick-menu__mobile-item {
     display: flex;
     min-width: 0;
-    min-height: 58px;
+    min-height: 64px;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 4px;
-    padding: 8px 2px 9px;
+    gap: 5px;
+    padding: 10px 6px;
+    border-radius: 14px;
+    background: #f1f5f9;
     text-decoration: none;
-    color: #111827;
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 700;
-    text-align: center;
-    transition:
-      color 0.2s ease,
-      background-color 0.2s ease;
+    color: #334155;
+    transition: all 0.2s ease;
     -webkit-tap-highlight-color: transparent;
   }
 
+  .quick-menu__mobile-item:active {
+    transform: scale(0.96);
+  }
+
   .quick-menu__mobile-item--active {
-    background: #eff6ff;
+    background: linear-gradient(135deg, rgba(13, 87, 198, 0.14), rgba(29, 116, 239, 0.18));
     color: #0d57c6;
+    box-shadow: 0 6px 14px rgba(13, 87, 198, 0.12);
   }
 
   .quick-menu__mobile-icon {
-    width: 17px;
-    height: 17px;
+    width: 18px;
+    height: 18px;
+    margin-bottom: 2px;
     flex: 0 0 auto;
+    color: currentColor;
   }
 
   .quick-menu__mobile-item span {
+    line-height: 1.2;
+    word-break: keep-all;
+    text-align: center;
+  }
+
+  .quick-menu__mobile-bottom {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .quick-menu__mobile-call {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+    padding: 12px 14px;
+    border-radius: 18px;
+    text-decoration: none;
+    color: #fff;
+    transition: transform 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .quick-menu__mobile-call:active {
+    transform: scale(0.97);
+  }
+
+  .quick-menu__mobile-call--clinic {
+    background: linear-gradient(135deg, #0d57c6 0%, #1f6fe8 100%);
+    box-shadow: 0 10px 22px rgba(13, 87, 198, 0.22);
+  }
+
+  .quick-menu__mobile-call--consult {
+    background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);
+    box-shadow: 0 10px 22px rgba(15, 118, 110, 0.22);
+  }
+
+  .quick-menu__mobile-call-icon-wrap {
+    width: 36px;
+    height: 36px;
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.2);
+    flex: 0 0 auto;
+  }
+
+  .quick-menu__mobile-call-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  .quick-menu__mobile-call-text {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .quick-menu__mobile-call-label {
+    font-size: 10px;
+    opacity: 0.85;
+    line-height: 1.2;
+  }
+
+  .quick-menu__mobile-call-number {
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
     line-height: 1.2;
     word-break: keep-all;
   }
