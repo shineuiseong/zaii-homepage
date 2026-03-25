@@ -33,6 +33,9 @@ import AppHeader from '~/components/common/AppHeader.vue'
 }
 
 @include mobile {
+  main {
+    padding-bottom: calc(88px + env(safe-area-inset-bottom));
+  }
   .app-main {
     padding-top: 72px;
   }
