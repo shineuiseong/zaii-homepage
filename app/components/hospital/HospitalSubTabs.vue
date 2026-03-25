@@ -60,9 +60,9 @@
 </template>
 
 <script setup lang="ts">
-import { nextTick, onBeforeUnmount, onMounted, ref } from 'vue'
+import { nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 
-defineProps<{
+const props = defineProps<{
   tabs: {
     label: string
     to: string
@@ -87,6 +87,26 @@ function checkScroll() {
   const maxScrollLeft = el.scrollWidth - el.clientWidth
   showLeft.value = el.scrollLeft > 4
   showRight.value = el.scrollLeft < maxScrollLeft - 4
+}
+
+function scrollActiveTabIntoView(behavior: ScrollBehavior = 'auto') {
+  const navEl = navRef.value
+  if (!navEl) return
+
+  const activeEl = navEl.querySelector('.hospital-sub-tabs__link.is-active') as HTMLElement | null
+  if (!activeEl) return
+
+  const targetLeft = activeEl.offsetLeft - navEl.clientWidth / 2 + activeEl.clientWidth / 2
+
+  const maxScrollLeft = navEl.scrollWidth - navEl.clientWidth
+  const nextLeft = Math.max(0, Math.min(targetLeft, maxScrollLeft))
+
+  navEl.scrollTo({
+    left: nextLeft,
+    behavior
+  })
+
+  window.setTimeout(checkScroll, 50)
 }
 
 function scrollLeft() {
@@ -183,13 +203,23 @@ function onDragEnd() {
 
 function onResize() {
   checkScroll()
+  scrollActiveTabIntoView('auto')
 }
 
 onMounted(async () => {
   await nextTick()
   checkScroll()
+  scrollActiveTabIntoView('auto')
   window.addEventListener('resize', onResize)
 })
+
+watch(
+  () => props.tabs.map((tab) => `${tab.to}:${tab.current ? '1' : '0'}`).join('|'),
+  async () => {
+    await nextTick()
+    scrollActiveTabIntoView('smooth')
+  }
+)
 
 onBeforeUnmount(() => {
   window.removeEventListener('resize', onResize)
