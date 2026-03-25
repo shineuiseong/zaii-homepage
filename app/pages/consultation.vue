@@ -18,7 +18,7 @@
 
 <script setup lang="ts">
 import ConsultationForm from '~/components/forms/ConsultationForm.vue'
-import { usePageSeo } from '~/composable/usePageSeo'
+import { usePageSeo } from '~/composables/usePageSeo'
 
 usePageSeo({
   title: '온라인상담 | 자이비뇨의학과',

@@ -44,20 +44,20 @@
         type="button"
         class="mobile-menu-button"
         :aria-expanded="mobileMenuOpen"
-        aria-label="메뉴 열기"
-        @click="toggleMobileMenu"
+        :aria-label="mobileMenuOpen ? '메뉴 닫기' : '메뉴 열기'"
+        @click="handleToggleMobileMenu"
       >
-        <Icon name="lucide:menu" size="28" />
+        <Icon :name="mobileMenuOpen ? 'lucide:x' : 'lucide:menu'" size="28" />
       </button>
     </div>
 
     <transition name="mobile-overlay-fade">
-      <div v-if="mobileMenuOpen" class="mobile-menu-overlay" @click="closeMobileMenu" />
+      <div v-if="mobileMenuOpen" class="mobile-menu-overlay" @click="handleCloseMobileMenu" />
     </transition>
 
     <aside class="mobile-drawer" :class="{ 'is-open': mobileMenuOpen }">
       <div class="mobile-drawer__header">
-        <NuxtLink to="/" class="mobile-drawer__logo" @click="closeMobileMenu">
+        <NuxtLink to="/" class="mobile-drawer__logo" @click="handleCloseMobileMenu">
           <img src="/images/logo.png" alt="자이비뇨의학과" />
         </NuxtLink>
 
@@ -65,7 +65,7 @@
           type="button"
           class="mobile-drawer__close"
           aria-label="메뉴 닫기"
-          @click="closeMobileMenu"
+          @click="handleCloseMobileMenu"
         >
           <Icon name="lucide:x" size="24" />
         </button>
@@ -87,7 +87,7 @@
                 :to="item.link"
                 class="mobile-menu-link"
                 :class="{ 'is-current': isMenuCurrent(item) }"
-                @click="closeMobileMenu"
+                @click="handleCloseMobileMenu"
               >
                 <span>{{ item.label }}</span>
                 <span v-if="item.hot" class="badge-hot">Hot</span>
@@ -111,7 +111,7 @@
                     :to="sub.link"
                     class="mobile-submenu-link"
                     :class="{ 'is-current': isSubCurrent(sub.link) }"
-                    @click="closeMobileMenu"
+                    @click="handleCloseMobileMenu"
                   >
                     {{ sub.label }}
                   </NuxtLink>
@@ -126,6 +126,8 @@
 </template>
 
 <script setup lang="ts">
+import { useMobileUi } from '~/composables/useMobileUi'
+
 type MenuChild = {
   label: string
   link: string
@@ -156,15 +158,16 @@ const menu: MenuItem[] = [
   },
   { label: '유로리프트', link: '/urolift', hot: true },
   { label: '리줌수술', link: '/rezum' },
-  { label: '필러 음경확대술', link: 'filler-penis-enlargement', hot: true },
+  { label: '필러 음경확대술', link: '/filler-penis-enlargement', hot: true },
   { label: '전립선비대증', link: '/prostate' },
   { label: '전립선암 신속검사', link: '/prostate-cancer' },
   { label: '온라인상담', link: '/consultation' }
 ]
 
 const active = ref<number | null>(null)
-const mobileMenuOpen = ref(false)
 const mobileSubmenuOpen = ref<number | null>(null)
+
+const { mobileMenuOpen, openMobileMenu, closeMobileMenu, toggleMobileMenu } = useMobileUi()
 
 const normalizePath = (path: string) => {
   if (!path) return '/'
@@ -177,6 +180,7 @@ const isSameOrChildPath = (target: string, current: string) => {
   const normalizedCurrent = normalizePath(current)
 
   if (normalizedTarget === '/') return normalizedCurrent === '/'
+
   return (
     normalizedCurrent === normalizedTarget || normalizedCurrent.startsWith(`${normalizedTarget}/`)
   )
@@ -194,17 +198,30 @@ const isMenuCurrent = (item: MenuItem) => {
   return isSameOrChildPath(item.link, route.path)
 }
 
-const toggleMobileMenu = () => {
-  mobileMenuOpen.value = !mobileMenuOpen.value
-
-  if (!mobileMenuOpen.value) {
-    mobileSubmenuOpen.value = null
-  }
+const resetMobileSubmenu = () => {
+  mobileSubmenuOpen.value = null
 }
 
-const closeMobileMenu = () => {
-  mobileMenuOpen.value = false
-  mobileSubmenuOpen.value = null
+const handleOpenMobileMenu = () => {
+  openMobileMenu()
+
+  const foundIndex = menu.findIndex((item) => item.children?.some((sub) => isSubCurrent(sub.link)))
+
+  mobileSubmenuOpen.value = foundIndex >= 0 ? foundIndex : null
+}
+
+const handleCloseMobileMenu = () => {
+  closeMobileMenu()
+  resetMobileSubmenu()
+}
+
+const handleToggleMobileMenu = () => {
+  if (mobileMenuOpen.value) {
+    handleCloseMobileMenu()
+    return
+  }
+
+  handleOpenMobileMenu()
 }
 
 const toggleMobileSubmenu = (index: number) => {
@@ -214,17 +231,25 @@ const toggleMobileSubmenu = (index: number) => {
 watch(
   () => route.path,
   () => {
-    mobileMenuOpen.value = false
-    mobileSubmenuOpen.value = null
+    handleCloseMobileMenu()
   }
 )
 
-watchEffect(() => {
-  if (!mobileMenuOpen.value) return
+watch(
+  () => mobileMenuOpen.value,
+  (isOpen) => {
+    if (!isOpen) {
+      resetMobileSubmenu()
+      return
+    }
 
-  const foundIndex = menu.findIndex((item) => item.children?.some((sub) => isSubCurrent(sub.link)))
-  mobileSubmenuOpen.value = foundIndex >= 0 ? foundIndex : null
-})
+    const foundIndex = menu.findIndex((item) =>
+      item.children?.some((sub) => isSubCurrent(sub.link))
+    )
+
+    mobileSubmenuOpen.value = foundIndex >= 0 ? foundIndex : null
+  }
+)
 </script>
 
 <style scoped lang="scss">

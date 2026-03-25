@@ -14,7 +14,7 @@
 import RezumFeatureSection from '~/components/rezum/RezumFeatureSection.vue'
 import RezumIntroSection from '~/components/rezum/RezumIntroSection.vue'
 import RezumPageHero from '~/components/rezum/RezumPageHero.vue'
-import { usePageSeo } from '~/composable/usePageSeo'
+import { usePageSeo } from '~/composables/usePageSeo'
 
 usePageSeo({
   title: '리줌 수술 | 전립선비대증 치료 | 자이비뇨의학과',

@@ -24,7 +24,7 @@ import UroliftPageHero from '~/components/urolift/UroliftPageHero.vue'
 import UroliftSectionNav from '~/components/urolift/UroliftSectionNav.vue'
 import UroliftIntroSection from '~/components/urolift/UroliftIntroSection.vue'
 import UroliftProcessSection from '~/components/urolift/UroliftProcessSection.vue'
-import { usePageSeo } from '~/composable/usePageSeo'
+import { usePageSeo } from '~/composables/usePageSeo'
 
 const sectionItems = [
   { id: 'urolift-intro', label: '유로리프트' },

@@ -14,7 +14,7 @@ import ClinicSection from '~/components/main/ClinicSection.vue'
 import ContactInfoSection from '~/components/main/ContactInfoSection.vue'
 import HistoryHighlightSection from '~/components/main/HistoryHighlightSection.vue'
 import UroliftSection from '~/components/main/UroliftSection.vue'
-import { usePageSeo } from '~/composable/usePageSeo'
+import { usePageSeo } from '~/composables/usePageSeo'
 
 usePageSeo({
   title: '자이비뇨의학과 | 전립선비대증 리줌·유로리프트 치료',

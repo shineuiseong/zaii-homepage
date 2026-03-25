@@ -13,7 +13,7 @@
 <script setup lang="ts">
 import ProstateCancerHero from '~/components/prostate-cancer/ProstateCancerHero.vue'
 import ProstateCancerIntroSection from '~/components/prostate-cancer/ProstateCancerIntroSection.vue'
-import { usePageSeo } from '~/composable/usePageSeo'
+import { usePageSeo } from '~/composables/usePageSeo'
 
 usePageSeo({
   title: '전립선암 신속검사 | 전립선암 진료 | 자이비뇨의학과',

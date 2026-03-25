@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import { usePageSeo } from '~/composable/usePageSeo'
+import { usePageSeo } from '~/composables/usePageSeo'
 
 usePageSeo({
   title: '필러 음경확대술 | 자이비뇨의학과',

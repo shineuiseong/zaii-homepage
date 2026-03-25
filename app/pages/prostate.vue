@@ -23,7 +23,7 @@ import ProstateSectionNav from '~/components/prostate/ProstateSectionNav.vue'
 import ProstateSelfCheckSection from '~/components/prostate/ProstateSelfCheckSection.vue'
 import ProstateSymptomTreatmentSection from '~/components/prostate/ProstateSymptomTreatmentSection.vue'
 import ProstateTreatmentSection from '~/components/prostate/ProstateTreatmentSection.vue'
-import { usePageSeo } from '~/composable/usePageSeo'
+import { usePageSeo } from '~/composables/usePageSeo'
 
 const sectionItems = [
   { id: 'prostate-symptom-treatment', label: '전립선비대증 증상과 치료' },

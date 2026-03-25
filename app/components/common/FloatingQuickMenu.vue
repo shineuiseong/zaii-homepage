@@ -10,8 +10,8 @@
 
         <div class="quick-menu__body-wrap">
           <div class="quick-menu__desktop-body">
-            <a
-              href="/urolift"
+            <NuxtLink
+              to="/urolift"
               class="quick-menu__card"
               :class="{ 'quick-menu__card--active': isActive('/urolift') }"
             >
@@ -25,10 +25,10 @@
                 </span>
                 <span class="quick-menu__desc">대표 시술 바로가기</span>
               </span>
-            </a>
+            </NuxtLink>
 
-            <a
-              href="/rezum"
+            <NuxtLink
+              to="/rezum"
               class="quick-menu__card"
               :class="{ 'quick-menu__card--active': isActive('/rezum') }"
             >
@@ -39,10 +39,10 @@
                 <span class="quick-menu__name">리줌시술</span>
                 <span class="quick-menu__desc">최소침습 치료 안내</span>
               </span>
-            </a>
+            </NuxtLink>
 
-            <a
-              href="/filler-penis-enlargement"
+            <NuxtLink
+              to="/filler-penis-enlargement"
               class="quick-menu__card"
               :class="{ 'quick-menu__card--active': isActive('/filler-penis-enlargement') }"
             >
@@ -53,10 +53,10 @@
                 <span class="quick-menu__name">필러 음경확대술</span>
                 <span class="quick-menu__desc">필러 확대 시술 안내</span>
               </span>
-            </a>
+            </NuxtLink>
 
-            <a
-              href="/consultation"
+            <NuxtLink
+              to="/consultation"
               class="quick-menu__card"
               :class="{ 'quick-menu__card--active': isActive('/consultation') }"
             >
@@ -67,7 +67,7 @@
                 <span class="quick-menu__name">온라인상담</span>
                 <span class="quick-menu__desc">문의 남기기</span>
               </span>
-            </a>
+            </NuxtLink>
 
             <a href="tel:0262075678" class="quick-menu__card quick-menu__card--contact">
               <span class="quick-menu__icon-wrap">
@@ -112,43 +112,48 @@
     </div>
 
     <!-- mobile -->
-    <nav class="quick-menu__mobile" aria-label="모바일 빠른 메뉴">
+    <nav
+      class="quick-menu__mobile"
+      :class="{ 'quick-menu__mobile--hidden': mobileMenuOpen }"
+      aria-label="모바일 빠른 메뉴"
+      :aria-hidden="mobileMenuOpen"
+    >
       <div class="quick-menu__mobile-top">
-        <a
-          href="/urolift"
+        <NuxtLink
+          to="/urolift"
           class="quick-menu__mobile-item"
           :class="{ 'quick-menu__mobile-item--active': isActive('/urolift') }"
         >
           <Icon name="lucide:flame" class="quick-menu__mobile-icon" />
           <span>유로리프트</span>
-        </a>
+        </NuxtLink>
 
-        <a
-          href="/rezum"
+        <NuxtLink
+          to="/rezum"
           class="quick-menu__mobile-item"
           :class="{ 'quick-menu__mobile-item--active': isActive('/rezum') }"
         >
           <Icon name="lucide:activity" class="quick-menu__mobile-icon" />
           <span>리줌</span>
-        </a>
+        </NuxtLink>
 
-        <a
-          href="/filler-penis-enlargement"
+        <NuxtLink
+          to="/filler-penis-enlargement"
           class="quick-menu__mobile-item"
           :class="{ 'quick-menu__mobile-item--active': isActive('/filler-penis-enlargement') }"
         >
           <Icon name="lucide:sparkles" class="quick-menu__mobile-icon" />
           <span>필러확대</span>
-        </a>
+        </NuxtLink>
 
-        <a
-          href="/consultation"
+        <NuxtLink
+          to="/consultation"
           class="quick-menu__mobile-item"
           :class="{ 'quick-menu__mobile-item--active': isActive('/consultation') }"
         >
           <Icon name="lucide:message-circle" class="quick-menu__mobile-icon" />
           <span>온라인상담</span>
-        </a>
+        </NuxtLink>
       </div>
 
       <div class="quick-menu__mobile-bottom">
@@ -181,6 +186,7 @@ import { ref } from 'vue'
 
 const route = useRoute()
 const isCollapsed = ref(false)
+const { mobileMenuOpen } = useMobileUi()
 
 function toggleMenu() {
   isCollapsed.value = !isCollapsed.value
@@ -528,6 +534,20 @@ function isActive(path: string) {
       0 12px 32px rgba(15, 23, 42, 0.18),
       0 2px 6px rgba(15, 23, 42, 0.06);
     backdrop-filter: blur(12px);
+    transition:
+      opacity 0.28s ease,
+      transform 0.28s ease,
+      visibility 0.28s ease;
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    visibility: visible;
+  }
+
+  .quick-menu__mobile--hidden {
+    opacity: 0;
+    transform: translateY(24px) scale(0.98);
+    visibility: hidden;
+    pointer-events: none;
   }
 
   .quick-menu__mobile-top {
