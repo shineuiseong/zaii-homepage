@@ -11,8 +11,15 @@
           <div class="urolift-process__card-head">
             <span>STEP {{ item.step }}</span>
           </div>
+
           <div class="urolift-process__card-body">
-            <img :src="item.image" :alt="`전립선 비대증 과정 ${item.step}`" />
+            <div class="urolift-process__image-frame">
+              <img
+                :src="item.image"
+                :alt="`전립선 비대증 과정 ${item.step}`"
+                class="urolift-process__image"
+              />
+            </div>
           </div>
         </article>
       </div>
@@ -22,8 +29,15 @@
           <div class="urolift-process__card-head">
             <span>STEP {{ item.step }}</span>
           </div>
+
           <div class="urolift-process__card-body urolift-process__card-body--plain">
-            <img :src="item.image" :alt="`전립선 비대증 과정 ${item.step}`" />
+            <div class="urolift-process__image-frame">
+              <img
+                :src="item.image"
+                :alt="`전립선 비대증 과정 ${item.step}`"
+                class="urolift-process__image"
+              />
+            </div>
           </div>
         </article>
       </div>
@@ -72,7 +86,6 @@ const bottomSteps = [
   font-weight: 800;
   letter-spacing: -0.03em;
   color: #101114;
-  word-break: keep-all;
 }
 
 .urolift-process__grid {
@@ -105,22 +118,12 @@ const bottomSteps = [
 
   span {
     font-size: 28px;
-    line-height: 1;
     font-weight: 800;
-    letter-spacing: -0.02em;
   }
 }
 
 .urolift-process__card-body {
-  padding: 28px 24px 30px;
-  background: #ffffff;
-
-  img {
-    display: block;
-    width: 100%;
-    height: auto;
-    object-fit: contain;
-  }
+  padding: 12px;
 }
 
 .urolift-process__card-body--plain {
@@ -128,117 +131,51 @@ const bottomSteps = [
   padding-bottom: 22px;
 }
 
-@include desktop-down {
-  .urolift-process {
-    padding-top: 72px;
-    padding-bottom: 84px;
-  }
+/* ✅ 핵심: 이미지 높이 통일 */
+.urolift-process__image-frame {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
 
+.urolift-process__image {
+  width: auto;
+  height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+@include desktop-down {
   .urolift-process__title {
     font-size: 46px;
   }
 
-  .urolift-process__grid {
-    gap: 22px;
-  }
-
-  .urolift-process__card-head {
-    min-height: 74px;
-
-    span {
-      font-size: 24px;
-    }
-  }
-
-  .urolift-process__card-body {
-    padding: 22px 18px 24px;
+  .urolift-process__image-frame {
+    height: 220px;
   }
 }
 
 @include laptop-down {
-  .urolift-process {
-    padding-top: 60px;
-    padding-bottom: 72px;
-  }
-
-  .urolift-process__head {
-    margin-bottom: 28px;
-  }
-
-  .urolift-process__title {
-    font-size: 34px;
-  }
-
   .urolift-process__grid--top,
   .urolift-process__grid--bottom {
     grid-template-columns: 1fr;
   }
 
-  .urolift-process__grid--top {
-    margin-bottom: 18px;
-  }
-
-  .urolift-process__grid {
-    gap: 16px;
-  }
-
-  .urolift-process__card {
-    border-width: 4px;
-  }
-
-  .urolift-process__card-head {
-    min-height: 62px;
-    padding: 10px 14px;
-
-    span {
-      font-size: 22px;
-    }
-  }
-
-  .urolift-process__card-body {
-    padding: 16px 14px 18px;
-  }
-
-  .urolift-process__card-body--plain {
-    padding-top: 14px;
-    padding-bottom: 14px;
+  .urolift-process__image-frame {
+    height: 260px;
   }
 }
 
 @include mobile {
-  .urolift-process {
-    padding-top: 48px;
-    padding-bottom: 56px;
-  }
-
-  .urolift-process__eyebrow {
-    font-size: 10px;
-    letter-spacing: 0.22em;
-  }
-
   .urolift-process__title {
     font-size: 28px;
-    line-height: 1.22;
   }
 
-  .urolift-process__head {
-    margin-bottom: 22px;
-  }
-
-  .urolift-process__grid {
-    gap: 14px;
-  }
-
-  .urolift-process__card-head {
-    min-height: 56px;
-
-    span {
-      font-size: 18px;
-    }
-  }
-
-  .urolift-process__card-body {
-    padding: 14px 12px 16px;
+  .urolift-process__image-frame {
+    height: 220px;
   }
 }
 </style>
