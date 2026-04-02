@@ -17,20 +17,63 @@
 </template>
 
 <script setup lang="ts">
+import { defineBreadcrumb, defineWebPage, useSchemaOrg } from '#imports'
 import ConsultationForm from '~/components/forms/ConsultationForm.vue'
 import { usePageSeo } from '~/composables/usePageSeo'
 
+const config = useRuntimeConfig()
+const siteUrl = config.public.siteUrl || 'https://zaii.kr'
+const pageUrl = `${siteUrl}/consultation`
+const pageTitle = '온라인상담 | 자이비뇨의학과'
+const pageDescription =
+  '자이비뇨의학과 온라인상담 페이지입니다. 성함과 연락처를 남겨주시면 상담을 도와드립니다.'
+const pageImage = `${siteUrl}/images/og-image.png`
+
 usePageSeo({
-  title: '온라인상담 | 자이비뇨의학과',
-  description:
-    '자이비뇨의학과 온라인상담 페이지입니다. 성함과 연락처를 남겨주시면 상담을 도와드립니다.',
+  title: pageTitle,
+  description: pageDescription,
   path: '/consultation',
   keywords:
     '자이비뇨의학과, 온라인상담, 비뇨기과 상담, 전립선비대증 상담, 유로리프트 상담, 리줌 상담',
   ogDescription: '온라인으로 간편하게 상담을 신청해보세요. 자이비뇨의학과가 안내해드립니다.',
   twitterTitle: '온라인상담 | 자이비뇨의학과',
-  twitterDescription: '성함과 연락처를 남겨주시면 상담을 도와드립니다.'
+  twitterDescription: '성함과 연락처를 남겨주시면 상담을 도와드립니다.',
+  ogImage: pageImage,
+  twitterImage: pageImage
 })
+
+useSchemaOrg([
+  defineWebPage({
+    '@id': `${pageUrl}#webpage`,
+    url: pageUrl,
+    name: pageTitle,
+    description: pageDescription,
+    inLanguage: 'ko-KR',
+    isPartOf: {
+      '@id': `${siteUrl}/#website`
+    },
+    primaryImageOfPage: {
+      '@type': 'ImageObject',
+      contentUrl: pageImage
+    }
+  }),
+
+  defineBreadcrumb({
+    '@id': `${pageUrl}#breadcrumb`,
+    itemListElement: [
+      {
+        position: 1,
+        name: '홈',
+        item: `${siteUrl}/`
+      },
+      {
+        position: 2,
+        name: '온라인상담',
+        item: pageUrl
+      }
+    ]
+  })
+])
 </script>
 
 <style scoped lang="scss">

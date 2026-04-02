@@ -16,6 +16,7 @@
 </template>
 
 <script setup lang="ts">
+import { defineBreadcrumb, defineWebPage, useSchemaOrg } from '#imports'
 import ProstatePageHero from '~/components/prostate/ProstatePageHero.vue'
 import ProstateNeglectSection from '~/components/prostate/ProstateNeglectSection.vue'
 import ProstateOneDayProcessSection from '~/components/prostate/ProstateOneDayProcessSection.vue'
@@ -24,6 +25,14 @@ import ProstateSelfCheckSection from '~/components/prostate/ProstateSelfCheckSec
 import ProstateSymptomTreatmentSection from '~/components/prostate/ProstateSymptomTreatmentSection.vue'
 import ProstateTreatmentSection from '~/components/prostate/ProstateTreatmentSection.vue'
 import { usePageSeo } from '~/composables/usePageSeo'
+
+const config = useRuntimeConfig()
+const siteUrl = config.public.siteUrl || 'https://zaii.kr'
+const pageUrl = `${siteUrl}/prostate`
+const pageTitle = '전립선비대증 증상·치료 | 리줌·유로리프트 | 자이비뇨의학과'
+const pageDescription =
+  '전립선비대증의 증상, 자가진단, 검사, 치료방법을 안내합니다. 자이비뇨의학과는 리줌(Rezūm), 유로리프트(UroLift) 등 최소침습 치료와 비수술적 치료를 제공합니다.'
+const pageImage = `${siteUrl}/images/og-image.png`
 
 const sectionItems = [
   { id: 'prostate-symptom-treatment', label: '전립선비대증 증상과 치료' },
@@ -34,17 +43,56 @@ const sectionItems = [
 ]
 
 usePageSeo({
-  title: '전립선비대증 증상·치료 | 리줌·유로리프트 | 자이비뇨의학과',
-  description:
-    '전립선비대증의 증상, 자가진단, 검사, 치료방법을 안내합니다. 자이비뇨의학과는 리줌(Rezūm), 유로리프트(UroLift) 등 최소침습 치료와 비수술적 치료를 제공합니다.',
+  title: pageTitle,
+  description: pageDescription,
   path: '/prostate',
   keywords:
     '전립선비대증, 전립선비대증 증상, 전립선비대증 치료, 전립선비대증 자가진단, 전립선 검사, 리줌, 유로리프트, 배뇨장애, 전립선비대증 병원',
   ogDescription:
     '전립선비대증 증상, 자가진단, 검사와 치료방법 안내. 리줌·유로리프트 등 최소침습 치료 제공.',
   twitterTitle: '전립선비대증 증상·치료 | 자이비뇨의학과',
-  twitterDescription: '전립선비대증 증상부터 검사, 치료까지 한 번에 안내합니다.'
+  twitterDescription: '전립선비대증 증상부터 검사, 치료까지 한 번에 안내합니다.',
+  ogImage: pageImage,
+  twitterImage: pageImage
 })
+
+useSchemaOrg([
+  defineWebPage({
+    '@type': 'MedicalWebPage',
+    '@id': `${pageUrl}#webpage`,
+    url: pageUrl,
+    name: pageTitle,
+    description: pageDescription,
+    inLanguage: 'ko-KR',
+    isPartOf: {
+      '@id': `${siteUrl}/#website`
+    },
+    about: {
+      '@type': 'MedicalCondition',
+      name: '전립선비대증'
+    },
+    primaryImageOfPage: {
+      '@type': 'ImageObject',
+      contentUrl: pageImage
+    }
+  }),
+
+  defineBreadcrumb({
+    '@id': `${pageUrl}#breadcrumb`,
+    itemListElement: [
+      {
+        position: 1,
+        name: '홈',
+        item: `${siteUrl}/`
+      },
+      {
+        position: 2,
+        name: '전립선비대증',
+        item: pageUrl
+      }
+    ]
+  })
+])
 </script>
 
 <style scoped lang="scss">

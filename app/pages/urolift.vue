@@ -24,7 +24,19 @@ import UroliftPageHero from '~/components/urolift/UroliftPageHero.vue'
 import UroliftSectionNav from '~/components/urolift/UroliftSectionNav.vue'
 import UroliftIntroSection from '~/components/urolift/UroliftIntroSection.vue'
 import UroliftProcessSection from '~/components/urolift/UroliftProcessSection.vue'
+import UroliftFeatureSection from '~/components/urolift/UroliftFeatureSection.vue'
+import UroliftProcedureSection from '~/components/urolift/UroliftProcedureSection.vue'
+import UroliftResultSection from '~/components/urolift/UroliftResultSection.vue'
+import UroliftCasesSection from '~/components/urolift/UroliftCasesSection.vue'
 import { usePageSeo } from '~/composables/usePageSeo'
+
+const config = useRuntimeConfig()
+const siteUrl = config.public.siteUrl || 'https://zaii.kr'
+const pageUrl = `${siteUrl}/urolift`
+const pageTitle = '유로리프트 시술 | 전립선비대증 치료 | 자이비뇨의학과'
+const pageDescription =
+  '유로리프트(UroLift)는 절개 없이 전립선비대증을 개선하는 최소침습 치료입니다. 자이비뇨의학과에서 안전하고 빠른 유로리프트 시술을 제공합니다.'
+const pageImage = `${siteUrl}/images/og-image.png`
 
 const sectionItems = [
   { id: 'urolift-intro', label: '유로리프트' },
@@ -36,14 +48,53 @@ const sectionItems = [
 ]
 
 usePageSeo({
-  title: '유로리프트 시술 | 전립선비대증 치료 | 자이비뇨의학과',
-  description:
-    '유로리프트(UroLift)는 절개 없이 전립선비대증을 개선하는 최소침습 치료입니다. 자이비뇨의학과에서 안전하고 빠른 유로리프트 시술을 제공합니다.',
+  title: pageTitle,
+  description: pageDescription,
   path: '/urolift',
   keywords:
     '유로리프트, Urolift, 전립선비대증 시술, 전립선결찰술, 유로리프트 비용, 유로리프트 효과, 전립선비대증 치료',
   ogDescription: '절개 없이 전립선비대증을 개선하는 유로리프트 시술. 빠른 회복과 안전한 치료.',
   twitterTitle: '유로리프트 시술 | 자이비뇨의학과',
-  twitterDescription: '전립선비대증 치료, 유로리프트 시술로 빠르게 개선하세요.'
+  twitterDescription: '전립선비대증 치료, 유로리프트 시술로 빠르게 개선하세요.',
+  ogImage: pageImage,
+  twitterImage: pageImage
 })
+
+useSchemaOrg([
+  defineWebPage({
+    '@type': 'MedicalWebPage',
+    '@id': `${pageUrl}#webpage`,
+    url: pageUrl,
+    name: pageTitle,
+    description: pageDescription,
+    inLanguage: 'ko-KR',
+    isPartOf: {
+      '@id': `${siteUrl}/#website`
+    },
+    about: {
+      '@type': 'MedicalCondition',
+      name: '전립선비대증'
+    },
+    primaryImageOfPage: {
+      '@type': 'ImageObject',
+      contentUrl: pageImage
+    }
+  }),
+
+  defineBreadcrumb({
+    '@id': `${pageUrl}#breadcrumb`,
+    itemListElement: [
+      {
+        position: 1,
+        name: '홈',
+        item: `${siteUrl}/`
+      },
+      {
+        position: 2,
+        name: '유로리프트',
+        item: pageUrl
+      }
+    ]
+  })
+])
 </script>
