@@ -1,516 +1,490 @@
 <template>
   <aside class="quick-menu" aria-label="빠른 메뉴">
-    <!-- desktop -->
-    <div class="quick-menu__desktop">
-      <div class="quick-menu__panel" :class="{ 'quick-menu__panel--collapsed': isCollapsed }">
-        <div class="quick-menu__desktop-head">
-          <p class="quick-menu__eyebrow">ZAII UROLOGY</p>
-          <strong class="quick-menu__title">빠른 상담 메뉴</strong>
-        </div>
+    <!-- =========================
+      DESKTOP
+    ========================== -->
+    <nav class="quick-menu__desktop" aria-label="데스크톱 빠른 메뉴">
+      <!-- 진료문의 -->
+      <a href="tel:0262075678" class="quick-menu__item">
+        <span class="quick-menu__icon-box">
+          <Icon name="lucide:phone" class="quick-menu__icon" />
+        </span>
 
-        <div class="quick-menu__body-wrap">
-          <div class="quick-menu__desktop-body">
-            <NuxtLink
-              to="/urolift"
-              class="quick-menu__card"
-              :class="{ 'quick-menu__card--active': isActive('/urolift') }"
-            >
-              <span class="quick-menu__icon-wrap">
-                <Icon name="lucide:flame" class="quick-menu__icon" />
-              </span>
-              <span class="quick-menu__content">
-                <span class="quick-menu__name-row">
-                  <span class="quick-menu__name">유로리프트</span>
-                  <span class="quick-menu__badge">HOT</span>
-                </span>
-                <span class="quick-menu__desc">대표 시술 바로가기</span>
-              </span>
-            </NuxtLink>
+        <span class="quick-menu__text"> 진료문의 </span>
+      </a>
 
-            <NuxtLink
-              to="/rezum"
-              class="quick-menu__card"
-              :class="{ 'quick-menu__card--active': isActive('/rezum') }"
-            >
-              <span class="quick-menu__icon-wrap">
-                <Icon name="lucide:activity" class="quick-menu__icon" />
-              </span>
-              <span class="quick-menu__content">
-                <span class="quick-menu__name">리줌시술</span>
-                <span class="quick-menu__desc">최소침습 치료 안내</span>
-              </span>
-            </NuxtLink>
+      <!-- 상담문의 -->
+      <a href="tel:01026386034" class="quick-menu__item">
+        <span class="quick-menu__icon-box">
+          <Icon name="lucide:headphones" class="quick-menu__icon" />
+        </span>
 
-            <NuxtLink
-              to="/filler-penis-enlargement"
-              class="quick-menu__card"
-              :class="{ 'quick-menu__card--active': isActive('/filler-penis-enlargement') }"
-            >
-              <span class="quick-menu__icon-wrap">
-                <Icon name="lucide:sparkles" class="quick-menu__icon" />
-              </span>
-              <span class="quick-menu__content">
-                <span class="quick-menu__name">필러 음경확대술</span>
-                <span class="quick-menu__desc">필러 확대 시술 안내</span>
-              </span>
-            </NuxtLink>
+        <span class="quick-menu__text"> 상담문의 </span>
+      </a>
 
-            <NuxtLink
-              to="/consultation"
-              class="quick-menu__card"
-              :class="{ 'quick-menu__card--active': isActive('/consultation') }"
-            >
-              <span class="quick-menu__icon-wrap">
-                <Icon name="lucide:message-circle" class="quick-menu__icon" />
-              </span>
-              <span class="quick-menu__content">
-                <span class="quick-menu__name">온라인상담</span>
-                <span class="quick-menu__desc">문의 남기기</span>
-              </span>
-            </NuxtLink>
+      <!-- 오시는 길 -->
+      <NuxtLink
+        to="/hospital/location"
+        class="quick-menu__item"
+        :class="{
+          'quick-menu__item--active': isActive('/hospital/location')
+        }"
+      >
+        <span class="quick-menu__icon-box">
+          <Icon name="lucide:map" class="quick-menu__icon" />
+        </span>
 
-            <a href="tel:0262075678" class="quick-menu__card quick-menu__card--contact">
-              <span class="quick-menu__icon-wrap">
-                <Icon name="lucide:phone" class="quick-menu__icon" />
-              </span>
-              <span class="quick-menu__content">
-                <span class="quick-menu__meta">진료문의</span>
-                <span class="quick-menu__number">02-6207-5678</span>
-              </span>
-            </a>
+        <span class="quick-menu__text"> 오시는 길 </span>
+      </NuxtLink>
 
-            <a href="tel:01026386034" class="quick-menu__card quick-menu__card--contact">
-              <span class="quick-menu__icon-wrap">
-                <Icon name="lucide:smartphone" class="quick-menu__icon" />
-              </span>
-              <span class="quick-menu__content">
-                <span class="quick-menu__meta">상담문의</span>
-                <span class="quick-menu__number">010-2638-6034</span>
-              </span>
-            </a>
-          </div>
-        </div>
+      <!-- 온라인상담 -->
+      <NuxtLink
+        to="/consultation"
+        class="quick-menu__item"
+        :class="{
+          'quick-menu__item--active': isActive('/consultation')
+        }"
+      >
+        <span class="quick-menu__icon-box">
+          <Icon name="lucide:message-circle" class="quick-menu__icon" />
+        </span>
 
-        <button
-          type="button"
-          class="quick-menu__bottom-toggle"
-          :aria-expanded="!isCollapsed"
-          :aria-label="isCollapsed ? '빠른 메뉴 펼치기' : '빠른 메뉴 접기'"
-          @click="toggleMenu"
-        >
-          <span class="quick-menu__bottom-toggle-line" />
-          <span class="quick-menu__bottom-toggle-text">
-            {{ isCollapsed ? '상담 메뉴 펼치기' : '빠른 메뉴 접기' }}
-          </span>
-          <Icon
-            name="lucide:chevron-down"
-            class="quick-menu__bottom-toggle-icon"
-            :class="{ 'quick-menu__bottom-toggle-icon--rotated': isCollapsed }"
-          />
-        </button>
-      </div>
-    </div>
+        <span class="quick-menu__text"> 온라인상담 </span>
+      </NuxtLink>
 
-    <!-- mobile -->
+      <!-- TOP -->
+      <button
+        type="button"
+        class="quick-menu__item quick-menu__item--top"
+        aria-label="페이지 상단으로 이동"
+        @click="scrollToTop"
+      >
+        <Icon name="lucide:arrow-up" class="quick-menu__top-icon" />
+
+        <span class="quick-menu__top-text"> TOP </span>
+      </button>
+    </nav>
+
+    <!-- =========================
+      MOBILE
+    ========================== -->
     <nav
       class="quick-menu__mobile"
-      :class="{ 'quick-menu__mobile--hidden': mobileMenuOpen }"
+      :class="{
+        'quick-menu__mobile--hidden': mobileMenuOpen
+      }"
       aria-label="모바일 빠른 메뉴"
       :aria-hidden="mobileMenuOpen"
     >
-      <div class="quick-menu__mobile-top">
-        <NuxtLink
-          to="/urolift"
-          class="quick-menu__mobile-item"
-          :class="{ 'quick-menu__mobile-item--active': isActive('/urolift') }"
-        >
-          <Icon name="lucide:flame" class="quick-menu__mobile-icon" />
-          <span>유로리프트</span>
-        </NuxtLink>
+      <a href="tel:0262075678" class="quick-menu__mobile-item">
+        <Icon name="lucide:phone" class="quick-menu__mobile-icon" />
 
-        <NuxtLink
-          to="/rezum"
-          class="quick-menu__mobile-item"
-          :class="{ 'quick-menu__mobile-item--active': isActive('/rezum') }"
-        >
-          <Icon name="lucide:activity" class="quick-menu__mobile-icon" />
-          <span>리줌</span>
-        </NuxtLink>
+        <span> 진료문의 </span>
+      </a>
 
-        <NuxtLink
-          to="/filler-penis-enlargement"
-          class="quick-menu__mobile-item"
-          :class="{ 'quick-menu__mobile-item--active': isActive('/filler-penis-enlargement') }"
-        >
-          <Icon name="lucide:sparkles" class="quick-menu__mobile-icon" />
-          <span>필러확대</span>
-        </NuxtLink>
+      <a href="tel:01026386034" class="quick-menu__mobile-item">
+        <Icon name="lucide:headphones" class="quick-menu__mobile-icon" />
 
-        <NuxtLink
-          to="/consultation"
-          class="quick-menu__mobile-item"
-          :class="{ 'quick-menu__mobile-item--active': isActive('/consultation') }"
-        >
-          <Icon name="lucide:message-circle" class="quick-menu__mobile-icon" />
-          <span>온라인상담</span>
-        </NuxtLink>
-      </div>
+        <span> 상담문의 </span>
+      </a>
 
-      <div class="quick-menu__mobile-bottom">
-        <a href="tel:0262075678" class="quick-menu__mobile-call quick-menu__mobile-call--clinic">
-          <span class="quick-menu__mobile-call-icon-wrap">
-            <Icon name="lucide:phone" class="quick-menu__mobile-call-icon" />
-          </span>
-          <span class="quick-menu__mobile-call-text">
-            <span class="quick-menu__mobile-call-label">진료문의</span>
-            <span class="quick-menu__mobile-call-number">02-6207-5678</span>
-          </span>
-        </a>
+      <NuxtLink
+        to="/hospital/location"
+        class="quick-menu__mobile-item"
+        :class="{
+          'quick-menu__mobile-item--active': isActive('/hospital/location')
+        }"
+      >
+        <Icon name="lucide:map" class="quick-menu__mobile-icon" />
 
-        <a href="tel:01026386034" class="quick-menu__mobile-call quick-menu__mobile-call--consult">
-          <span class="quick-menu__mobile-call-icon-wrap">
-            <Icon name="lucide:smartphone" class="quick-menu__mobile-call-icon" />
-          </span>
-          <span class="quick-menu__mobile-call-text">
-            <span class="quick-menu__mobile-call-label">상담전화</span>
-            <span class="quick-menu__mobile-call-number">010-2638-6034</span>
-          </span>
-        </a>
-      </div>
+        <span> 오시는 길 </span>
+      </NuxtLink>
+
+      <NuxtLink
+        to="/consultation"
+        class="quick-menu__mobile-item"
+        :class="{
+          'quick-menu__mobile-item--active': isActive('/consultation')
+        }"
+      >
+        <Icon name="lucide:message-circle" class="quick-menu__mobile-icon" />
+
+        <span> 온라인상담 </span>
+      </NuxtLink>
     </nav>
   </aside>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-
 const route = useRoute()
-const isCollapsed = ref(false)
-const { mobileMenuOpen } = useMobileUi()
 
-function toggleMenu() {
-  isCollapsed.value = !isCollapsed.value
-}
+const { mobileMenuOpen } = useMobileUi()
 
 function isActive(path: string) {
   return route.path === path || route.path.startsWith(`${path}/`)
 }
+
+function scrollToTop() {
+  if (!import.meta.client) {
+    return
+  }
+
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  })
+}
 </script>
 
 <style scoped lang="scss">
+/* ========================================================
+   ROOT
+======================================================== */
+
 .quick-menu {
   position: fixed;
+
   z-index: 1200;
 }
 
-/* desktop */
+/* ========================================================
+   DESKTOP
+======================================================== */
+
 .quick-menu__desktop {
   position: fixed;
-  top: 46%;
-  right: 20px;
-  transform: translateY(-50%);
-  width: 216px;
-}
 
-.quick-menu__panel {
-  width: 216px;
-  border-radius: 24px;
-  overflow: hidden;
-  background: rgba(255, 255, 255, 0.96);
-  border: 1px solid rgba(13, 87, 198, 0.1);
-  box-shadow:
-    0 14px 36px rgba(15, 23, 42, 0.12),
-    0 4px 12px rgba(15, 23, 42, 0.06);
-  backdrop-filter: blur(12px);
-}
+  /*
+   * 화면 정중앙보다 살짝 아래.
+   * 팝업을 왼쪽에 붙였을 때도
+   * 참고 이미지처럼 안정적으로 보임.
+   */
+  top: 52%;
+  right: 18px;
 
-.quick-menu__desktop-head {
-  padding: 14px 16px 13px;
-  background: linear-gradient(135deg, #0d57c6 0%, #1f6fe8 100%);
-  color: #fff;
-}
-
-.quick-menu__eyebrow {
-  margin: 0 0 4px;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  color: rgba(255, 255, 255, 0.82);
-}
-
-.quick-menu__title {
-  display: block;
-  font-size: 15px;
-  font-weight: 800;
-  line-height: 1.2;
-  color: #fff;
-}
-
-.quick-menu__body-wrap {
-  max-height: 700px;
-  overflow: hidden;
-  transition:
-    max-height 0.34s ease,
-    opacity 0.24s ease,
-    transform 0.28s ease;
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.quick-menu__panel--collapsed .quick-menu__body-wrap {
-  max-height: 0;
-  opacity: 0;
-  transform: translateY(-8px);
-}
-
-.quick-menu__desktop-body {
-  padding: 8px;
   display: flex;
   flex-direction: column;
+
+  width: 88px;
+
   gap: 7px;
+
+  transform: translateY(-50%);
 }
 
-.quick-menu__card {
+/* ========================================================
+   DESKTOP ITEM
+======================================================== */
+
+.quick-menu__item {
+  position: relative;
+
   display: flex;
+
+  width: 88px;
+  height: 88px;
+
+  flex-direction: column;
   align-items: center;
-  gap: 10px;
-  padding: 12px;
-  border-radius: 16px;
+  justify-content: center;
+
+  gap: 6px;
+
+  padding: 8px 5px;
+
+  border: 1px solid rgba(15, 23, 42, 0.07);
+
+  border-radius: 15px;
+
+  background: rgba(255, 255, 255, 0.98);
+
+  color: #151922;
+
   text-decoration: none;
-  color: #111827;
-  background: #fff;
-  border: 1px solid #eef2f7;
+
+  box-shadow:
+    0 9px 22px rgba(15, 23, 42, 0.07),
+    0 2px 5px rgba(15, 23, 42, 0.035);
+
+  backdrop-filter: blur(10px);
+
+  -webkit-backdrop-filter: blur(10px);
+
+  cursor: pointer;
+
   transition:
     transform 0.18s ease,
     box-shadow 0.18s ease,
     border-color 0.18s ease,
-    background-color 0.18s ease,
+    background 0.18s ease,
     color 0.18s ease;
+
+  -webkit-tap-highlight-color: transparent;
 }
 
-.quick-menu__card:hover {
+.quick-menu__item:hover {
   transform: translateY(-2px);
+
   border-color: rgba(13, 87, 198, 0.18);
-  box-shadow: 0 8px 18px rgba(13, 87, 198, 0.09);
-  background: #f8fbff;
+
+  background: #f9fbff;
+
+  box-shadow:
+    0 11px 25px rgba(15, 23, 42, 0.09),
+    0 3px 7px rgba(13, 87, 198, 0.04);
 }
 
-.quick-menu__card--active {
-  background: linear-gradient(135deg, rgba(13, 87, 198, 0.08), rgba(29, 116, 239, 0.12));
-  border-color: rgba(13, 87, 198, 0.2);
-  box-shadow: 0 8px 18px rgba(13, 87, 198, 0.08);
-}
+/* ========================================================
+   ICON
+======================================================== */
 
-.quick-menu__card--active .quick-menu__icon-wrap {
-  background: #0d57c6;
-  color: #fff;
-}
-
-.quick-menu__card--active .quick-menu__name,
-.quick-menu__card--active .quick-menu__number {
-  color: #0d57c6;
-}
-
-.quick-menu__card--active .quick-menu__desc,
-.quick-menu__card--active .quick-menu__meta {
-  color: #5b6472;
-}
-
-.quick-menu__card--contact .quick-menu__number {
-  color: #0d57c6;
-}
-
-.quick-menu__icon-wrap {
-  flex: 0 0 auto;
-  width: 38px;
-  height: 38px;
-  border-radius: 999px;
-  display: inline-flex;
+.quick-menu__icon-box {
+  display: flex;
   align-items: center;
   justify-content: center;
-  background: #eff6ff;
+
+  width: 31px;
+  height: 31px;
+
   color: #0d57c6;
-  transition:
-    background-color 0.18s ease,
-    color 0.18s ease;
+
+  flex: 0 0 auto;
+
+  transition: transform 0.18s ease;
 }
 
 .quick-menu__icon {
-  width: 18px;
-  height: 18px;
+  width: 24px;
+  height: 24px;
+
+  stroke-width: 1.8;
 }
 
-.quick-menu__content {
-  min-width: 0;
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  gap: 3px;
+.quick-menu__item:hover .quick-menu__icon-box {
+  transform: translateY(-1px);
 }
 
-.quick-menu__name-row {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  min-width: 0;
-  flex-wrap: wrap;
-}
+/* ========================================================
+   TEXT
+======================================================== */
 
-.quick-menu__name {
+.quick-menu__text {
   display: block;
-  font-size: 14px;
-  font-weight: 800;
-  line-height: 1.2;
-  word-break: keep-all;
-  transition: color 0.18s ease;
-}
 
-.quick-menu__desc {
-  display: block;
-  font-size: 11px;
-  line-height: 1.3;
-  color: #6b7280;
-  transition: color 0.18s ease;
-}
+  color: #151922;
 
-.quick-menu__meta {
-  display: block;
-  font-size: 11px;
-  font-weight: 700;
-  color: #6b7280;
-  line-height: 1.2;
-  transition: color 0.18s ease;
-}
+  font-size: 12px;
+  font-weight: 750;
 
-.quick-menu__number {
-  display: block;
-  font-size: 14px;
-  font-weight: 800;
   line-height: 1.25;
-  letter-spacing: -0.02em;
+
+  letter-spacing: -0.04em;
+
+  text-align: center;
+
   word-break: keep-all;
+
   transition: color 0.18s ease;
 }
 
-.quick-menu__badge {
-  flex: 0 0 auto;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  height: 20px;
-  padding: 0 7px;
-  border-radius: 999px;
-  background: #ffd84d;
-  color: #111827;
-  font-size: 10px;
-  font-weight: 900;
-  line-height: 1;
+/* ========================================================
+   ACTIVE
+======================================================== */
+
+.quick-menu__item--active {
+  border-color: rgba(13, 87, 198, 0.18);
+
+  background: linear-gradient(180deg, #fff 0%, #f5f9ff 100%);
 }
 
-.quick-menu__bottom-toggle {
-  width: 100%;
-  border: 0;
-  border-top: 1px solid rgba(13, 87, 198, 0.08);
-  background: #fff;
-  color: #4b5563;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 11px 14px 12px;
-  cursor: pointer;
-  transition:
-    background-color 0.2s ease,
-    color 0.2s ease;
-}
-
-.quick-menu__bottom-toggle:hover {
-  background: #f8fbff;
+.quick-menu__item--active .quick-menu__text {
   color: #0d57c6;
 }
 
-.quick-menu__bottom-toggle-line {
-  width: 28px;
-  height: 3px;
-  border-radius: 999px;
-  background: #d1d5db;
-  flex: 0 0 auto;
+/*
+ * 기존 위쪽 3px 막대는 제거.
+ * 참고 이미지처럼 과하게 활성 표시하지 않음.
+ */
+.quick-menu__item--active::before {
+  position: absolute;
+
+  top: 0;
+  left: 50%;
+
+  width: 22px;
+  height: 1px;
+
+  background: #0d57c6;
+
+  transform: translateX(-50%);
+
+  content: '';
 }
 
-.quick-menu__bottom-toggle-text {
-  font-size: 12px;
-  font-weight: 700;
+/* ========================================================
+   TOP
+======================================================== */
+
+.quick-menu__item--top {
+  height: 66px;
+
+  gap: 3px;
+
+  padding: 7px 5px;
+
+  border: 1px solid rgba(15, 23, 42, 0.07);
+
+  font-family: inherit;
+}
+
+.quick-menu__top-icon {
+  width: 23px;
+  height: 23px;
+
+  stroke-width: 1.7;
+
+  color: #111827;
+}
+
+.quick-menu__top-text {
+  display: block;
+
+  color: #737b88;
+
+  font-size: 8px;
+  font-weight: 800;
+
   line-height: 1;
+
+  letter-spacing: 0.14em;
 }
 
-.quick-menu__bottom-toggle-icon {
-  width: 15px;
-  height: 15px;
-  transition: transform 0.28s ease;
+/* ========================================================
+   LARGE DESKTOP
+======================================================== */
+
+@media (min-width: 1600px) {
+  .quick-menu__desktop {
+    right: 22px;
+  }
 }
 
-.quick-menu__bottom-toggle-icon--rotated {
-  transform: rotate(180deg);
-}
-
-/* mobile */
-.quick-menu__mobile {
-  display: none;
-}
+/* ========================================================
+   DESKTOP DOWN
+======================================================== */
 
 @include desktop-down {
   .quick-menu__desktop {
     right: 14px;
+
+    width: 84px;
+
+    gap: 6px;
   }
 
-  .quick-menu__panel {
-    width: 204px;
+  .quick-menu__item {
+    width: 84px;
+    height: 84px;
+
+    gap: 5px;
+
+    border-radius: 14px;
   }
 
-  .quick-menu__title {
-    font-size: 14px;
+  .quick-menu__icon-box {
+    width: 29px;
+    height: 29px;
   }
 
-  .quick-menu__number {
-    font-size: 13px;
+  .quick-menu__icon {
+    width: 22px;
+    height: 22px;
+  }
+
+  .quick-menu__text {
+    font-size: 11px;
+  }
+
+  .quick-menu__item--top {
+    height: 61px;
+  }
+
+  .quick-menu__top-icon {
+    width: 21px;
+    height: 21px;
   }
 }
 
+/* ========================================================
+   LAPTOP
+======================================================== */
+
 @include laptop-down {
+  /*
+   * laptop 영역까지는
+   * 조금 더 작은 desktop quick menu.
+   *
+   * mobile breakpoint 진입 전까지만 표시.
+   */
+
   .quick-menu__desktop {
-    top: 45%;
+    right: 10px;
+
+    width: 76px;
+
+    gap: 5px;
   }
 
-  .quick-menu__panel {
-    width: 196px;
+  .quick-menu__item {
+    width: 76px;
+    height: 76px;
+
+    padding: 6px 4px;
+
+    gap: 4px;
+
+    border-radius: 13px;
   }
 
-  .quick-menu__card {
-    padding: 11px;
+  .quick-menu__icon-box {
+    width: 27px;
+    height: 27px;
   }
 
-  .quick-menu__icon-wrap {
-    width: 36px;
-    height: 36px;
+  .quick-menu__icon {
+    width: 20px;
+    height: 20px;
   }
 
-  .quick-menu__name {
-    font-size: 13px;
-  }
-
-  .quick-menu__desc,
-  .quick-menu__meta {
+  .quick-menu__text {
     font-size: 10px;
   }
 
-  .quick-menu__number {
-    font-size: 12px;
+  .quick-menu__item--top {
+    height: 55px;
   }
 
-  .quick-menu__bottom-toggle-text {
-    font-size: 11px;
+  .quick-menu__top-icon {
+    width: 19px;
+    height: 19px;
+  }
+
+  .quick-menu__top-text {
+    display: none;
   }
 }
+
+/* ========================================================
+   MOBILE BASE
+======================================================== */
+
+.quick-menu__mobile {
+  display: none;
+}
+
+/* ========================================================
+   MOBILE
+======================================================== */
 
 @include mobile {
   .quick-menu__desktop {
@@ -519,59 +493,93 @@ function isActive(path: string) {
 
   .quick-menu__mobile {
     position: fixed;
+
     left: 10px;
     right: 10px;
-    bottom: calc(env(safe-area-inset-bottom) + 12px);
+
+    bottom: calc(env(safe-area-inset-bottom) + 9px);
+
     z-index: 1200;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding: 12px;
-    border-radius: 20px;
+
+    display: grid;
+
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+
+    gap: 3px;
+
+    padding: 5px;
+
+    border: 1px solid rgba(15, 23, 42, 0.07);
+
+    border-radius: 16px;
+
     background: rgba(255, 255, 255, 0.98);
-    border: 1px solid rgba(13, 87, 198, 0.08);
+
     box-shadow:
-      0 12px 32px rgba(15, 23, 42, 0.18),
-      0 2px 6px rgba(15, 23, 42, 0.06);
-    backdrop-filter: blur(12px);
-    transition:
-      opacity 0.28s ease,
-      transform 0.28s ease,
-      visibility 0.28s ease;
+      0 9px 28px rgba(15, 23, 42, 0.14),
+      0 2px 5px rgba(15, 23, 42, 0.04);
+
+    backdrop-filter: blur(14px);
+
+    -webkit-backdrop-filter: blur(14px);
+
     opacity: 1;
-    transform: translateY(0) scale(1);
+
+    transform: translateY(0);
+
     visibility: visible;
+
+    transition:
+      opacity 0.25s ease,
+      transform 0.25s ease,
+      visibility 0.25s ease;
   }
+
+  /* ======================================================
+     MOBILE HIDDEN
+  ====================================================== */
 
   .quick-menu__mobile--hidden {
     opacity: 0;
-    transform: translateY(24px) scale(0.98);
+
+    transform: translateY(18px);
+
     visibility: hidden;
+
     pointer-events: none;
   }
 
-  .quick-menu__mobile-top {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 8px;
-  }
+  /* ======================================================
+     MOBILE ITEM
+  ====================================================== */
 
   .quick-menu__mobile-item {
+    position: relative;
+
     display: flex;
+
     min-width: 0;
-    min-height: 64px;
+    height: 58px;
+
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 5px;
-    padding: 10px 6px;
-    border-radius: 14px;
-    background: #f1f5f9;
+
+    gap: 4px;
+
+    padding: 5px 2px;
+
+    border-radius: 11px;
+
+    color: #333b48;
+
     text-decoration: none;
-    font-size: 11px;
-    font-weight: 700;
-    color: #334155;
-    transition: all 0.2s ease;
+
+    transition:
+      background 0.18s ease,
+      color 0.18s ease,
+      transform 0.12s ease;
+
     -webkit-tap-highlight-color: transparent;
   }
 
@@ -579,93 +587,98 @@ function isActive(path: string) {
     transform: scale(0.96);
   }
 
-  .quick-menu__mobile-item--active {
-    background: linear-gradient(135deg, rgba(13, 87, 198, 0.14), rgba(29, 116, 239, 0.18));
+  /* ======================================================
+     MOBILE ICON
+  ====================================================== */
+
+  .quick-menu__mobile-icon {
+    width: 19px;
+    height: 19px;
+
     color: #0d57c6;
-    box-shadow: 0 6px 14px rgba(13, 87, 198, 0.12);
+
+    stroke-width: 1.8;
+  }
+
+  /* ======================================================
+     MOBILE TEXT
+  ====================================================== */
+
+  .quick-menu__mobile-item span {
+    overflow: hidden;
+
+    max-width: 100%;
+
+    font-size: 9.5px;
+    font-weight: 750;
+
+    line-height: 1.15;
+
+    letter-spacing: -0.035em;
+
+    text-align: center;
+
+    white-space: nowrap;
+  }
+
+  /* ======================================================
+     MOBILE ACTIVE
+  ====================================================== */
+
+  .quick-menu__mobile-item--active {
+    background: #f0f6ff;
+
+    color: #0d57c6;
+  }
+
+  .quick-menu__mobile-item--active::after {
+    position: absolute;
+
+    top: 0;
+    left: 50%;
+
+    width: 16px;
+    height: 1px;
+
+    background: #0d57c6;
+
+    transform: translateX(-50%);
+
+    content: '';
+  }
+}
+
+/* ========================================================
+   VERY SMALL MOBILE
+======================================================== */
+
+@media (max-width: 360px) {
+  .quick-menu__mobile {
+    left: 6px;
+    right: 6px;
+
+    bottom: calc(env(safe-area-inset-bottom) + 6px);
+
+    gap: 2px;
+
+    padding: 4px;
+
+    border-radius: 14px;
+  }
+
+  .quick-menu__mobile-item {
+    height: 54px;
+
+    padding-inline: 1px;
   }
 
   .quick-menu__mobile-icon {
     width: 18px;
     height: 18px;
-    margin-bottom: 2px;
-    flex: 0 0 auto;
-    color: currentColor;
   }
 
   .quick-menu__mobile-item span {
-    line-height: 1.2;
-    word-break: keep-all;
-    text-align: center;
-  }
-
-  .quick-menu__mobile-bottom {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px;
-  }
-
-  .quick-menu__mobile-call {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    min-width: 0;
-    padding: 12px 14px;
-    border-radius: 18px;
-    text-decoration: none;
-    color: #fff;
-    transition: transform 0.15s ease;
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  .quick-menu__mobile-call:active {
-    transform: scale(0.97);
-  }
-
-  .quick-menu__mobile-call--clinic {
-    background: linear-gradient(135deg, #0d57c6 0%, #1f6fe8 100%);
-    box-shadow: 0 10px 22px rgba(13, 87, 198, 0.22);
-  }
-
-  .quick-menu__mobile-call--consult {
-    background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);
-    box-shadow: 0 10px 22px rgba(15, 118, 110, 0.22);
-  }
-
-  .quick-menu__mobile-call-icon-wrap {
-    width: 36px;
-    height: 36px;
-    border-radius: 999px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(255, 255, 255, 0.2);
-    flex: 0 0 auto;
-  }
-
-  .quick-menu__mobile-call-icon {
-    width: 16px;
-    height: 16px;
-  }
-
-  .quick-menu__mobile-call-text {
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .quick-menu__mobile-call-label {
-    font-size: 10px;
-    opacity: 0.85;
-    line-height: 1.2;
-  }
-
-  .quick-menu__mobile-call-number {
-    font-size: 14px;
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    line-height: 1.2;
-    word-break: keep-all;
+    font-size: 9px;
   }
 }
 </style>

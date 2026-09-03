@@ -1,6 +1,6 @@
 <template>
-  <MainPopupBanner />
-  <HeroSlider />
+  <MainHero />
+  <!-- <HeroSlider /> -->
   <UroliftSection />
   <ClinicSection />
   <HistoryHighlightSection />
@@ -9,8 +9,8 @@
 
 <script setup lang="ts">
 import { defineBreadcrumb, defineWebPage, useSchemaOrg } from '#imports'
-import MainPopupBanner from '~/components/common/MainPopupBanner.vue'
 import HeroSlider from '~/components/hero/HeroSlider.vue'
+import MainHero from '~/components/hero/MainHero.vue'
 import ClinicSection from '~/components/main/ClinicSection.vue'
 import ContactInfoSection from '~/components/main/ContactInfoSection.vue'
 import HistoryHighlightSection from '~/components/main/HistoryHighlightSection.vue'
