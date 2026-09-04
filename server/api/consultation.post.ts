@@ -4,27 +4,34 @@ import type { H3Event } from 'h3'
 type ConsultationRequestBody = {
   name: string
   phone: string
-  age?: string
-  insurance?: string
-  region?: string
   content?: string
   agreePrivacy: boolean
   agreeSensitive?: boolean
 }
 
+/* =========================================================
+   Client IP
+========================================================= */
+
 function getClientIp(event: H3Event) {
   const xForwardedFor = getHeader(event, 'x-forwarded-for')
+
   if (xForwardedFor) {
     return xForwardedFor.split(',')[0]?.trim() || ''
   }
 
   const xRealIp = getHeader(event, 'x-real-ip')
+
   if (xRealIp) {
     return xRealIp
   }
 
   return event.node.req.socket.remoteAddress || ''
 }
+
+/* =========================================================
+   KST Timestamp
+========================================================= */
 
 function getKstTimestamp() {
   const now = new Date()
@@ -40,29 +47,50 @@ function getKstTimestamp() {
     hour12: false
   }).formatToParts(now)
 
-  const map = Object.fromEntries(parts.map((p) => [p.type, p.value]))
+  const map = Object.fromEntries(parts.map((part) => [part.type, part.value]))
+
   return `${map.year}-${map.month}-${map.day} ${map.hour}:${map.minute}:${map.second}`
 }
 
+/* =========================================================
+   Handler
+========================================================= */
+
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig(event)
+
   const body = await readBody<ConsultationRequestBody>(event)
 
+  /* =======================================================
+     Normalize
+  ======================================================= */
+
   const name = body.name?.trim() || ''
+
   const phone = body.phone?.replace(/\D/g, '') || ''
-  const age = body.age?.trim() || '모름'
-  const insurance = body.insurance?.trim() || '모름'
-  const region = body.region?.trim() || '모름'
+
   const content = body.content?.trim() || ''
-  const agreePrivacy = !!body.agreePrivacy
-  const agreeSensitive = !!body.agreeSensitive
+
+  const agreePrivacy = Boolean(body.agreePrivacy)
+
+  const agreeSensitive = Boolean(body.agreeSensitive)
+
+  /* =======================================================
+     Validation
+  ======================================================= */
 
   if (!name) {
-    throw createError({ statusCode: 400, statusMessage: '성함을 입력해주세요.' })
+    throw createError({
+      statusCode: 400,
+      statusMessage: '성함을 입력해주세요.'
+    })
   }
 
-  if (!phone || phone.length < 10) {
-    throw createError({ statusCode: 400, statusMessage: '연락처를 정확히 입력해주세요.' })
+  if (!phone || phone.length < 10 || phone.length > 11) {
+    throw createError({
+      statusCode: 400,
+      statusMessage: '연락처를 정확히 입력해주세요.'
+    })
   }
 
   if (!agreePrivacy) {
@@ -72,9 +100,25 @@ export default defineEventHandler(async (event) => {
     })
   }
 
+  /*
+   * 상담내용에 건강정보가 포함되어 있으면서
+   * 민감정보 동의를 받지 않은 경우를 엄격하게
+   * 차단하려면 여기에서 agreeSensitive 검증 가능.
+   *
+   * 현재 프론트에서는 선택 동의이므로
+   * 서버에서도 필수 검증은 하지 않는다.
+   */
+
+  /* =======================================================
+     Google Sheets Config
+  ======================================================= */
+
   const clientEmail = config.googleClientEmail
+
   const privateKey = config.googlePrivateKey
+
   const spreadsheetId = config.googleSpreadsheetId
+
   const sheetName = config.googleSheetName
 
   if (!clientEmail || !privateKey || !spreadsheetId || !sheetName) {
@@ -84,9 +128,15 @@ export default defineEventHandler(async (event) => {
     })
   }
 
+  /* =======================================================
+     Google Auth
+  ======================================================= */
+
   const auth = new google.auth.JWT({
     email: clientEmail,
+
     key: privateKey.replace(/\\n/g, '\n'),
+
     scopes: ['https://www.googleapis.com/auth/spreadsheets']
   })
 
@@ -95,35 +145,53 @@ export default defineEventHandler(async (event) => {
     auth
   })
 
+  /* =======================================================
+     Request Metadata
+  ======================================================= */
+
   const submittedAt = getKstTimestamp()
+
   const userAgent = getHeader(event, 'user-agent') || ''
+
   const ip = getClientIp(event)
+
   const referer = getHeader(event, 'referer') || ''
 
+  /* =======================================================
+     Sheet Row
+  ======================================================= */
+
   const row = [
-    submittedAt,
-    name,
-    `'${phone}`,
-    age,
-    insurance,
-    region,
-    content,
-    agreePrivacy ? '동의' : '미동의',
-    agreeSensitive ? '동의' : '미동의',
-    ip,
-    userAgent,
-    referer
+    submittedAt, // A 접수일시
+    name, // B 성함
+    `'${phone}`, // C 연락처
+    content, // D 상담내용
+    agreePrivacy ? '동의' : '미동의', // E 개인정보 동의
+    agreeSensitive ? '동의' : '미동의', // F 건강정보 동의
+    ip, // G IP
+    userAgent, // H User-Agent
+    referer // I Referer
   ]
 
+  /* =======================================================
+     Append
+  ======================================================= */
+
   try {
-    const res = await sheets.spreadsheets.values.append({
+    await sheets.spreadsheets.values.append({
       spreadsheetId,
-      range: `${sheetName}!A2:L`,
+
+      range: `${sheetName}!A2:I`,
+
       valueInputOption: 'USER_ENTERED',
+
       insertDataOption: 'INSERT_ROWS',
+
       includeValuesInResponse: true,
+
       requestBody: {
         majorDimension: 'ROWS',
+
         values: [row]
       }
     })
@@ -138,6 +206,7 @@ export default defineEventHandler(async (event) => {
 
   return {
     ok: true,
+
     message: '상담 신청이 접수되었습니다.'
   }
 })
