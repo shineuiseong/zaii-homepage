@@ -36,9 +36,18 @@
     <div class="background-dim" />
 
     <!-- =====================================================
+         Entrance Grid Lines
+    ====================================================== -->
+    <div ref="gridLinesRef" class="entrance-grid-lines" aria-hidden="true">
+      <span />
+      <span />
+      <span />
+    </div>
+
+    <!-- =====================================================
          Desktop Heading
     ====================================================== -->
-    <div class="treatment-heading">
+    <div ref="headingRef" class="treatment-heading">
       <span class="treatment-heading-line" />
 
       <span class="treatment-heading-eyebrow"> 전립선 치료 </span>
@@ -59,7 +68,7 @@
     <!-- =====================================================
          Desktop Grid
     ====================================================== -->
-    <div class="treatment-grid">
+    <div ref="gridRef" class="treatment-grid">
       <article
         v-for="(treatment, index) in treatments"
         :key="treatment.id"
@@ -129,7 +138,7 @@
     <!-- =====================================================
          Mobile
     ====================================================== -->
-    <div class="treatment-mobile">
+    <div ref="mobileRef" class="treatment-mobile">
       <div class="mobile-heading">
         <span class="mobile-eyebrow"> 전립선 치료 </span>
 
@@ -296,59 +305,36 @@ type Treatment = {
 const treatments: readonly Treatment[] = [
   {
     id: 'urolift',
-
     category: '전립선비대증 치료',
-
     title: '유로리프트',
-
     description: '특수 결찰사를 이용해 전립선 조직을 당겨 막혀 있던 요도를 확보하는 치료입니다.',
-
     image: '/images/treatment/urolift-bg.webp',
-
     href: '/urolift'
   },
-
   {
     id: 'rezum',
-
     category: '전립선비대증 치료',
-
     title: '리줌 수증기 치료',
-
     description: '수증기 에너지를 이용해 비대해진 전립선 조직을 치료하는 최소침습 치료입니다.',
-
     image: '/images/treatment/rezum-bg.webp',
-
     href: '/rezum'
   },
-
   {
     id: 'prostate',
-
     category: '전립선 진료',
-
     title: '전립선 정밀 진료',
-
     description:
       '환자의 배뇨 증상과 전립선 상태를 세밀하게 확인하여 개인에게 맞는 치료 방향을 결정합니다.',
-
     image: '/images/treatment/prostate-bg.webp',
-
     href: '/prostate'
   },
-
   {
     id: 'checkup',
-
     category: '전립선암 검사',
-
     title: '전립선암 신속검사',
-
     description:
       '간편하고 신속한 검사를 통해 전립선암 위험도를 확인하고, 필요한 경우 정밀검사와 진료 방향을 안내합니다.',
-
     image: '/images/treatment/checkup-bg.webp',
-
     href: '/prostate-cancer'
   }
 ]
@@ -366,12 +352,20 @@ const currentTreatment = ref<Treatment>(DEFAULT_TREATMENT)
 const nextImage = ref(DEFAULT_TREATMENT.image)
 
 /* =========================================================
-   DOM Refs
+   Refs
 ========================================================= */
 
 const sectionRef = ref<HTMLElement | null>(null)
 
 const revealLayerRef = ref<HTMLElement | null>(null)
+
+const headingRef = ref<HTMLElement | null>(null)
+
+const gridRef = ref<HTMLElement | null>(null)
+
+const gridLinesRef = ref<HTMLElement | null>(null)
+
+const mobileRef = ref<HTMLElement | null>(null)
 
 const sliceRefs = ref<Array<HTMLElement | null>>([null, null, null, null])
 
@@ -392,6 +386,12 @@ function getSlices(): HTMLElement[] {
 let gsap: (typeof import('gsap'))['default'] | null = null
 
 let transition: ReturnType<(typeof import('gsap'))['default']['timeline']> | null = null
+
+let entranceTimeline: ReturnType<(typeof import('gsap'))['default']['timeline']> | null = null
+
+let entranceObserver: IntersectionObserver | null = null
+
+let entrancePlayed = false
 
 let isAnimating = false
 
@@ -419,7 +419,6 @@ function preloadImage(src: string): Promise<void> {
 
     if (cached?.complete && cached.naturalWidth > 0) {
       resolve()
-
       return
     }
 
@@ -432,7 +431,6 @@ function preloadImage(src: string): Promise<void> {
     }
 
     image.onload = finish
-
     image.onerror = finish
 
     if (!image.src) {
@@ -452,7 +450,7 @@ function preloadImages() {
 }
 
 /* =========================================================
-   Slices
+   Reveal Slices
 ========================================================= */
 
 function getInitialClip() {
@@ -471,7 +469,6 @@ function prepareSlices() {
   slices.forEach((slice) => {
     gsap?.set(slice, {
       visibility: 'visible',
-
       clipPath: getInitialClip()
     })
   })
@@ -487,10 +484,280 @@ function hideSlices() {
   slices.forEach((slice) => {
     gsap?.set(slice, {
       visibility: 'hidden',
-
       clipPath: getInitialClip()
     })
   })
+}
+
+/* =========================================================
+   Entrance Animation
+========================================================= */
+
+function prepareEntranceAnimation() {
+  if (!gsap) {
+    return
+  }
+
+  const heading = headingRef.value
+
+  const grid = gridRef.value
+
+  const gridLines = gridLinesRef.value
+
+  const mobile = mobileRef.value
+
+  if (heading) {
+    const line = heading.querySelector('.treatment-heading-line')
+
+    const eyebrow = heading.querySelector('.treatment-heading-eyebrow')
+
+    const title = heading.querySelector('h2')
+
+    const description = heading.querySelector('p')
+
+    gsap.set(line, {
+      scaleY: 0,
+      transformOrigin: 'top center'
+    })
+
+    gsap.set([eyebrow, title, description], {
+      opacity: 0,
+      y: 28
+    })
+  }
+
+  if (grid) {
+    const panels = grid.querySelectorAll('.treatment-panel')
+
+    const panelNumbers = grid.querySelectorAll('.panel-number')
+
+    const panelContents = grid.querySelectorAll('.panel-content')
+
+    const panelArrows = grid.querySelectorAll('.panel-arrow')
+
+    gsap.set(panels, {
+      opacity: 0,
+      y: 70
+    })
+
+    gsap.set([panelNumbers, panelContents, panelArrows], {
+      opacity: 0
+    })
+  }
+
+  if (gridLines) {
+    const lines = gridLines.querySelectorAll('span')
+
+    gsap.set(lines, {
+      scaleY: 0,
+      transformOrigin: 'top center'
+    })
+  }
+
+  if (mobile) {
+    const heading = mobile.querySelector('.mobile-heading')
+
+    const swiper = mobile.querySelector('.mobile-swiper')
+
+    const navigation = mobile.querySelector('.mobile-navigation')
+
+    gsap.set([heading, swiper, navigation], {
+      opacity: 0,
+      y: 34
+    })
+  }
+}
+
+function playEntranceAnimation() {
+  if (!gsap || entrancePlayed) {
+    return
+  }
+
+  entrancePlayed = true
+
+  const heading = headingRef.value
+
+  const grid = gridRef.value
+
+  const gridLines = gridLinesRef.value
+
+  const mobile = mobileRef.value
+
+  entranceTimeline = gsap.timeline({
+    defaults: {
+      ease: 'power3.out'
+    }
+  })
+
+  /* =======================================================
+     Desktop Heading
+  ======================================================= */
+
+  if (heading) {
+    const line = heading.querySelector('.treatment-heading-line')
+
+    const eyebrow = heading.querySelector('.treatment-heading-eyebrow')
+
+    const title = heading.querySelector('h2')
+
+    const description = heading.querySelector('p')
+
+    entranceTimeline.to(
+      line,
+      {
+        scaleY: 1,
+        duration: 0.7,
+        ease: 'power3.inOut'
+      },
+      0.05
+    )
+
+    entranceTimeline.to(
+      eyebrow,
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.65
+      },
+      0.16
+    )
+
+    entranceTimeline.to(
+      title,
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.95
+      },
+      0.25
+    )
+
+    entranceTimeline.to(
+      description,
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.75
+      },
+      0.43
+    )
+  }
+
+  /* =======================================================
+     Vertical grid lines
+  ======================================================= */
+
+  if (gridLines) {
+    const lines = gridLines.querySelectorAll('span')
+
+    entranceTimeline.to(
+      lines,
+      {
+        scaleY: 1,
+        duration: 1.05,
+        stagger: 0.08,
+        ease: 'power3.inOut'
+      },
+      0.32
+    )
+  }
+
+  /* =======================================================
+     Panels
+  ======================================================= */
+
+  if (grid) {
+    const panels = grid.querySelectorAll('.treatment-panel')
+
+    const panelNumbers = grid.querySelectorAll('.panel-number')
+
+    const panelContents = grid.querySelectorAll('.panel-content')
+
+    const panelArrows = grid.querySelectorAll('.panel-arrow')
+
+    entranceTimeline.to(
+      panels,
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.9,
+        stagger: 0.11
+      },
+      0.5
+    )
+
+    entranceTimeline.to(
+      panelNumbers,
+      {
+        opacity: 1,
+        duration: 0.55,
+        stagger: 0.08
+      },
+      0.75
+    )
+
+    entranceTimeline.to(
+      panelContents,
+      {
+        opacity: 1,
+        duration: 0.65,
+        stagger: 0.08
+      },
+      0.82
+    )
+
+    entranceTimeline.to(
+      panelArrows,
+      {
+        opacity: 0.7,
+        duration: 0.55,
+        stagger: 0.07
+      },
+      0.95
+    )
+  }
+
+  /* =======================================================
+     Mobile
+  ======================================================= */
+
+  if (mobile) {
+    const mobileHeading = mobile.querySelector('.mobile-heading')
+
+    const swiper = mobile.querySelector('.mobile-swiper')
+
+    const navigation = mobile.querySelector('.mobile-navigation')
+
+    entranceTimeline.to(
+      mobileHeading,
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.85
+      },
+      0.12
+    )
+
+    entranceTimeline.to(
+      swiper,
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.9
+      },
+      0.34
+    )
+
+    entranceTimeline.to(
+      navigation,
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.7
+      },
+      0.54
+    )
+  }
 }
 
 /* =========================================================
@@ -507,7 +774,6 @@ function runQueuedAnimation() {
   const index = queuedIndex
 
   queuedTreatment = null
-
   queuedIndex = -1
 
   if (treatment.id === currentTreatment.value.id) {
@@ -563,7 +829,6 @@ async function animateBackground(treatment: Treatment, targetIndex: number) {
   requestAnimationFrame(() => {
     if (!gsap) {
       isAnimating = false
-
       return
     }
 
@@ -651,7 +916,6 @@ function activateTreatment(treatment: Treatment, index: number) {
 
   if (treatment.id === currentTreatment.value.id) {
     queuedTreatment = null
-
     queuedIndex = -1
 
     return
@@ -718,6 +982,31 @@ onMounted(async () => {
   await nextTick()
 
   hideSlices()
+
+  prepareEntranceAnimation()
+
+  const section = sectionRef.value
+
+  if (!section) {
+    return
+  }
+
+  entranceObserver = new IntersectionObserver(
+    ([entry]) => {
+      if (!entry || !entry.isIntersecting) {
+        return
+      }
+
+      playEntranceAnimation()
+
+      entranceObserver?.disconnect()
+    },
+    {
+      threshold: 0.18
+    }
+  )
+
+  entranceObserver.observe(section)
 })
 
 onBeforeUnmount(() => {
@@ -728,8 +1017,15 @@ onBeforeUnmount(() => {
   hoverTimer = null
 
   queuedTreatment = null
-
   queuedIndex = -1
+
+  entranceObserver?.disconnect()
+
+  entranceObserver = null
+
+  entranceTimeline?.kill()
+
+  entranceTimeline = null
 
   transition?.kill()
 
@@ -897,6 +1193,47 @@ onBeforeUnmount(() => {
 }
 
 /* =========================================================
+   Entrance Grid Lines
+========================================================= */
+
+.entrance-grid-lines {
+  position: absolute;
+
+  z-index: 3;
+
+  inset: 0;
+
+  display: grid;
+
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+
+  pointer-events: none;
+}
+
+.entrance-grid-lines span {
+  width: 1px;
+  height: 100%;
+
+  justify-self: end;
+
+  background: rgba(255, 255, 255, 0.16);
+
+  transform-origin: top center;
+}
+
+.entrance-grid-lines span:nth-child(1) {
+  grid-column: 1;
+}
+
+.entrance-grid-lines span:nth-child(2) {
+  grid-column: 2;
+}
+
+.entrance-grid-lines span:nth-child(3) {
+  grid-column: 3;
+}
+
+/* =========================================================
    Desktop Heading
 ========================================================= */
 
@@ -983,7 +1320,7 @@ onBeforeUnmount(() => {
 .treatment-grid {
   position: relative;
 
-  z-index: 3;
+  z-index: 4;
 
   width: 100%;
   height: 100%;
@@ -1005,12 +1342,6 @@ onBeforeUnmount(() => {
   cursor: pointer;
 
   outline: none;
-
-  border-right: 1px solid rgba(255, 255, 255, 0.18);
-}
-
-.treatment-panel:first-child {
-  border-left: 1px solid rgba(255, 255, 255, 0.18);
 }
 
 /* =========================================================
@@ -1314,7 +1645,8 @@ onBeforeUnmount(() => {
   .background-reveal,
   .background-dim,
   .treatment-grid,
-  .treatment-heading {
+  .treatment-heading,
+  .entrance-grid-lines {
     display: none;
   }
 
@@ -1394,7 +1726,6 @@ onBeforeUnmount(() => {
     overflow: visible;
 
     padding-left: 20px;
-
     padding-right: 20px;
 
     cursor: grab;
@@ -1803,6 +2134,24 @@ onBeforeUnmount(() => {
   .mobile-card-more,
   .mobile-progress-value {
     transition: none;
+  }
+
+  .treatment-heading-line,
+  .entrance-grid-lines span {
+    transform: none !important;
+  }
+
+  .treatment-heading,
+  .treatment-panel,
+  .panel-number,
+  .panel-content,
+  .panel-arrow,
+  .mobile-heading,
+  .mobile-swiper,
+  .mobile-navigation {
+    opacity: 1 !important;
+
+    transform: none !important;
   }
 }
 </style>
