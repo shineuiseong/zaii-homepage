@@ -1,8 +1,8 @@
 <template>
   <section ref="sectionRef" class="treatment-section">
     <!-- =====================================================
-           Desktop Background
-      ====================================================== -->
+         Desktop Background
+    ====================================================== -->
     <div
       class="background-current"
       :style="{
@@ -11,8 +11,8 @@
     />
 
     <!-- =====================================================
-           Desktop Reveal Layer
-      ====================================================== -->
+         Desktop Reveal Layer
+    ====================================================== -->
     <div ref="revealLayerRef" class="background-reveal" aria-hidden="true">
       <div
         v-for="index in 4"
@@ -30,11 +30,35 @@
       </div>
     </div>
 
+    <!-- =====================================================
+         Overlay
+    ====================================================== -->
     <div class="background-dim" />
 
     <!-- =====================================================
-           Desktop Grid
-      ====================================================== -->
+         Desktop Heading
+    ====================================================== -->
+    <div class="treatment-heading">
+      <span class="treatment-heading-line" />
+
+      <span class="treatment-heading-eyebrow"> 전립선 치료 </span>
+
+      <h2>
+        환자의 상태에 따라
+        <br />
+        <strong>치료 방법은 달라집니다.</strong>
+      </h2>
+
+      <p>
+        증상과 전립선 상태를 세밀하게 확인하고
+        <br />
+        환자에게 필요한 치료 방법을 제안합니다.
+      </p>
+    </div>
+
+    <!-- =====================================================
+         Desktop Grid
+    ====================================================== -->
     <div class="treatment-grid">
       <article
         v-for="(treatment, index) in treatments"
@@ -103,22 +127,22 @@
     </div>
 
     <!-- =====================================================
-           Mobile Swiper
-      ====================================================== -->
+         Mobile
+    ====================================================== -->
     <div class="treatment-mobile">
       <div class="mobile-heading">
-        <span class="mobile-eyebrow"> ZAI UROLOGY </span>
+        <span class="mobile-eyebrow"> 전립선 치료 </span>
 
         <h2>
-          환자에게 맞는
+          환자의 상태에 따라
           <br />
-          <strong>전립선 치료</strong>
+          <strong>치료 방법은 달라집니다.</strong>
         </h2>
 
         <p>
-          환자의 증상과 상태를 고려해
+          증상과 전립선 상태를 세밀하게 확인하고
           <br />
-          적절한 치료 방법을 제안합니다.
+          환자에게 필요한 치료 방법을 제안합니다.
         </p>
       </div>
 
@@ -254,7 +278,7 @@ import type { Swiper as SwiperInstance } from 'swiper'
    Types
 ========================================================= */
 
-type TreatmentId = 'rezum' | 'urolift' | 'prostate' | 'checkup'
+type TreatmentId = 'urolift' | 'rezum' | 'prostate' | 'checkup'
 
 type Treatment = {
   id: TreatmentId
@@ -272,39 +296,59 @@ type Treatment = {
 const treatments: readonly Treatment[] = [
   {
     id: 'urolift',
-    category: 'UROLIFT',
+
+    category: '전립선비대증 치료',
+
     title: '유로리프트',
+
     description: '특수 결찰사를 이용해 전립선 조직을 당겨 막혀 있던 요도를 확보하는 치료입니다.',
+
     image: '/images/treatment/urolift-bg.webp',
+
     href: '/urolift'
   },
 
   {
     id: 'rezum',
-    category: 'REZUM',
+
+    category: '전립선비대증 치료',
+
     title: '리줌 수증기 치료',
+
     description: '수증기 에너지를 이용해 비대해진 전립선 조직을 치료하는 최소침습 치료입니다.',
+
     image: '/images/treatment/rezum-bg.webp',
+
     href: '/rezum'
   },
 
   {
     id: 'prostate',
-    category: 'PROSTATE',
+
+    category: '전립선 진료',
+
     title: '전립선 정밀 진료',
+
     description:
       '환자의 배뇨 증상과 전립선 상태를 세밀하게 확인하여 개인에게 맞는 치료 방향을 결정합니다.',
+
     image: '/images/treatment/prostate-bg.webp',
+
     href: '/prostate'
   },
 
   {
     id: 'checkup',
-    category: 'PROSTATE CANCER TEST',
+
+    category: '전립선암 검사',
+
     title: '전립선암 신속검사',
+
     description:
       '간편하고 신속한 검사를 통해 전립선암 위험도를 확인하고, 필요한 경우 정밀검사와 진료 방향을 안내합니다.',
+
     image: '/images/treatment/checkup-bg.webp',
+
     href: '/prostate-cancer'
   }
 ]
@@ -322,7 +366,7 @@ const currentTreatment = ref<Treatment>(DEFAULT_TREATMENT)
 const nextImage = ref(DEFAULT_TREATMENT.image)
 
 /* =========================================================
-   DOM refs
+   DOM Refs
 ========================================================= */
 
 const sectionRef = ref<HTMLElement | null>(null)
@@ -349,20 +393,14 @@ let gsap: (typeof import('gsap'))['default'] | null = null
 
 let transition: ReturnType<(typeof import('gsap'))['default']['timeline']> | null = null
 
-/*
- * 지금 배경 전환 중인지.
- */
 let isAnimating = false
 
-/*
- * 애니메이션 도중 새로운 hover가 들어오면
- * 마지막 대상만 여기에 저장.
- */
 let queuedTreatment: Treatment | null = null
+
 let queuedIndex = -1
 
 /* =========================================================
-   Hover buffering
+   Hover
 ========================================================= */
 
 let hoverTimer: ReturnType<typeof setTimeout> | null = null
@@ -370,7 +408,7 @@ let hoverTimer: ReturnType<typeof setTimeout> | null = null
 const HOVER_DELAY = 60
 
 /* =========================================================
-   Image preload
+   Image Preload
 ========================================================= */
 
 const imageCache = new Map<string, HTMLImageElement>()
@@ -381,6 +419,7 @@ function preloadImage(src: string): Promise<void> {
 
     if (cached?.complete && cached.naturalWidth > 0) {
       resolve()
+
       return
     }
 
@@ -393,6 +432,7 @@ function preloadImage(src: string): Promise<void> {
     }
 
     image.onload = finish
+
     image.onerror = finish
 
     if (!image.src) {
@@ -412,17 +452,10 @@ function preloadImages() {
 }
 
 /* =========================================================
-   Slice helpers
+   Slices
 ========================================================= */
 
-function getInitialClip(index: number) {
-  /*
-   * 계단형 느낌.
-   *
-   * 기존처럼 위/아래를 번갈아 쓰는 것보다
-   * 모두 같은 방향으로 열리면서
-   * 시간차를 주는 게 훨씬 안정적이다.
-   */
+function getInitialClip() {
   return 'inset(100% 0% 0% 0%)'
 }
 
@@ -435,10 +468,11 @@ function prepareSlices() {
 
   gsap.killTweensOf(slices)
 
-  slices.forEach((slice, index) => {
+  slices.forEach((slice) => {
     gsap?.set(slice, {
       visibility: 'visible',
-      clipPath: getInitialClip(index)
+
+      clipPath: getInitialClip()
     })
   })
 }
@@ -450,16 +484,17 @@ function hideSlices() {
 
   const slices = getSlices()
 
-  slices.forEach((slice, index) => {
+  slices.forEach((slice) => {
     gsap?.set(slice, {
       visibility: 'hidden',
-      clipPath: getInitialClip(index)
+
+      clipPath: getInitialClip()
     })
   })
 }
 
 /* =========================================================
-   Run queued animation
+   Queue
 ========================================================= */
 
 function runQueuedAnimation() {
@@ -468,15 +503,13 @@ function runQueuedAnimation() {
   }
 
   const treatment = queuedTreatment
+
   const index = queuedIndex
 
   queuedTreatment = null
+
   queuedIndex = -1
 
-  /*
-   * 방금 끝난 이미지와 같으면
-   * 다시 애니메이션할 필요 없음.
-   */
   if (treatment.id === currentTreatment.value.id) {
     return
   }
@@ -485,26 +518,19 @@ function runQueuedAnimation() {
 }
 
 /* =========================================================
-   Background animation
+   Background Animation
 ========================================================= */
 
 async function animateBackground(treatment: Treatment, targetIndex: number) {
   activeId.value = treatment.id
 
-  /*
-   * 이미 해당 이미지면 종료.
-   */
   if (treatment.id === currentTreatment.value.id && !isAnimating) {
     return
   }
 
-  /*
-   * 애니메이션 중이면 절대 kill하지 않는다.
-   *
-   * 마지막 hover만 queue에 저장.
-   */
   if (isAnimating) {
     queuedTreatment = treatment
+
     queuedIndex = targetIndex
 
     return
@@ -512,6 +538,7 @@ async function animateBackground(treatment: Treatment, targetIndex: number) {
 
   if (!gsap) {
     currentTreatment.value = treatment
+
     nextImage.value = treatment.image
 
     return
@@ -519,15 +546,8 @@ async function animateBackground(treatment: Treatment, targetIndex: number) {
 
   isAnimating = true
 
-  /*
-   * 다음 이미지는 애니메이션 전에 확실하게 로드.
-   */
   await preloadImage(treatment.image)
 
-  /*
-   * 기다리는 동안 더 최신 hover가 들어왔으면
-   * 굳이 오래된 target을 그리지 않는다.
-   */
   if (queuedTreatment && queuedTreatment.id !== treatment.id) {
     isAnimating = false
 
@@ -543,6 +563,7 @@ async function animateBackground(treatment: Treatment, targetIndex: number) {
   requestAnimationFrame(() => {
     if (!gsap) {
       isAnimating = false
+
       return
     }
 
@@ -558,10 +579,6 @@ async function animateBackground(treatment: Treatment, targetIndex: number) {
       return
     }
 
-    /*
-     * 기존 timeline 완전히 끝난 상태에서만
-     * 새 timeline이 시작되므로 꿀렁임 없음.
-     */
     prepareSlices()
 
     const currentIndex = treatments.findIndex((item) => item.id === currentTreatment.value.id)
@@ -580,44 +597,21 @@ async function animateBackground(treatment: Treatment, targetIndex: number) {
       },
 
       onComplete: () => {
-        /*
-         * reveal 이미지를 실제 background로 확정.
-         */
         currentTreatment.value = treatment
 
         transition = null
 
-        /*
-         * base background가 Vue에 반영된 뒤
-         * reveal layer 숨김.
-         */
         nextTick(() => {
           requestAnimationFrame(() => {
             hideSlices()
 
             isAnimating = false
 
-            /*
-             * 사용자가 그 사이 다른 패널로
-             * 이동했다면 마지막 요청 하나만 실행.
-             */
             runQueuedAnimation()
           })
         })
       }
     })
-
-    /*
-     * =====================================================
-     * 핵심 계단 애니메이션
-     *
-     * scale 없음
-     * kill 없음
-     * 중간 reverse 없음
-     *
-     * clip-path만 사용.
-     * =====================================================
-     */
 
     orderedSlices.forEach((slice, orderIndex) => {
       transition?.to(
@@ -641,25 +635,12 @@ async function animateBackground(treatment: Treatment, targetIndex: number) {
 ========================================================= */
 
 function activateTreatment(treatment: Treatment, index: number) {
-  /*
-   * 글씨는 마우스에 즉각 반응.
-   */
   activeId.value = treatment.id
 
-  /*
-   * hover timer 초기화.
-   */
   if (hoverTimer) {
     clearTimeout(hoverTimer)
   }
 
-  /*
-   * 현재 transition 중이라면
-   * 45ms 기다리지 않고 queue만 최신으로 교체.
-   *
-   * 이렇게 해야 빠른 hover에도
-   * 최종 대상이 정확히 남는다.
-   */
   if (isAnimating) {
     queuedTreatment = treatment
 
@@ -668,10 +649,6 @@ function activateTreatment(treatment: Treatment, index: number) {
     return
   }
 
-  /*
-   * 현재 실제 background와 같으면
-   * 애니메이션 불필요.
-   */
   if (treatment.id === currentTreatment.value.id) {
     queuedTreatment = null
 
@@ -680,15 +657,11 @@ function activateTreatment(treatment: Treatment, index: number) {
     return
   }
 
-  hoverTimer = setTimeout(
-    () => {
-      hoverTimer = null
+  hoverTimer = setTimeout(() => {
+    hoverTimer = null
 
-      void animateBackground(treatment, index)
-    },
-
-    HOVER_DELAY
-  )
+    void animateBackground(treatment, index)
+  }, HOVER_DELAY)
 }
 
 /* =========================================================
@@ -736,9 +709,6 @@ function selectMobileSlide(index: number) {
 ========================================================= */
 
 onMounted(async () => {
-  /*
-   * 먼저 이미지 모두 preload.
-   */
   preloadImages()
 
   const module = await import('gsap')
@@ -761,13 +731,6 @@ onBeforeUnmount(() => {
 
   queuedIndex = -1
 
-  /*
-   * 컴포넌트 제거 시에만
-   * GSAP kill.
-   *
-   * 사용자 hover 중에는
-   * timeline kill을 하지 않는다.
-   */
   transition?.kill()
 
   transition = null
@@ -786,14 +749,14 @@ onBeforeUnmount(() => {
 
 <style scoped>
 /* =========================================================
-     Section
-  ========================================================= */
+   Section
+========================================================= */
 
 .treatment-section {
   position: relative;
 
   width: 100%;
-  height: 820px;
+  height: 900px;
 
   overflow: hidden;
 
@@ -803,8 +766,8 @@ onBeforeUnmount(() => {
 }
 
 /* =========================================================
-     Desktop background
-  ========================================================= */
+   Desktop Background
+========================================================= */
 
 .background-current {
   position: absolute;
@@ -825,8 +788,8 @@ onBeforeUnmount(() => {
 }
 
 /* =========================================================
-     Reveal
-  ========================================================= */
+   Reveal
+========================================================= */
 
 .background-reveal {
   position: absolute;
@@ -850,7 +813,6 @@ onBeforeUnmount(() => {
   position: relative;
 
   width: 100%;
-
   height: 100%;
 
   overflow: hidden;
@@ -910,8 +872,8 @@ onBeforeUnmount(() => {
 }
 
 /* =========================================================
-     Dim
-  ========================================================= */
+   Dim
+========================================================= */
 
 .background-dim {
   position: absolute;
@@ -924,17 +886,99 @@ onBeforeUnmount(() => {
 
   background: linear-gradient(
     180deg,
-    rgba(4, 9, 14, 0.12) 0%,
+    rgba(4, 9, 14, 0.38) 0%,
 
-    rgba(4, 9, 14, 0.2) 44%,
+    rgba(4, 9, 14, 0.36) 35%,
 
-    rgba(4, 9, 14, 0.54) 100%
+    rgba(4, 9, 14, 0.48) 65%,
+
+    rgba(4, 9, 14, 0.67) 100%
   );
 }
 
 /* =========================================================
-     Desktop grid
-  ========================================================= */
+   Desktop Heading
+========================================================= */
+
+.treatment-heading {
+  position: absolute;
+
+  z-index: 5;
+
+  top: 62px;
+  left: 50%;
+
+  width: min(820px, calc(100% - 80px));
+
+  transform: translateX(-50%);
+
+  text-align: center;
+
+  pointer-events: none;
+}
+
+.treatment-heading-line {
+  display: block;
+
+  width: 1px;
+  height: 38px;
+
+  margin: 0 auto 18px;
+
+  background: rgba(255, 255, 255, 0.48);
+}
+
+.treatment-heading-eyebrow {
+  display: block;
+
+  margin-bottom: 14px;
+
+  color: rgba(255, 255, 255, 0.67);
+
+  font-size: 14px;
+
+  font-weight: 450;
+
+  letter-spacing: -0.025em;
+}
+
+.treatment-heading h2 {
+  margin: 0;
+
+  color: #fff;
+
+  font-size: clamp(39px, 3.8vw, 62px);
+
+  font-weight: 300;
+
+  line-height: 1.16;
+
+  letter-spacing: -0.058em;
+
+  word-break: keep-all;
+}
+
+.treatment-heading h2 strong {
+  font-weight: 650;
+}
+
+.treatment-heading p {
+  margin: 19px 0 0;
+
+  color: rgba(255, 255, 255, 0.64);
+
+  font-size: 15px;
+
+  font-weight: 300;
+
+  line-height: 1.75;
+
+  letter-spacing: -0.025em;
+}
+
+/* =========================================================
+   Desktop Grid
+========================================================= */
 
 .treatment-grid {
   position: relative;
@@ -962,16 +1006,16 @@ onBeforeUnmount(() => {
 
   outline: none;
 
-  border-right: 1px solid rgba(255, 255, 255, 0.22);
+  border-right: 1px solid rgba(255, 255, 255, 0.18);
 }
 
 .treatment-panel:first-child {
-  border-left: 1px solid rgba(255, 255, 255, 0.22);
+  border-left: 1px solid rgba(255, 255, 255, 0.18);
 }
 
 /* =========================================================
-     Panel hover
-  ========================================================= */
+   Panel Hover
+========================================================= */
 
 .panel-hover {
   position: absolute;
@@ -980,37 +1024,37 @@ onBeforeUnmount(() => {
 
   z-index: 0;
 
-  background: rgba(4, 9, 14, 0.28);
+  background: rgba(4, 9, 14, 0.3);
 
   transition: background-color 0.42s ease;
 }
 
 .treatment-panel.is-active .panel-hover {
-  background: rgba(4, 9, 14, 0.04);
+  background: rgba(4, 9, 14, 0.06);
 }
 
 @media (hover: hover) {
   .treatment-panel:hover .panel-hover {
-    background: rgba(4, 9, 14, 0.07);
+    background: rgba(4, 9, 14, 0.08);
   }
 }
 
 /* =========================================================
-     Number
-  ========================================================= */
+   Number
+========================================================= */
 
 .panel-number {
   position: absolute;
 
   z-index: 2;
 
-  top: 145px;
+  top: 390px;
 
   left: clamp(26px, 2.6vw, 50px);
 
-  color: rgba(255, 255, 255, 0.94);
+  color: rgba(255, 255, 255, 0.88);
 
-  font-size: clamp(48px, 4.3vw, 76px);
+  font-size: clamp(37px, 3.3vw, 56px);
 
   font-weight: 300;
 
@@ -1022,8 +1066,8 @@ onBeforeUnmount(() => {
 }
 
 /* =========================================================
-     Panel content
-  ========================================================= */
+   Panel Content
+========================================================= */
 
 .panel-content {
   position: absolute;
@@ -1034,9 +1078,9 @@ onBeforeUnmount(() => {
 
   right: clamp(22px, 2vw, 38px);
 
-  bottom: 138px;
+  bottom: 90px;
 
-  height: 220px;
+  height: 210px;
 
   pointer-events: none;
 }
@@ -1046,15 +1090,15 @@ onBeforeUnmount(() => {
 
   margin-bottom: 12px;
 
-  color: rgba(255, 255, 255, 0.58);
+  color: rgba(255, 255, 255, 0.57);
 
-  font-size: 10px;
+  font-size: 12px;
 
-  font-weight: 500;
+  font-weight: 350;
 
   line-height: 1;
 
-  letter-spacing: 0.2em;
+  letter-spacing: -0.02em;
 }
 
 .panel-title {
@@ -1064,7 +1108,7 @@ onBeforeUnmount(() => {
 
   font-size: clamp(25px, 2vw, 35px);
 
-  font-weight: 400;
+  font-weight: 450;
 
   line-height: 1.3;
 
@@ -1074,8 +1118,8 @@ onBeforeUnmount(() => {
 }
 
 /* =========================================================
-     Detail
-  ========================================================= */
+   Detail
+========================================================= */
 
 .panel-detail {
   position: absolute;
@@ -1116,7 +1160,7 @@ onBeforeUnmount(() => {
 .panel-detail p {
   margin: 0;
 
-  color: rgba(255, 255, 255, 0.72);
+  color: rgba(255, 255, 255, 0.7);
 
   font-size: 14px;
 
@@ -1128,8 +1172,8 @@ onBeforeUnmount(() => {
 }
 
 /* =========================================================
-     Desktop More Link
-  ========================================================= */
+   More
+========================================================= */
 
 .panel-more {
   width: fit-content;
@@ -1162,7 +1206,7 @@ onBeforeUnmount(() => {
 .panel-more:hover {
   gap: 34px;
 
-  border-color: rgba(255, 255, 255, 1);
+  border-color: #fff;
 }
 
 .panel-more svg {
@@ -1173,8 +1217,8 @@ onBeforeUnmount(() => {
 }
 
 /* =========================================================
-     Arrow
-  ========================================================= */
+   Arrow
+========================================================= */
 
 .panel-arrow {
   position: absolute;
@@ -1209,17 +1253,33 @@ onBeforeUnmount(() => {
 }
 
 /* =========================================================
-     Tablet
-  ========================================================= */
+   Tablet
+========================================================= */
 
 @media (max-width: 1180px) {
-  .panel-number,
-  .panel-content {
+  .treatment-section {
+    height: 850px;
+  }
+
+  .treatment-heading {
+    top: 55px;
+  }
+
+  .treatment-heading h2 {
+    font-size: 46px;
+  }
+
+  .panel-number {
+    top: 365px;
+
     left: 25px;
   }
 
   .panel-content {
+    left: 25px;
     right: 20px;
+
+    bottom: 80px;
   }
 
   .panel-title {
@@ -1232,8 +1292,8 @@ onBeforeUnmount(() => {
 }
 
 /* =========================================================
-     Mobile
-  ========================================================= */
+   Mobile
+========================================================= */
 
 .treatment-mobile {
   display: none;
@@ -1253,7 +1313,8 @@ onBeforeUnmount(() => {
   .background-current,
   .background-reveal,
   .background-dim,
-  .treatment-grid {
+  .treatment-grid,
+  .treatment-heading {
     display: none;
   }
 
@@ -1270,8 +1331,8 @@ onBeforeUnmount(() => {
   }
 
   /* =========================================
-       Heading
-    ========================================= */
+     Heading
+  ========================================= */
 
   .mobile-heading {
     padding: 0 20px;
@@ -1282,15 +1343,15 @@ onBeforeUnmount(() => {
   .mobile-eyebrow {
     display: block;
 
-    margin-bottom: 12px;
+    margin-bottom: 13px;
 
-    color: rgba(255, 255, 255, 0.48);
+    color: rgba(255, 255, 255, 0.5);
 
-    font-size: 10px;
+    font-size: 12px;
 
-    font-weight: 500;
+    font-weight: 400;
 
-    letter-spacing: 0.2em;
+    letter-spacing: -0.02em;
   }
 
   .mobile-heading h2 {
@@ -1324,8 +1385,8 @@ onBeforeUnmount(() => {
   }
 
   /* =========================================
-       Swiper
-    ========================================= */
+     Swiper
+  ========================================= */
 
   .mobile-swiper {
     width: 100%;
@@ -1378,8 +1439,8 @@ onBeforeUnmount(() => {
   }
 
   /* =========================================
-       Mobile Card
-    ========================================= */
+     Card
+  ========================================= */
 
   .mobile-card {
     position: relative;
@@ -1435,8 +1496,8 @@ onBeforeUnmount(() => {
   }
 
   /* =========================================
-       Overlay
-    ========================================= */
+     Overlay
+  ========================================= */
 
   .mobile-card-overlay {
     position: absolute;
@@ -1460,8 +1521,8 @@ onBeforeUnmount(() => {
   }
 
   /* =========================================
-       Number
-    ========================================= */
+     Number
+  ========================================= */
 
   .mobile-card-number {
     position: absolute;
@@ -1485,8 +1546,8 @@ onBeforeUnmount(() => {
   }
 
   /* =========================================
-       Mobile Content
-    ========================================= */
+     Content
+  ========================================= */
 
   .mobile-card-content {
     position: absolute;
@@ -1508,13 +1569,13 @@ onBeforeUnmount(() => {
 
     color: rgba(255, 255, 255, 0.55);
 
-    font-size: 9px;
+    font-size: 11px;
 
-    font-weight: 500;
+    font-weight: 350;
 
     line-height: 1;
 
-    letter-spacing: 0.2em;
+    letter-spacing: -0.02em;
   }
 
   .mobile-card-content h3 {
@@ -1564,8 +1625,8 @@ onBeforeUnmount(() => {
   }
 
   /* =========================================
-       Mobile More Link
-    ========================================= */
+     More
+  ========================================= */
 
   .mobile-card-more {
     width: fit-content;
@@ -1603,8 +1664,8 @@ onBeforeUnmount(() => {
   }
 
   /* =========================================
-       Arrow
-    ========================================= */
+     Arrow
+  ========================================= */
 
   .mobile-card-arrow {
     position: absolute;
@@ -1630,8 +1691,8 @@ onBeforeUnmount(() => {
   }
 
   /* =========================================
-       Progress
-    ========================================= */
+     Navigation
+  ========================================= */
 
   .mobile-navigation {
     padding: 28px 20px 0;
@@ -1671,8 +1732,8 @@ onBeforeUnmount(() => {
   }
 
   /* =========================================
-       Counter
-    ========================================= */
+     Counter
+  ========================================= */
 
   .mobile-counter {
     display: flex;
@@ -1698,8 +1759,8 @@ onBeforeUnmount(() => {
 }
 
 /* =========================================================
-     Small mobile
-  ========================================================= */
+   Small Mobile
+========================================================= */
 
 @media (max-width: 390px) {
   .treatment-mobile {
@@ -1730,8 +1791,8 @@ onBeforeUnmount(() => {
 }
 
 /* =========================================================
-     Reduced motion
-  ========================================================= */
+   Reduced Motion
+========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
   .panel-hover,

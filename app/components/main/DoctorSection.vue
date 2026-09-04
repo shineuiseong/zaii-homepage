@@ -8,7 +8,7 @@
     <!-- =====================================================
            Decorative typography
       ====================================================== -->
-    <div class="doctor-watermark" aria-hidden="true">ZAI</div>
+    <div class="doctor-watermark" aria-hidden="true">ZAII</div>
 
     <!-- =====================================================
            Content
@@ -18,7 +18,7 @@
              Left
         ========================== -->
       <div ref="introRef" class="doctor-intro">
-        <span class="doctor-eyebrow"> MEDICAL DIRECTOR </span>
+        <span class="doctor-eyebrow"> 의료진 소개 </span>
 
         <h2 class="doctor-heading">
           환자의 건강을
