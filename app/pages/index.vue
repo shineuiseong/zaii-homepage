@@ -1,6 +1,8 @@
 <template>
   <MainHero />
   <!-- <HeroSlider /> -->
+  <TreatmentSelectSection />
+  <DoctorSection />
   <UroliftSection />
   <ClinicSection />
   <HistoryHighlightSection />
@@ -13,7 +15,9 @@ import HeroSlider from '~/components/hero/HeroSlider.vue'
 import MainHero from '~/components/hero/MainHero.vue'
 import ClinicSection from '~/components/main/ClinicSection.vue'
 import ContactInfoSection from '~/components/main/ContactInfoSection.vue'
+import DoctorSection from '~/components/main/DoctorSection.vue'
 import HistoryHighlightSection from '~/components/main/HistoryHighlightSection.vue'
+import TreatmentSelectSection from '~/components/main/TreatmentSelectSection.vue'
 import UroliftSection from '~/components/main/UroliftSection.vue'
 import { usePageSeo } from '~/composables/usePageSeo'
 
