@@ -190,10 +190,15 @@
             }"
             @click="selectMobileSlide(index)"
           >
+            <!-- =============================================
+                 핵심 변경 부분
+                 치료별로 mobilePosition 적용
+            ============================================== -->
             <div
               class="mobile-card-image"
               :style="{
-                backgroundImage: `url(${treatment.image})`
+                backgroundImage: `url(${treatment.image})`,
+                backgroundPosition: treatment.mobilePosition
               }"
             />
 
@@ -299,6 +304,20 @@ type Treatment = {
   title: string
   description: string
   image: string
+
+  /*
+   * 모바일 카드에서만 사용하는 이미지 포커스 위치
+   *
+   * 왼쪽으로 이동:
+   * 40% center
+   * 35% center
+   *
+   * 오른쪽으로 이동:
+   * 55% center
+   * 60% center
+   */
+  mobilePosition: string
+
   href: string
 }
 
@@ -313,6 +332,13 @@ const treatments: readonly Treatment[] = [
     title: '유로리프트',
     description: '특수 결찰사를 이용해 전립선 조직을 당겨 막혀 있던 요도를 확보하는 치료입니다.',
     image: '/images/treatment/urolift-bg.webp',
+
+    /*
+     * 유로리프트 기구 + 전립선이 같이 보이도록
+     * 중앙에서 살짝 왼쪽 포커스
+     */
+    mobilePosition: '44% center',
+
     href: '/urolift'
   },
   {
@@ -321,6 +347,12 @@ const treatments: readonly Treatment[] = [
     title: '리줌 수증기 치료',
     description: '수증기 에너지를 이용해 비대해진 전립선 조직을 치료하는 최소침습 치료입니다.',
     image: '/images/treatment/rezum-bg.webp',
+
+    /*
+     * 리줌 기구와 치료 부위 중심
+     */
+    mobilePosition: '40% center',
+
     href: '/rezum'
   },
   {
@@ -330,6 +362,12 @@ const treatments: readonly Treatment[] = [
     description:
       '환자의 배뇨 증상과 전립선 상태를 세밀하게 확인하여 개인에게 맞는 치료 방향을 결정합니다.',
     image: '/images/treatment/prostate-bg.webp',
+
+    /*
+     * 전립선 중심이 조금 오른쪽에 있을 경우 대비
+     */
+    mobilePosition: '52% center',
+
     href: '/prostate'
   },
   {
@@ -339,6 +377,12 @@ const treatments: readonly Treatment[] = [
     description:
       '간편하고 신속한 검사를 통해 전립선암 위험도를 확인하고, 필요한 경우 정밀검사와 진료 방향을 안내합니다.',
     image: '/images/treatment/checkup-bg.webp',
+
+    /*
+     * 기본 중앙
+     */
+    mobilePosition: '50% center',
+
     href: '/prostate-cancer'
   }
 ]
@@ -504,8 +548,11 @@ function prepareEntranceAnimation() {
   }
 
   const heading = headingRef.value
+
   const grid = gridRef.value
+
   const gridLines = gridLinesRef.value
+
   const mobile = mobileRef.value
 
   if (heading) {
@@ -578,8 +625,11 @@ function playEntranceAnimation() {
   entrancePlayed = true
 
   const heading = headingRef.value
+
   const grid = gridRef.value
+
   const gridLines = gridLinesRef.value
+
   const mobile = mobileRef.value
 
   entranceTimeline = gsap.timeline({
@@ -769,9 +819,11 @@ function runQueuedAnimation() {
   }
 
   const treatment = queuedTreatment
+
   const index = queuedIndex
 
   queuedTreatment = null
+
   queuedIndex = -1
 
   if (treatment.id === currentTreatment.value.id) {
@@ -794,6 +846,7 @@ async function animateBackground(treatment: Treatment, targetIndex: number) {
 
   if (isAnimating) {
     queuedTreatment = treatment
+
     queuedIndex = targetIndex
 
     return
@@ -801,6 +854,7 @@ async function animateBackground(treatment: Treatment, targetIndex: number) {
 
   if (!gsap) {
     currentTreatment.value = treatment
+
     nextImage.value = treatment.image
 
     return
@@ -905,6 +959,7 @@ function activateTreatment(treatment: Treatment, index: number) {
 
   if (isAnimating) {
     queuedTreatment = treatment
+
     queuedIndex = index
 
     return
@@ -912,6 +967,7 @@ function activateTreatment(treatment: Treatment, index: number) {
 
   if (treatment.id === currentTreatment.value.id) {
     queuedTreatment = null
+
     queuedIndex = -1
 
     return
@@ -941,10 +997,6 @@ function handleSwiperInit(swiper: SwiperInstance) {
 
   mobileActiveIndex.value = swiper.activeIndex
 
-  /*
-   * 초기 렌더링 직후 한 번 더 크기를
-   * 계산해주는 것이 모바일에서 안전하다.
-   */
   nextTick(() => {
     requestAnimationFrame(() => {
       swiper.update()
@@ -995,7 +1047,9 @@ function handleResize() {
     }
 
     swiper.update()
+
     swiper.updateSize()
+
     swiper.updateSlides()
   }, 100)
 }
@@ -1021,10 +1075,6 @@ onMounted(async () => {
     passive: true
   })
 
-  /*
-   * Safari / 모바일 브라우저에서
-   * 초기 viewport 계산이 늦는 경우를 대비.
-   */
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
       mobileSwiper.value?.update()
@@ -1067,9 +1117,11 @@ onBeforeUnmount(() => {
   window.removeEventListener('resize', handleResize)
 
   hoverTimer = null
+
   resizeTimer = null
 
   queuedTreatment = null
+
   queuedIndex = -1
 
   entranceObserver?.disconnect()
@@ -1798,11 +1850,6 @@ onBeforeUnmount(() => {
     cursor: grabbing;
   }
 
-  /*
-   * Swiper core CSS가 어떤 이유로 늦게
-   * 적용되더라도 세로로 무너지지 않도록
-   * 레이아웃 fallback을 직접 지정한다.
-   */
   .mobile-swiper :deep(.swiper-wrapper) {
     position: relative;
 
@@ -1892,16 +1939,28 @@ onBeforeUnmount(() => {
     backface-visibility: hidden;
   }
 
+  /*
+   * 핵심:
+   *
+   * background-size는 cover 그대로 유지.
+   * 카드 전체를 꽉 채우면서
+   * treatment.mobilePosition으로
+   * 이미지 중심만 개별 조정한다.
+   */
   .mobile-card-image {
     position: absolute;
 
     inset: 0;
 
-    background-position: center;
-
     background-size: cover;
 
     background-repeat: no-repeat;
+
+    /*
+     * background-position은
+     * Vue inline style에서
+     * 각 치료별로 들어온다.
+     */
 
     pointer-events: none;
 
