@@ -172,7 +172,7 @@ const form = reactive<ConsultationFormValues>({
   name: '',
   phone: '',
   content: '',
-  agreePrivacy: false,
+  agreePrivacy: true,
   agreeSensitive: false
 })
 
