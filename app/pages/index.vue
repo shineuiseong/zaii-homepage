@@ -1,26 +1,20 @@
 <template>
   <MainHero />
-  <!-- <HeroSlider /> -->
   <TreatmentSelectSection />
   <DoctorSection />
   <RecordSection />
-  <!-- <UroliftSection />
-  <ClinicSection />
-  <HistoryHighlightSection /> -->
+  <SpaceSection />
   <ContactInfoSection />
 </template>
 
 <script setup lang="ts">
 import { defineBreadcrumb, defineWebPage, useSchemaOrg } from '#imports'
-import HeroSlider from '~/components/hero/HeroSlider.vue'
 import MainHero from '~/components/hero/MainHero.vue'
-import ClinicSection from '~/components/main/ClinicSection.vue'
 import ContactInfoSection from '~/components/main/ContactInfoSection.vue'
 import DoctorSection from '~/components/main/DoctorSection.vue'
-import HistoryHighlightSection from '~/components/main/HistoryHighlightSection.vue'
 import RecordSection from '~/components/main/RecordSection.vue'
+import SpaceSection from '~/components/main/SpaceSection.vue'
 import TreatmentSelectSection from '~/components/main/TreatmentSelectSection.vue'
-import UroliftSection from '~/components/main/UroliftSection.vue'
 import { usePageSeo } from '~/composables/usePageSeo'
 
 const config = useRuntimeConfig()

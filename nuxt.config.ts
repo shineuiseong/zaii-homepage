@@ -3,7 +3,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
 
-  css: ['@/assets/scss/main.scss'],
+  css: ['@/assets/scss/main.scss', 'swiper/css'],
 
   modules: ['@nuxt/eslint', '@nuxt/icon', '@nuxtjs/sitemap', '@nuxtjs/robots', '@nuxtjs/seo'],
 

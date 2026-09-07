@@ -159,6 +159,8 @@
         class="mobile-swiper"
         :slides-per-view="1.16"
         :space-between="14"
+        :slides-offset-before="20"
+        :slides-offset-after="20"
         :speed="620"
         :allow-touch-move="true"
         :simulate-touch="true"
@@ -175,6 +177,8 @@
         :watch-slides-progress="true"
         :observer="true"
         :observe-parents="true"
+        :resize-observer="true"
+        :update-on-window-resize="true"
         @swiper="handleSwiperInit"
         @slide-change="handleMobileSlideChange"
       >
@@ -419,6 +423,7 @@ function preloadImage(src: string): Promise<void> {
 
     if (cached?.complete && cached.naturalWidth > 0) {
       resolve()
+
       return
     }
 
@@ -499,11 +504,8 @@ function prepareEntranceAnimation() {
   }
 
   const heading = headingRef.value
-
   const grid = gridRef.value
-
   const gridLines = gridLinesRef.value
-
   const mobile = mobileRef.value
 
   if (heading) {
@@ -555,13 +557,13 @@ function prepareEntranceAnimation() {
   }
 
   if (mobile) {
-    const heading = mobile.querySelector('.mobile-heading')
+    const mobileHeading = mobile.querySelector('.mobile-heading')
 
     const swiper = mobile.querySelector('.mobile-swiper')
 
     const navigation = mobile.querySelector('.mobile-navigation')
 
-    gsap.set([heading, swiper, navigation], {
+    gsap.set([mobileHeading, swiper, navigation], {
       opacity: 0,
       y: 34
     })
@@ -576,11 +578,8 @@ function playEntranceAnimation() {
   entrancePlayed = true
 
   const heading = headingRef.value
-
   const grid = gridRef.value
-
   const gridLines = gridLinesRef.value
-
   const mobile = mobileRef.value
 
   entranceTimeline = gsap.timeline({
@@ -644,7 +643,7 @@ function playEntranceAnimation() {
   }
 
   /* =======================================================
-     Vertical grid lines
+     Vertical Grid Lines
   ======================================================= */
 
   if (gridLines) {
@@ -770,7 +769,6 @@ function runQueuedAnimation() {
   }
 
   const treatment = queuedTreatment
-
   const index = queuedIndex
 
   queuedTreatment = null
@@ -796,7 +794,6 @@ async function animateBackground(treatment: Treatment, targetIndex: number) {
 
   if (isAnimating) {
     queuedTreatment = treatment
-
     queuedIndex = targetIndex
 
     return
@@ -804,7 +801,6 @@ async function animateBackground(treatment: Treatment, targetIndex: number) {
 
   if (!gsap) {
     currentTreatment.value = treatment
-
     nextImage.value = treatment.image
 
     return
@@ -829,6 +825,7 @@ async function animateBackground(treatment: Treatment, targetIndex: number) {
   requestAnimationFrame(() => {
     if (!gsap) {
       isAnimating = false
+
       return
     }
 
@@ -908,7 +905,6 @@ function activateTreatment(treatment: Treatment, index: number) {
 
   if (isAnimating) {
     queuedTreatment = treatment
-
     queuedIndex = index
 
     return
@@ -944,6 +940,16 @@ function handleSwiperInit(swiper: SwiperInstance) {
   mobileSwiper.value = swiper
 
   mobileActiveIndex.value = swiper.activeIndex
+
+  /*
+   * 초기 렌더링 직후 한 번 더 크기를
+   * 계산해주는 것이 모바일에서 안전하다.
+   */
+  nextTick(() => {
+    requestAnimationFrame(() => {
+      swiper.update()
+    })
+  })
 }
 
 function handleMobileSlideChange(swiper: SwiperInstance) {
@@ -969,6 +975,32 @@ function selectMobileSlide(index: number) {
 }
 
 /* =========================================================
+   Swiper Resize Safety
+========================================================= */
+
+let resizeTimer: ReturnType<typeof setTimeout> | null = null
+
+function handleResize() {
+  if (resizeTimer) {
+    clearTimeout(resizeTimer)
+  }
+
+  resizeTimer = setTimeout(() => {
+    resizeTimer = null
+
+    const swiper = mobileSwiper.value
+
+    if (!swiper || swiper.destroyed) {
+      return
+    }
+
+    swiper.update()
+    swiper.updateSize()
+    swiper.updateSlides()
+  }, 100)
+}
+
+/* =========================================================
    Lifecycle
 ========================================================= */
 
@@ -984,6 +1016,20 @@ onMounted(async () => {
   hideSlices()
 
   prepareEntranceAnimation()
+
+  window.addEventListener('resize', handleResize, {
+    passive: true
+  })
+
+  /*
+   * Safari / 모바일 브라우저에서
+   * 초기 viewport 계산이 늦는 경우를 대비.
+   */
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      mobileSwiper.value?.update()
+    })
+  })
 
   const section = sectionRef.value
 
@@ -1014,7 +1060,14 @@ onBeforeUnmount(() => {
     clearTimeout(hoverTimer)
   }
 
+  if (resizeTimer) {
+    clearTimeout(resizeTimer)
+  }
+
+  window.removeEventListener('resize', handleResize)
+
   hoverTimer = null
+  resizeTimer = null
 
   queuedTreatment = null
   queuedIndex = -1
@@ -1183,11 +1236,8 @@ onBeforeUnmount(() => {
   background: linear-gradient(
     180deg,
     rgba(4, 9, 14, 0.38) 0%,
-
     rgba(4, 9, 14, 0.36) 35%,
-
     rgba(4, 9, 14, 0.48) 65%,
-
     rgba(4, 9, 14, 0.67) 100%
   );
 }
@@ -1698,6 +1748,8 @@ onBeforeUnmount(() => {
     line-height: 1.24;
 
     letter-spacing: -0.05em;
+
+    word-break: keep-all;
   }
 
   .mobile-heading h2 strong {
@@ -1714,6 +1766,8 @@ onBeforeUnmount(() => {
     font-weight: 300;
 
     line-height: 1.7;
+
+    word-break: keep-all;
   }
 
   /* =========================================
@@ -1721,12 +1775,13 @@ onBeforeUnmount(() => {
   ========================================= */
 
   .mobile-swiper {
+    position: relative;
+
     width: 100%;
 
     overflow: visible;
 
-    padding-left: 20px;
-    padding-right: 20px;
+    box-sizing: border-box;
 
     cursor: grab;
 
@@ -1735,22 +1790,59 @@ onBeforeUnmount(() => {
     user-select: none;
 
     -webkit-user-select: none;
+
+    -webkit-tap-highlight-color: transparent;
   }
 
   .mobile-swiper:active {
     cursor: grabbing;
   }
 
+  /*
+   * Swiper core CSS가 어떤 이유로 늦게
+   * 적용되더라도 세로로 무너지지 않도록
+   * 레이아웃 fallback을 직접 지정한다.
+   */
   .mobile-swiper :deep(.swiper-wrapper) {
+    position: relative;
+
+    z-index: 1;
+
+    display: flex;
+
+    width: 100%;
+    height: 100%;
+
     align-items: stretch;
+
+    box-sizing: content-box;
+
+    transition-property: transform;
+
+    transform: translate3d(0, 0, 0);
+
+    will-change: transform;
   }
 
   .mobile-swiper :deep(.swiper-slide) {
+    position: relative;
+
+    display: block;
+
+    flex-shrink: 0;
+
+    width: 100%;
     height: auto;
+
+    box-sizing: border-box;
 
     opacity: 0.62;
 
     filter: brightness(0.82);
+
+    transform: translateZ(0);
+
+    backface-visibility: hidden;
 
     transition:
       opacity 0.35s ease,
@@ -1794,6 +1886,10 @@ onBeforeUnmount(() => {
     -webkit-user-select: none;
 
     -webkit-tap-highlight-color: transparent;
+
+    transform: translateZ(0);
+
+    backface-visibility: hidden;
   }
 
   .mobile-card-image {
@@ -1815,15 +1911,17 @@ onBeforeUnmount(() => {
 
     -webkit-user-drag: none;
 
-    transform: scale(1.025);
+    transform: scale(1.025) translateZ(0);
 
     transition: transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
 
     will-change: transform;
+
+    backface-visibility: hidden;
   }
 
   .mobile-swiper :deep(.swiper-slide-active) .mobile-card-image {
-    transform: scale(1);
+    transform: scale(1) translateZ(0);
   }
 
   /* =========================================
@@ -1842,11 +1940,8 @@ onBeforeUnmount(() => {
     background: linear-gradient(
       180deg,
       rgba(4, 8, 12, 0.08) 0%,
-
       rgba(4, 8, 12, 0.14) 32%,
-
       rgba(4, 8, 12, 0.42) 62%,
-
       rgba(4, 8, 12, 0.94) 100%
     );
   }
@@ -2037,6 +2132,8 @@ onBeforeUnmount(() => {
 
   .mobile-progress {
     flex: 1;
+
+    min-width: 0;
   }
 
   .mobile-progress-bg {
@@ -2073,6 +2170,8 @@ onBeforeUnmount(() => {
 
     gap: 5px;
 
+    flex-shrink: 0;
+
     color: rgba(255, 255, 255, 0.4);
 
     font-size: 11px;
@@ -2099,6 +2198,8 @@ onBeforeUnmount(() => {
   }
 
   .mobile-heading {
+    padding: 0 18px;
+
     margin-bottom: 28px;
   }
 
@@ -2114,7 +2215,7 @@ onBeforeUnmount(() => {
     font-size: 25px;
   }
 
-  .mobile-swiper {
+  .mobile-navigation {
     padding-left: 18px;
 
     padding-right: 18px;
