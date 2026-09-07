@@ -76,18 +76,21 @@
       aria-label="모바일 빠른 메뉴"
       :aria-hidden="mobileMenuOpen"
     >
-      <a href="tel:0262075678" class="quick-menu__mobile-item">
+      <!-- 진료문의 -->
+      <a href="tel:0262075678" class="quick-menu__mobile-item" aria-label="진료문의 전화">
         <Icon name="lucide:phone" class="quick-menu__mobile-icon" />
 
         <span> 진료문의 </span>
       </a>
 
-      <a href="tel:01026386034" class="quick-menu__mobile-item">
+      <!-- 상담문의 -->
+      <a href="tel:01026386034" class="quick-menu__mobile-item" aria-label="상담문의 전화">
         <Icon name="lucide:headphones" class="quick-menu__mobile-icon" />
 
         <span> 상담문의 </span>
       </a>
 
+      <!-- 오시는 길 -->
       <NuxtLink
         to="/hospital/location"
         class="quick-menu__mobile-item"
@@ -100,6 +103,7 @@
         <span> 오시는 길 </span>
       </NuxtLink>
 
+      <!-- 온라인상담 -->
       <NuxtLink
         to="/consultation"
         class="quick-menu__mobile-item"
@@ -154,11 +158,6 @@ function scrollToTop() {
 .quick-menu__desktop {
   position: fixed;
 
-  /*
-   * 화면 정중앙보다 살짝 아래.
-   * 팝업을 왼쪽에 붙였을 때도
-   * 참고 이미지처럼 안정적으로 보임.
-   */
   top: 52%;
   right: 18px;
 
@@ -294,17 +293,13 @@ function scrollToTop() {
 .quick-menu__item--active {
   border-color: rgba(13, 87, 198, 0.18);
 
-  background: linear-gradient(180deg, #fff 0%, #f5f9ff 100%);
+  background: linear-gradient(180deg, #ffffff 0%, #f5f9ff 100%);
 }
 
 .quick-menu__item--active .quick-menu__text {
   color: #0d57c6;
 }
 
-/*
- * 기존 위쪽 3px 막대는 제거.
- * 참고 이미지처럼 과하게 활성 표시하지 않음.
- */
 .quick-menu__item--active::before {
   position: absolute;
 
@@ -420,13 +415,6 @@ function scrollToTop() {
 ======================================================== */
 
 @include laptop-down {
-  /*
-   * laptop 영역까지는
-   * 조금 더 작은 desktop quick menu.
-   *
-   * mobile breakpoint 진입 전까지만 표시.
-   */
-
   .quick-menu__desktop {
     right: 10px;
 
@@ -494,10 +482,12 @@ function scrollToTop() {
   .quick-menu__mobile {
     position: fixed;
 
-    left: 10px;
-    right: 10px;
-
-    bottom: calc(env(safe-area-inset-bottom) + 9px);
+    /*
+     * 화면 좌우/하단에 완전히 붙임
+     */
+    left: 0;
+    right: 0;
+    bottom: 0;
 
     z-index: 1200;
 
@@ -505,23 +495,32 @@ function scrollToTop() {
 
     grid-template-columns: repeat(4, minmax(0, 1fr));
 
-    gap: 3px;
+    /*
+     * 메뉴 사이 빈 공간 없음
+     */
+    gap: 0;
 
-    padding: 5px;
+    /*
+     * iPhone 홈 인디케이터 영역은
+     * 외부 여백이 아니라 내부 영역으로 확보
+     */
+    padding: 0 0 env(safe-area-inset-bottom);
 
-    border: 1px solid rgba(15, 23, 42, 0.07);
+    border: 0;
 
-    border-radius: 16px;
+    border-top: 1px solid rgba(15, 23, 42, 0.1);
+
+    border-radius: 0;
 
     background: rgba(255, 255, 255, 0.98);
 
     box-shadow:
-      0 9px 28px rgba(15, 23, 42, 0.14),
-      0 2px 5px rgba(15, 23, 42, 0.04);
+      0 -6px 24px rgba(15, 23, 42, 0.09),
+      0 -1px 3px rgba(15, 23, 42, 0.03);
 
-    backdrop-filter: blur(14px);
+    backdrop-filter: blur(16px);
 
-    -webkit-backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(16px);
 
     opacity: 1;
 
@@ -542,7 +541,7 @@ function scrollToTop() {
   .quick-menu__mobile--hidden {
     opacity: 0;
 
-    transform: translateY(18px);
+    transform: translateY(100%);
 
     visibility: hidden;
 
@@ -559,19 +558,26 @@ function scrollToTop() {
     display: flex;
 
     min-width: 0;
-    height: 58px;
+
+    /*
+     * 기존 58px → 72px
+     * 터치 영역을 넉넉하게 확보
+     */
+    height: 72px;
 
     flex-direction: column;
     align-items: center;
     justify-content: center;
 
-    gap: 4px;
+    gap: 6px;
 
-    padding: 5px 2px;
+    padding: 8px 2px;
 
-    border-radius: 11px;
+    border-radius: 0;
 
-    color: #333b48;
+    background: transparent;
+
+    color: #252b34;
 
     text-decoration: none;
 
@@ -583,8 +589,17 @@ function scrollToTop() {
     -webkit-tap-highlight-color: transparent;
   }
 
+  /*
+   * 메뉴 사이에 얇은 구분선
+   */
+  .quick-menu__mobile-item:not(:first-child) {
+    border-left: 1px solid rgba(15, 23, 42, 0.07);
+  }
+
   .quick-menu__mobile-item:active {
-    transform: scale(0.96);
+    background: #f4f7fb;
+
+    transform: scale(0.97);
   }
 
   /* ======================================================
@@ -592,12 +607,14 @@ function scrollToTop() {
   ====================================================== */
 
   .quick-menu__mobile-icon {
-    width: 19px;
-    height: 19px;
+    width: 24px;
+    height: 24px;
+
+    flex: 0 0 auto;
 
     color: #0d57c6;
 
-    stroke-width: 1.8;
+    stroke-width: 1.9;
   }
 
   /* ======================================================
@@ -609,16 +626,24 @@ function scrollToTop() {
 
     max-width: 100%;
 
-    font-size: 9.5px;
-    font-weight: 750;
+    color: #252b34;
 
-    line-height: 1.15;
+    /*
+     * 기존 9.5px → 13px
+     */
+    font-size: 13px;
 
-    letter-spacing: -0.035em;
+    font-weight: 700;
+
+    line-height: 1.2;
+
+    letter-spacing: -0.04em;
 
     text-align: center;
 
     white-space: nowrap;
+
+    transition: color 0.18s ease;
   }
 
   /* ======================================================
@@ -626,8 +651,16 @@ function scrollToTop() {
   ====================================================== */
 
   .quick-menu__mobile-item--active {
-    background: #f0f6ff;
+    background: #f1f6fe;
 
+    color: #0d57c6;
+  }
+
+  .quick-menu__mobile-item--active .quick-menu__mobile-icon {
+    color: #0d57c6;
+  }
+
+  .quick-menu__mobile-item--active span {
     color: #0d57c6;
   }
 
@@ -637,8 +670,10 @@ function scrollToTop() {
     top: 0;
     left: 50%;
 
-    width: 16px;
-    height: 1px;
+    width: 34px;
+    height: 3px;
+
+    border-radius: 0 0 3px 3px;
 
     background: #0d57c6;
 
@@ -654,31 +689,37 @@ function scrollToTop() {
 
 @media (max-width: 360px) {
   .quick-menu__mobile {
-    left: 6px;
-    right: 6px;
+    left: 0;
+    right: 0;
+    bottom: 0;
 
-    bottom: calc(env(safe-area-inset-bottom) + 6px);
+    gap: 0;
 
-    gap: 2px;
+    padding: 0 0 env(safe-area-inset-bottom);
 
-    padding: 4px;
-
-    border-radius: 14px;
+    border-radius: 0;
   }
 
   .quick-menu__mobile-item {
-    height: 54px;
+    /*
+     * 작은 휴대폰에서도 너무 작아지지 않게
+     */
+    height: 68px;
 
-    padding-inline: 1px;
+    gap: 5px;
+
+    padding: 7px 1px;
   }
 
   .quick-menu__mobile-icon {
-    width: 18px;
-    height: 18px;
+    width: 22px;
+    height: 22px;
   }
 
   .quick-menu__mobile-item span {
-    font-size: 9px;
+    font-size: 12px;
+
+    letter-spacing: -0.045em;
   }
 }
 </style>

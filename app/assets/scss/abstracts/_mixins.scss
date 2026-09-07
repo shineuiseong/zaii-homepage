@@ -5,6 +5,12 @@
    MEDIA QUERY
 ========================= */
 
+@mixin small-mobile {
+  @media (max-width: #{$breakpoint-small-mobile}) {
+    @content;
+  }
+}
+
 @mixin mobile {
   @media (max-width: #{$breakpoint-mobile}) {
     @content;
