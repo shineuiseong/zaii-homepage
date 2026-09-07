@@ -276,7 +276,7 @@
               <div class="policy-contact-box">
                 <p><strong>개인정보관리책임자</strong> : 변재상</p>
                 <p><strong>전화번호</strong> : 02-6207-5678</p>
-                <p><strong>이메일</strong> : privacy@zaiiuro.com</p>
+                <p><strong>이메일</strong> : zaii0917@naver.com</p>
                 <p><strong>주소</strong> : 서울특별시 서초구 서운로 220 4층</p>
               </div>
             </section>
