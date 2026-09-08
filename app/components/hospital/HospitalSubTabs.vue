@@ -1,23 +1,20 @@
 <template>
   <section class="hospital-sub-tabs">
-    <div class="container">
-      <div
-        class="hospital-sub-tabs__wrap"
-        :class="{
-          'is-left-visible': showLeft,
-          'is-right-visible': showRight
-        }"
-      >
+    <div class="container hospital-sub-tabs__container">
+      <div class="hospital-sub-tabs__wrap">
+        <!-- LEFT -->
         <button
-          v-if="showLeft"
           type="button"
-          class="hospital-sub-tabs__arrow is-left"
-          aria-label="이전 탭 보기"
+          class="hospital-sub-tabs__arrow hospital-sub-tabs__arrow--left"
+          :class="{ 'is-disabled': !showLeft }"
+          :disabled="!showLeft"
+          aria-label="이전 메뉴 보기"
           @click="scrollLeft"
         >
-          <span aria-hidden="true">‹</span>
+          <Icon name="lucide:chevron-left" size="22" />
         </button>
 
+        <!-- NAV -->
         <nav
           ref="navRef"
           class="hospital-sub-tabs__nav"
@@ -45,14 +42,16 @@
           </NuxtLink>
         </nav>
 
+        <!-- RIGHT -->
         <button
-          v-if="showRight"
           type="button"
-          class="hospital-sub-tabs__arrow is-right"
-          aria-label="다음 탭 보기"
+          class="hospital-sub-tabs__arrow hospital-sub-tabs__arrow--right"
+          :class="{ 'is-disabled': !showRight }"
+          :disabled="!showRight"
+          aria-label="다음 메뉴 보기"
           @click="scrollRight"
         >
-          <span aria-hidden="true">›</span>
+          <Icon name="lucide:chevron-right" size="22" />
         </button>
       </div>
     </div>
@@ -76,29 +75,53 @@ const showLeft = ref(false)
 const showRight = ref(false)
 
 const isDragging = ref(false)
-const movedDuringDrag = ref(false)
+
 const startX = ref(0)
 const startScrollLeft = ref(0)
 
+function isDesktop() {
+  return window.innerWidth > 1024
+}
+
 function checkScroll() {
   const el = navRef.value
+
   if (!el) return
 
-  const maxScrollLeft = el.scrollWidth - el.clientWidth
-  showLeft.value = el.scrollLeft > 4
-  showRight.value = el.scrollLeft < maxScrollLeft - 4
+  if (isDesktop()) {
+    showLeft.value = false
+    showRight.value = false
+    return
+  }
+
+  const maxScrollLeft = Math.max(0, el.scrollWidth - el.clientWidth)
+
+  showLeft.value = el.scrollLeft > 5
+  showRight.value = el.scrollLeft < maxScrollLeft - 5
 }
 
 function scrollActiveTabIntoView(behavior: ScrollBehavior = 'auto') {
   const navEl = navRef.value
+
   if (!navEl) return
 
+  /*
+   * PC에서는 7개 메뉴가 전부 화면 안에 들어가므로
+   * 스크롤 위치를 강제로 변경하지 않음
+   */
+  if (isDesktop()) {
+    navEl.scrollLeft = 0
+    return
+  }
+
   const activeEl = navEl.querySelector('.hospital-sub-tabs__link.is-active') as HTMLElement | null
+
   if (!activeEl) return
 
   const targetLeft = activeEl.offsetLeft - navEl.clientWidth / 2 + activeEl.clientWidth / 2
 
   const maxScrollLeft = navEl.scrollWidth - navEl.clientWidth
+
   const nextLeft = Math.max(0, Math.min(targetLeft, maxScrollLeft))
 
   navEl.scrollTo({
@@ -106,39 +129,46 @@ function scrollActiveTabIntoView(behavior: ScrollBehavior = 'auto') {
     behavior
   })
 
-  window.setTimeout(checkScroll, 50)
+  window.setTimeout(checkScroll, behavior === 'smooth' ? 350 : 50)
 }
 
 function scrollLeft() {
   const el = navRef.value
+
   if (!el) return
 
+  const amount = Math.max(220, el.clientWidth * 0.7)
+
   el.scrollBy({
-    left: -220,
+    left: -amount,
     behavior: 'smooth'
   })
 
-  window.setTimeout(checkScroll, 250)
+  window.setTimeout(checkScroll, 350)
 }
 
 function scrollRight() {
   const el = navRef.value
+
   if (!el) return
 
+  const amount = Math.max(220, el.clientWidth * 0.7)
+
   el.scrollBy({
-    left: 220,
+    left: amount,
     behavior: 'smooth'
   })
 
-  window.setTimeout(checkScroll, 250)
+  window.setTimeout(checkScroll, 350)
 }
 
 function onDragStart(e: MouseEvent) {
   const el = navRef.value
-  if (!el) return
+
+  if (!el || isDesktop()) return
 
   isDragging.value = true
-  movedDuringDrag.value = false
+
   startX.value = e.pageX
   startScrollLeft.value = el.scrollLeft
 
@@ -147,47 +177,49 @@ function onDragStart(e: MouseEvent) {
 
 function onDragMove(e: MouseEvent) {
   const el = navRef.value
-  if (!el || !isDragging.value) return
+
+  if (!el || !isDragging.value || isDesktop()) return
 
   const diff = e.pageX - startX.value
 
-  if (Math.abs(diff) > 3) {
-    movedDuringDrag.value = true
-  }
-
   e.preventDefault()
+
   el.scrollLeft = startScrollLeft.value - diff
+
   checkScroll()
 }
 
 function onTouchStart(e: TouchEvent) {
   const el = navRef.value
+
   if (!el) return
 
   isDragging.value = true
-  movedDuringDrag.value = false
+
   startX.value = e.touches[0]?.pageX ?? 0
+
   startScrollLeft.value = el.scrollLeft
 }
 
 function onTouchMove(e: TouchEvent) {
   const el = navRef.value
+
   if (!el || !isDragging.value) return
 
   const currentX = e.touches[0]?.pageX ?? 0
+
   const diff = currentX - startX.value
 
-  if (Math.abs(diff) > 3) {
-    movedDuringDrag.value = true
-  }
-
   el.scrollLeft = startScrollLeft.value - diff
+
   checkScroll()
 }
 
 function onDragEnd() {
   const el = navRef.value
+
   isDragging.value = false
+
   startX.value = 0
   startScrollLeft.value = 0
 
@@ -195,28 +227,45 @@ function onDragEnd() {
     el.classList.remove('is-dragging')
   }
 
-  window.setTimeout(() => {
-    movedDuringDrag.value = false
-    checkScroll()
-  }, 0)
+  window.setTimeout(checkScroll, 30)
 }
 
 function onResize() {
+  const el = navRef.value
+
+  if (!el) return
+
+  if (isDesktop()) {
+    el.scrollLeft = 0
+  } else {
+    scrollActiveTabIntoView('auto')
+  }
+
   checkScroll()
-  scrollActiveTabIntoView('auto')
 }
 
 onMounted(async () => {
   await nextTick()
+
+  if (isDesktop()) {
+    if (navRef.value) {
+      navRef.value.scrollLeft = 0
+    }
+  } else {
+    scrollActiveTabIntoView('auto')
+  }
+
   checkScroll()
-  scrollActiveTabIntoView('auto')
+
   window.addEventListener('resize', onResize)
 })
 
 watch(
   () => props.tabs.map((tab) => `${tab.to}:${tab.current ? '1' : '0'}`).join('|'),
+
   async () => {
     await nextTick()
+
     scrollActiveTabIntoView('smooth')
   }
 )
@@ -227,174 +276,387 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped lang="scss">
+/* ========================================================
+   ROOT
+======================================================== */
+
 .hospital-sub-tabs {
   position: relative;
-  z-index: 2;
-  margin-top: -36px;
+  z-index: 10;
+
+  margin-top: -30px;
 }
+
+.hospital-sub-tabs__container {
+  position: relative;
+}
+
+/* ========================================================
+   WRAP
+======================================================== */
 
 .hospital-sub-tabs__wrap {
   position: relative;
 
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 44px;
-    z-index: 2;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.2s ease;
-  }
+  width: 100%;
+  max-width: 1320px;
 
-  &::before {
-    left: 0;
-    background: linear-gradient(to right, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0));
-  }
+  margin: 0 auto;
 
-  &::after {
-    right: 0;
-    background: linear-gradient(to left, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0));
-  }
+  background: #ffffff;
 
-  &.is-left-visible::before {
-    opacity: 1;
-  }
+  border: 1px solid #dce5eb;
 
-  &.is-right-visible::after {
-    opacity: 1;
-  }
+  box-shadow: 0 15px 38px rgba(25, 50, 70, 0.07);
 }
 
+/* ========================================================
+   NAV
+======================================================== */
+
 .hospital-sub-tabs__nav {
-  display: flex;
-  align-items: stretch;
-  overflow-x: auto;
-  overflow-y: hidden;
-  background: #fff;
-  border: 1px solid #dce6f1;
-  box-shadow: 0 14px 36px rgba(15, 23, 42, 0.08);
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
+  position: relative;
+
+  display: grid;
+
+  /*
+   * PC에서는 7개 칸 정확하게 균등 분배
+   */
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+
+  width: 100%;
+
+  min-height: 84px;
+
+  overflow: hidden;
+
+  background: #ffffff;
+
   scrollbar-width: none;
-  cursor: grab;
+
   user-select: none;
 
   &::-webkit-scrollbar {
     display: none;
   }
-
-  &.is-dragging {
-    cursor: grabbing;
-    scroll-behavior: auto;
-  }
 }
+
+/* ========================================================
+   LINK
+======================================================== */
 
 .hospital-sub-tabs__link {
   position: relative;
-  z-index: 1;
-  flex: 0 0 auto;
-  min-width: 168px;
-  min-height: 72px;
-  padding: 14px 20px;
-  border-right: 1px solid #e5edf5;
-  display: inline-flex;
+
+  display: flex;
   align-items: center;
   justify-content: center;
-  background: #fff;
-  color: $text-sub;
+
+  min-width: 0;
+  min-height: 84px;
+
+  padding: 0 14px;
+
+  color: #798893;
+
   text-align: center;
   text-decoration: none;
-  white-space: nowrap;
-  transition:
-    background 0.2s ease,
-    color 0.2s ease,
-    box-shadow 0.2s ease;
 
-  &:last-child {
-    border-right: 0;
+  transition:
+    color 0.2s ease,
+    background 0.2s ease;
+
+  /*
+   * 각 탭은 모두 동일한 하단 구조
+   */
+  &::after {
+    content: '';
+
+    position: absolute;
+
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    height: 3px;
+
+    background: transparent;
+
+    transition: background 0.22s ease;
   }
 
   &:hover {
-    color: $color-primary;
-    background: #f8fbff;
+    color: #294e69;
+
+    background: #f8fafb;
   }
 
   &.is-active {
-    color: $text-main;
-    background: #f8fbff;
-    box-shadow: inset 0 -3px 0 $color-primary;
+    color: #173d5b;
+
+    background: #fbfcfd;
+
+    &::after {
+      background: #377fb2;
+    }
+
+    .hospital-sub-tabs__text {
+      font-weight: 700;
+    }
   }
 }
+
+/* ========================================================
+   TEXT
+======================================================== */
 
 .hospital-sub-tabs__text {
   display: block;
-  font-size: 15px;
-  font-weight: 700;
-  line-height: 1.35;
+
+  width: 100%;
+
+  font-size: 17px;
+  line-height: 1.45;
+
+  font-weight: 600;
+
+  letter-spacing: -0.035em;
+
+  text-align: center;
+
   word-break: keep-all;
 }
 
+/* ========================================================
+   ARROWS
+======================================================== */
+
 .hospital-sub-tabs__arrow {
   position: absolute;
+
   top: 50%;
-  transform: translateY(-50%);
-  z-index: 3;
-  width: 38px;
-  height: 38px;
-  border: 1px solid #dce6f1;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.96);
-  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.12);
-  display: inline-flex;
+
+  z-index: 5;
+
+  display: none;
   align-items: center;
   justify-content: center;
-  color: $text-main;
+
+  width: 42px;
+  height: 42px;
+
+  padding: 0;
+
+  border: 1px solid #d8e3ea;
+  border-radius: 50%;
+
+  background: #ffffff;
+
+  color: #31516a;
+
+  box-shadow: 0 7px 20px rgba(27, 49, 67, 0.12);
+
   cursor: pointer;
+
+  transform: translateY(-50%);
+
   transition:
-    transform 0.2s ease,
-    background 0.2s ease,
+    opacity 0.2s ease,
     color 0.2s ease,
-    box-shadow 0.2s ease;
+    border-color 0.2s ease;
 
-  &:hover {
-    background: #fff;
-    color: $color-primary;
-    box-shadow: 0 10px 22px rgba(15, 23, 42, 0.16);
+  &:hover:not(:disabled) {
+    color: #216594;
+
+    border-color: #acc7da;
   }
 
-  span {
-    font-size: 24px;
-    line-height: 1;
-    transform: translateY(-1px);
-  }
+  &:disabled,
+  &.is-disabled {
+    opacity: 0.26;
 
-  &.is-left {
-    left: 10px;
-  }
-
-  &.is-right {
-    right: 10px;
+    cursor: default;
   }
 }
+
+.hospital-sub-tabs__arrow--left {
+  left: 6px;
+}
+
+.hospital-sub-tabs__arrow--right {
+  right: 6px;
+}
+
+/* ========================================================
+   DESKTOP DOWN
+======================================================== */
+
+@include desktop-down {
+  .hospital-sub-tabs__wrap {
+    max-width: 1220px;
+  }
+
+  .hospital-sub-tabs__nav {
+    min-height: 78px;
+  }
+
+  .hospital-sub-tabs__link {
+    min-height: 78px;
+
+    padding: 0 9px;
+  }
+
+  .hospital-sub-tabs__text {
+    font-size: 16px;
+  }
+}
+
+/* ========================================================
+   LAPTOP
+======================================================== */
 
 @include laptop-down {
   .hospital-sub-tabs {
     margin-top: 0;
+
+    background: #ffffff;
+
+    border-bottom: 1px solid #e3e9ed;
   }
 
-  .hospital-sub-tabs__nav {
-    border-left: 0;
+  .hospital-sub-tabs__container {
+    max-width: none;
+
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  .hospital-sub-tabs__wrap {
+    max-width: none;
+
+    padding-right: 52px;
+    padding-left: 52px;
+
     border-right: 0;
+    border-left: 0;
+
     box-shadow: none;
   }
 
+  .hospital-sub-tabs__nav {
+    display: flex;
+
+    min-height: 70px;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    scroll-behavior: smooth;
+    scroll-snap-type: x proximity;
+
+    -webkit-overflow-scrolling: touch;
+
+    &.is-dragging {
+      scroll-behavior: auto;
+    }
+  }
+
   .hospital-sub-tabs__link {
-    min-width: 132px;
-    min-height: 58px;
-    padding: 10px 16px;
+    /*
+     * 태블릿부터는 모두 동일한 고정폭
+     */
+    flex: 0 0 188px;
+
+    width: 188px;
+    min-width: 188px;
+    min-height: 70px;
+
+    padding: 0 12px;
+
+    scroll-snap-align: center;
+  }
+
+  .hospital-sub-tabs__text {
+    font-size: 16px;
+  }
+
+  .hospital-sub-tabs__arrow {
+    display: inline-flex;
+  }
+}
+
+/* ========================================================
+   MOBILE
+======================================================== */
+
+@include mobile {
+  .hospital-sub-tabs__wrap {
+    padding-right: 48px;
+    padding-left: 48px;
+  }
+
+  .hospital-sub-tabs__nav {
+    min-height: 64px;
+
+    scroll-snap-type: x mandatory;
+  }
+
+  .hospital-sub-tabs__link {
+    flex: 0 0 170px;
+
+    width: 170px;
+    min-width: 170px;
+    min-height: 64px;
+
+    padding: 0 12px;
+
+    scroll-snap-align: center;
+  }
+
+  .hospital-sub-tabs__text {
+    font-size: 15px;
+
+    line-height: 1.4;
+  }
+
+  /*
+   * 모바일은 양쪽 화살표 항상 노출
+   */
+  .hospital-sub-tabs__arrow {
+    display: inline-flex;
+
+    width: 38px;
+    height: 38px;
+
+    background: #ffffff;
+
+    color: #294d66;
+  }
+
+  .hospital-sub-tabs__arrow--left {
+    left: 5px;
+  }
+
+  .hospital-sub-tabs__arrow--right {
+    right: 5px;
+  }
+}
+
+/* ========================================================
+   SMALL MOBILE
+======================================================== */
+
+@media (max-width: 380px) {
+  .hospital-sub-tabs__wrap {
+    padding-right: 44px;
+    padding-left: 44px;
+  }
+
+  .hospital-sub-tabs__link {
+    flex-basis: 158px;
+
+    width: 158px;
+    min-width: 158px;
   }
 
   .hospital-sub-tabs__text {
@@ -402,53 +664,8 @@ onBeforeUnmount(() => {
   }
 
   .hospital-sub-tabs__arrow {
-    width: 34px;
-    height: 34px;
-
-    &.is-left {
-      left: 8px;
-    }
-
-    &.is-right {
-      right: 8px;
-    }
-
-    span {
-      font-size: 22px;
-    }
-  }
-
-  .hospital-sub-tabs__wrap {
-    &::before,
-    &::after {
-      width: 32px;
-    }
-  }
-}
-
-@include mobile {
-  .hospital-sub-tabs__nav {
-    scroll-snap-type: x proximity;
-  }
-
-  .hospital-sub-tabs__link {
-    min-width: 112px;
-    min-height: 52px;
-    padding: 8px 14px;
-    scroll-snap-align: start;
-  }
-
-  .hospital-sub-tabs__text {
-    font-size: 13px;
-  }
-
-  .hospital-sub-tabs__arrow {
-    width: 30px;
-    height: 30px;
-
-    span {
-      font-size: 20px;
-    }
+    width: 36px;
+    height: 36px;
   }
 }
 </style>

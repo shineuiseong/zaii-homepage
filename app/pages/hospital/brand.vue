@@ -9,20 +9,14 @@
 
     <HospitalSubTabs :tabs="tabs" />
 
-    <BrandSpecialtySection />
-    <BrandHighRiskSection />
-    <BrandPelvicPainSection />
-    <BrandFastCancerSection />
+    <BrandStorySection />
   </div>
 </template>
 
 <script setup lang="ts">
 import HospitalPageHero from '~/components/hospital/HospitalPageHero.vue'
 import HospitalSubTabs from '~/components/hospital/HospitalSubTabs.vue'
-import BrandSpecialtySection from '~/components/hospital/BrandSpecialtySection.vue'
-import BrandHighRiskSection from '~/components/hospital/BrandHighRiskSection.vue'
-import BrandPelvicPainSection from '~/components/hospital/BrandPelvicPainSection.vue'
-import BrandFastCancerSection from '~/components/hospital/BrandFastCancerSection.vue'
+import BrandStorySection from '~/components/hospital/BrandStorySection.vue'
 
 const tabs = [
   { label: '자이비뇨의학과병원 발자취', to: '/hospital/history', current: false },

@@ -9,18 +9,14 @@
 
     <HospitalSubTabs :tabs="tabs" />
 
-    <GuideContactSection />
-    <GuideScheduleSection />
-    <GuideSubjectSection />
+    <MedicalGuideSection />
   </div>
 </template>
 
 <script setup lang="ts">
 import HospitalPageHero from '~/components/hospital/HospitalPageHero.vue'
 import HospitalSubTabs from '~/components/hospital/HospitalSubTabs.vue'
-import GuideContactSection from '~/components/hospital/GuideContactSection.vue'
-import GuideScheduleSection from '~/components/hospital/GuideScheduleSection.vue'
-import GuideSubjectSection from '~/components/hospital/GuideSubjectSection.vue'
+import MedicalGuideSection from '~/components/hospital/MedicalGuideSection.vue'
 
 const tabs = [
   { label: '자이비뇨의학과병원 발자취', to: '/hospital/history', current: false },
@@ -35,6 +31,6 @@ const tabs = [
 
 <style scoped lang="scss">
 .guide-page {
-  background: #fff;
+  background: #ffffff;
 }
 </style>

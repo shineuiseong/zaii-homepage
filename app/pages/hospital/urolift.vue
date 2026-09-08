@@ -9,22 +9,14 @@
 
     <HospitalSubTabs :tabs="tabs" />
 
-    <UroliftStartSection />
-    <UroliftDomesticSection />
-    <UroliftExpertsSection />
-    <UroliftDirectorSection />
-    <UroliftAchievementSection />
+    <UroliftStorySection />
   </div>
 </template>
 
 <script setup lang="ts">
 import HospitalPageHero from '~/components/hospital/HospitalPageHero.vue'
 import HospitalSubTabs from '~/components/hospital/HospitalSubTabs.vue'
-import UroliftStartSection from '~/components/hospital/UroliftStartSection.vue'
-import UroliftExpertsSection from '~/components/hospital/UroliftExpertsSection.vue'
-import UroliftDirectorSection from '~/components/hospital/UroliftDirectorSection.vue'
-import UroliftAchievementSection from '~/components/hospital/UroliftAchievementSection.vue'
-import UroliftDomesticSection from '~/components/hospital/UroliftDomesticSection.vue'
+import UroliftStorySection from '~/components/hospital/UroliftStorySection.vue'
 
 const tabs = [
   { label: '자이비뇨의학과병원 발자취', to: '/hospital/history', current: false },
