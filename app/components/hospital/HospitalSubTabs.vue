@@ -318,7 +318,7 @@ onBeforeUnmount(() => {
   position: relative;
 
   display: grid;
-  grid-template-columns: repeat(7, minmax(0, 1fr));
+  grid-template-columns: repeat(6, minmax(0, 1fr));
 
   width: 100%;
   min-height: 84px;

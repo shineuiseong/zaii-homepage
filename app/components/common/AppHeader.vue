@@ -367,11 +367,6 @@ const menu: MenuItem[] = [
       },
 
       {
-        label: '진료 안내',
-        link: '/hospital/guide'
-      },
-
-      {
         label: '병원 둘러보기',
         link: '/hospital/tour'
       },
@@ -474,7 +469,7 @@ const menu: MenuItem[] = [
 
       {
         label: '진료 안내',
-        link: '/hospital/guide'
+        link: '/guide'
       }
     ]
   },
