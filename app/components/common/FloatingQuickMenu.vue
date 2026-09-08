@@ -10,7 +10,7 @@
           <Icon name="lucide:phone" class="quick-menu__icon" />
         </span>
 
-        <span class="quick-menu__text"> 진료문의 </span>
+        <span class="quick-menu__text">진료문의</span>
       </a>
 
       <!-- 상담문의 -->
@@ -19,7 +19,7 @@
           <Icon name="lucide:headphones" class="quick-menu__icon" />
         </span>
 
-        <span class="quick-menu__text"> 상담문의 </span>
+        <span class="quick-menu__text">상담문의</span>
       </a>
 
       <!-- 오시는 길 -->
@@ -34,7 +34,7 @@
           <Icon name="lucide:map" class="quick-menu__icon" />
         </span>
 
-        <span class="quick-menu__text"> 오시는 길 </span>
+        <span class="quick-menu__text">오시는 길</span>
       </NuxtLink>
 
       <!-- 온라인상담 -->
@@ -49,7 +49,7 @@
           <Icon name="lucide:message-circle" class="quick-menu__icon" />
         </span>
 
-        <span class="quick-menu__text"> 온라인상담 </span>
+        <span class="quick-menu__text">온라인상담</span>
       </NuxtLink>
 
       <!-- TOP -->
@@ -61,7 +61,7 @@
       >
         <Icon name="lucide:arrow-up" class="quick-menu__top-icon" />
 
-        <span class="quick-menu__top-text"> TOP </span>
+        <span class="quick-menu__top-text">TOP</span>
       </button>
     </nav>
 
@@ -79,15 +79,13 @@
       <!-- 진료문의 -->
       <a href="tel:0262075678" class="quick-menu__mobile-item" aria-label="진료문의 전화">
         <Icon name="lucide:phone" class="quick-menu__mobile-icon" />
-
-        <span> 진료문의 </span>
+        <span>진료문의</span>
       </a>
 
       <!-- 상담문의 -->
       <a href="tel:01026386034" class="quick-menu__mobile-item" aria-label="상담문의 전화">
         <Icon name="lucide:headphones" class="quick-menu__mobile-icon" />
-
-        <span> 상담문의 </span>
+        <span>상담문의</span>
       </a>
 
       <!-- 오시는 길 -->
@@ -99,8 +97,7 @@
         }"
       >
         <Icon name="lucide:map" class="quick-menu__mobile-icon" />
-
-        <span> 오시는 길 </span>
+        <span>오시는 길</span>
       </NuxtLink>
 
       <!-- 온라인상담 -->
@@ -112,8 +109,7 @@
         }"
       >
         <Icon name="lucide:message-circle" class="quick-menu__mobile-icon" />
-
-        <span> 온라인상담 </span>
+        <span>온라인상담</span>
       </NuxtLink>
     </nav>
   </aside>
@@ -129,9 +125,7 @@ function isActive(path: string) {
 }
 
 function scrollToTop() {
-  if (!import.meta.client) {
-    return
-  }
+  if (!import.meta.client) return
 
   window.scrollTo({
     top: 0,
@@ -156,7 +150,6 @@ function scrollToTop() {
 
 .quick-menu__desktop {
   position: fixed;
-
   top: 52%;
   right: 18px;
 
@@ -164,7 +157,6 @@ function scrollToTop() {
   flex-direction: column;
 
   width: 88px;
-
   gap: 7px;
 
   transform: translateY(-50%);
@@ -190,11 +182,16 @@ function scrollToTop() {
 
   padding: 8px 5px;
 
+  overflow: hidden;
+
   border: 1px solid rgba($color-gray-900, 0.07);
 
   border-radius: 15px;
 
-  background: rgba($color-white, 0.98);
+  /*
+   * 항상 화이트 유지
+   */
+  background: $color-white;
 
   color: $text-main;
 
@@ -204,31 +201,117 @@ function scrollToTop() {
     0 9px 22px rgba($color-gray-900, 0.07),
     0 2px 5px rgba($color-gray-900, 0.035);
 
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  /*
+   * 배경색 영향 받지 않게 blur 제거
+   */
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 
   cursor: pointer;
 
   transition:
-    transform 0.18s ease,
-    box-shadow 0.18s ease,
-    border-color 0.18s ease,
-    background 0.18s ease,
-    color 0.18s ease;
+    border-color 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
 
   -webkit-tap-highlight-color: transparent;
+
+  &::after {
+    content: '';
+
+    position: absolute;
+
+    top: 16px;
+    bottom: 16px;
+    left: 0;
+
+    width: 3px;
+
+    border-radius: 0 4px 4px 0;
+
+    background: $color-primary;
+
+    opacity: 0;
+
+    transform: scaleY(0.55);
+
+    transition:
+      opacity 0.2s ease,
+      transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+  }
 }
 
-.quick-menu__item:hover {
-  transform: translateY(-2px);
+/* ========================================================
+   HOVER
+======================================================== */
 
+.quick-menu__item:hover {
   border-color: rgba($color-primary, 0.2);
 
-  background: rgba($color-primary, 0.035);
+  /*
+   * 검게/진하게 안 바뀌고
+   * 아주 살짝만 primary tint
+   */
+  background: mix($color-primary, $color-white, 4%);
 
   box-shadow:
-    0 11px 25px rgba($color-gray-900, 0.09),
-    0 3px 7px rgba($color-primary, 0.05);
+    0 12px 26px rgba($color-gray-900, 0.08),
+    0 4px 10px rgba($color-primary, 0.05);
+
+  &::after {
+    opacity: 1;
+
+    transform: scaleY(1);
+  }
+}
+
+.quick-menu__item:hover .quick-menu__icon-box {
+  color: $color-primary-hover;
+}
+
+.quick-menu__item:hover .quick-menu__text {
+  color: $color-primary-hover;
+}
+
+/* ========================================================
+   ACTIVE
+======================================================== */
+
+.quick-menu__item--active {
+  /*
+   * active도 화이트 기반
+   */
+  background: mix($color-primary, $color-white, 5%);
+
+  border-color: rgba($color-primary, 0.24);
+
+  box-shadow: 0 10px 24px rgba($color-gray-900, 0.07);
+
+  &::after {
+    opacity: 1;
+
+    transform: scaleY(1);
+  }
+}
+
+.quick-menu__item--active .quick-menu__icon-box {
+  color: $color-primary;
+}
+
+.quick-menu__item--active .quick-menu__text {
+  color: $color-primary;
+
+  font-weight: 800;
+}
+
+/*
+ * active 상태에 hover해도
+ * 절대 어두운 배경으로 변경하지 않음
+ */
+.quick-menu__item--active:hover {
+  background: mix($color-primary, $color-white, 7%);
+
+  border-color: rgba($color-primary, 0.3);
 }
 
 /* ========================================================
@@ -243,13 +326,13 @@ function scrollToTop() {
   width: 31px;
   height: 31px;
 
-  color: $color-primary;
-
   flex: 0 0 auto;
 
+  color: $color-primary;
+
   transition:
-    transform 0.18s ease,
-    color 0.18s ease;
+    color 0.2s ease,
+    transform 0.2s ease;
 }
 
 .quick-menu__icon {
@@ -262,7 +345,7 @@ function scrollToTop() {
 .quick-menu__item:hover .quick-menu__icon-box {
   color: $color-primary-hover;
 
-  transform: translateY(-1px);
+  transform: scale(1.05);
 }
 
 /* ========================================================
@@ -285,7 +368,9 @@ function scrollToTop() {
 
   word-break: keep-all;
 
-  transition: color 0.18s ease;
+  transition:
+    color 0.2s ease,
+    font-weight 0.2s ease;
 }
 
 .quick-menu__item:hover .quick-menu__text {
@@ -297,9 +382,15 @@ function scrollToTop() {
 ======================================================== */
 
 .quick-menu__item--active {
-  border-color: rgba($color-primary, 0.22);
+  border-color: rgba($color-primary, 0.24);
 
-  background: linear-gradient(180deg, $color-white 0%, rgba($color-primary, 0.045) 100%);
+  background: linear-gradient(180deg, $color-white 0%, rgba($color-primary, 0.055) 100%);
+
+  &::after {
+    opacity: 1;
+
+    transform: scaleY(1);
+  }
 }
 
 .quick-menu__item--active .quick-menu__icon-box {
@@ -308,22 +399,7 @@ function scrollToTop() {
 
 .quick-menu__item--active .quick-menu__text {
   color: $color-primary;
-}
-
-.quick-menu__item--active::before {
-  position: absolute;
-
-  top: 0;
-  left: 50%;
-
-  width: 24px;
-  height: 2px;
-
-  background: $color-primary;
-
-  transform: translateX(-50%);
-
-  content: '';
+  font-weight: 800;
 }
 
 /* ========================================================
@@ -340,6 +416,10 @@ function scrollToTop() {
   border: 1px solid rgba($color-gray-900, 0.07);
 
   font-family: inherit;
+
+  &::after {
+    display: none;
+  }
 }
 
 .quick-menu__top-icon {
@@ -350,11 +430,15 @@ function scrollToTop() {
 
   color: $text-main;
 
-  transition: color 0.18s ease;
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
 }
 
 .quick-menu__item--top:hover .quick-menu__top-icon {
   color: $color-primary;
+
+  transform: translateY(-2px);
 }
 
 .quick-menu__top-text {
@@ -369,7 +453,7 @@ function scrollToTop() {
 
   letter-spacing: 0.14em;
 
-  transition: color 0.18s ease;
+  transition: color 0.2s ease;
 }
 
 .quick-menu__item--top:hover .quick-menu__top-text {
@@ -519,7 +603,6 @@ function scrollToTop() {
     padding: 0 0 env(safe-area-inset-bottom);
 
     border: 0;
-
     border-top: 1px solid rgba($color-gray-900, 0.1);
 
     border-radius: 0;
@@ -567,14 +650,12 @@ function scrollToTop() {
     position: relative;
 
     display: flex;
-
-    min-width: 0;
-
-    height: 72px;
-
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
+    min-width: 0;
+    height: 72px;
 
     gap: 6px;
 
@@ -601,7 +682,7 @@ function scrollToTop() {
   }
 
   .quick-menu__mobile-item:active {
-    background: rgba($color-primary, 0.055);
+    background: rgba($color-primary, 0.07);
 
     transform: scale(0.97);
   }
@@ -669,21 +750,17 @@ function scrollToTop() {
   }
 
   .quick-menu__mobile-item--active::after {
+    content: '';
+
     position: absolute;
 
     top: 0;
-    left: 50%;
+    right: 0;
+    left: 0;
 
-    width: 36px;
     height: 3px;
 
-    border-radius: 0 0 3px 3px;
-
     background: $color-primary;
-
-    transform: translateX(-50%);
-
-    content: '';
   }
 }
 
