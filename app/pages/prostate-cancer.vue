@@ -7,69 +7,22 @@
       title="자이 전립선암"
     />
 
-    <div ref="introSectionRef" class="prostate-cancer-page__reveal">
-      <ProstateCancerIntroSection />
-    </div>
+    <ProstateCancerIntroSection />
 
-    <div ref="fastTrackSectionRef" class="prostate-cancer-page__reveal">
-      <ProstateCancerFastTrackSection />
-    </div>
+    <ProstateCancerFastTrackSection />
   </div>
 </template>
 
 <script setup lang="ts">
 import { defineBreadcrumb, defineWebPage, useSchemaOrg } from '#imports'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 import ProstateCancerHero from '~/components/prostate-cancer/ProstateCancerHero.vue'
 import ProstateCancerIntroSection from '~/components/prostate-cancer/ProstateCancerIntroSection.vue'
 import ProstateCancerFastTrackSection from '~/components/prostate-cancer/ProstateCancerFastTrackSection.vue'
-
 import { usePageSeo } from '~/composables/usePageSeo'
 
-const introSectionRef = ref<HTMLElement | null>(null)
-const fastTrackSectionRef = ref<HTMLElement | null>(null)
-
-let ctx: gsap.Context | null = null
-
-onMounted(() => {
-  gsap.registerPlugin(ScrollTrigger)
-
-  ctx = gsap.context(() => {
-    const sections = [introSectionRef.value, fastTrackSectionRef.value].filter(
-      Boolean
-    ) as HTMLElement[]
-
-    sections.forEach((section) => {
-      gsap.fromTo(
-        section,
-        {
-          opacity: 0,
-          y: 70
-        },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 1.15,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: section,
-            start: 'top 82%',
-            once: true
-          }
-        }
-      )
-    })
-  })
-})
-
-onBeforeUnmount(() => {
-  ctx?.revert()
-  ctx = null
-})
-
 const config = useRuntimeConfig()
+
 const siteUrl = config.public.siteUrl || 'https://zaii.kr'
 const pageUrl = `${siteUrl}/prostate-cancer`
 
@@ -135,16 +88,5 @@ useSchemaOrg([
 <style scoped lang="scss">
 .prostate-cancer-page {
   background: #ffffff;
-}
-
-.prostate-cancer-page__reveal {
-  width: 100%;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .prostate-cancer-page__reveal {
-    opacity: 1 !important;
-    transform: none !important;
-  }
 }
 </style>

@@ -1,24 +1,24 @@
 <template>
-  <section id="prostate-cancer-intro" class="prostate-cancer-intro">
+  <section id="prostate-cancer-intro" ref="sectionRef" class="prostate-cancer-intro">
     <div class="container prostate-cancer-intro__inner">
       <!-- =====================================================
            INTRO
       ====================================================== -->
       <div class="prostate-cancer-intro__intro">
         <div class="prostate-cancer-intro__intro-heading">
-          <div class="prostate-cancer-intro__eyebrow">
+          <div ref="eyebrowRef" class="prostate-cancer-intro__eyebrow">
             <span class="prostate-cancer-intro__eyebrow-line" />
             <span>PROSTATE CANCER</span>
           </div>
 
-          <h2 class="prostate-cancer-intro__title">
+          <h2 ref="titleRef" class="prostate-cancer-intro__title">
             전립선암,
             <br />
             <strong>조기 발견이 중요합니다.</strong>
           </h2>
         </div>
 
-        <div class="prostate-cancer-intro__intro-content">
+        <div ref="introContentRef" class="prostate-cancer-intro__intro-content">
           <p class="prostate-cancer-intro__intro-lead">
             초기에는 뚜렷한 증상이 없어
             <br class="desktop-only" />
@@ -42,14 +42,15 @@
       <!-- =====================================================
            KEY MESSAGE
       ====================================================== -->
-      <div class="prostate-cancer-intro__key">
+      <div ref="keyRef" class="prostate-cancer-intro__key">
         <div class="prostate-cancer-intro__key-index">01</div>
 
         <div class="prostate-cancer-intro__key-content">
           <span>EARLY DETECTION</span>
 
           <p>
-            특히 <strong>40대 이후부터는 정기적인 검사</strong>를 통해 전립선의 변화를 확인하는 것이
+            특히
+            <strong>40대 이후부터는 정기적인 검사</strong>를 통해 전립선의 변화를 확인하는 것이
             좋습니다.
           </p>
         </div>
@@ -60,14 +61,14 @@
       </div>
 
       <!-- =====================================================
-           CHECK SECTION
+           CHECK
       ====================================================== -->
       <div class="prostate-cancer-intro__check">
         <!-- LEFT -->
         <div class="prostate-cancer-intro__symptom-area">
-          <div class="prostate-cancer-intro__section-head">
+          <div ref="symptomHeadRef" class="prostate-cancer-intro__section-head">
             <div>
-              <span class="prostate-cancer-intro__section-number">02</span>
+              <span class="prostate-cancer-intro__section-number"> 02 </span>
 
               <p class="prostate-cancer-intro__section-eyebrow">CHECK YOUR SYMPTOMS</p>
 
@@ -84,7 +85,7 @@
             </p>
           </div>
 
-          <ul class="prostate-cancer-intro__symptoms">
+          <ul ref="symptomsRef" class="prostate-cancer-intro__symptoms">
             <li>
               <span class="prostate-cancer-intro__symptom-number">01</span>
               <p>주간 또는 야간에 소변을 보는 횟수가 증가합니다.</p>
@@ -128,7 +129,7 @@
         </div>
 
         <!-- RIGHT -->
-        <aside class="prostate-cancer-intro__reason-area">
+        <aside ref="reasonAreaRef" class="prostate-cancer-intro__reason-area">
           <div class="prostate-cancer-intro__reason-top">
             <span>03</span>
 
@@ -141,12 +142,13 @@
             </h3>
           </div>
 
-          <div class="prostate-cancer-intro__reasons">
+          <div ref="reasonsRef" class="prostate-cancer-intro__reasons">
             <div class="prostate-cancer-intro__reason">
               <span>01</span>
 
               <div>
                 <strong>증상만으로 구별하기 어렵습니다.</strong>
+
                 <p>전립선암의 증상은 전립선비대증이나 전립선염과 비슷하게 나타날 수 있습니다.</p>
               </div>
             </div>
@@ -156,6 +158,7 @@
 
               <div>
                 <strong>초기에는 증상이 없을 수 있습니다.</strong>
+
                 <p>별다른 불편함이 없더라도 검사 과정에서 발견되는 경우가 있습니다.</p>
               </div>
             </div>
@@ -165,6 +168,7 @@
 
               <div>
                 <strong>조기 발견이 치료 방향에 중요합니다.</strong>
+
                 <p>
                   빠르게 발견할수록 상태를 정확하게 확인하고 이후 치료 계획을 세우는 데 도움이
                   됩니다.
@@ -176,7 +180,8 @@
               <span>04</span>
 
               <div>
-                <strong>위험군이라면 더욱 세심한 확인이 필요합니다.</strong>
+                <strong> 위험군이라면 더욱 세심한 확인이 필요합니다. </strong>
+
                 <p>
                   연령, 가족력, 반복되는 배뇨 증상 등을 고려해 정기적인 검사를 받는 것이 좋습니다.
                 </p>
@@ -214,9 +219,9 @@
       </div>
 
       <!-- =====================================================
-           BOTTOM MESSAGE
+           BOTTOM
       ====================================================== -->
-      <div class="prostate-cancer-intro__bottom">
+      <div ref="bottomRef" class="prostate-cancer-intro__bottom">
         <span class="prostate-cancer-intro__bottom-line" />
 
         <p>
@@ -230,6 +235,223 @@
   </section>
 </template>
 
+<script setup lang="ts">
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+const sectionRef = ref<HTMLElement | null>(null)
+
+const eyebrowRef = ref<HTMLElement | null>(null)
+const titleRef = ref<HTMLElement | null>(null)
+const introContentRef = ref<HTMLElement | null>(null)
+
+const keyRef = ref<HTMLElement | null>(null)
+
+const symptomHeadRef = ref<HTMLElement | null>(null)
+const symptomsRef = ref<HTMLElement | null>(null)
+
+const reasonAreaRef = ref<HTMLElement | null>(null)
+const reasonsRef = ref<HTMLElement | null>(null)
+
+const bottomRef = ref<HTMLElement | null>(null)
+
+let ctx: gsap.Context | null = null
+
+onMounted(() => {
+  const section = sectionRef.value
+
+  // DOM ref가 확보되지 않았으면 실행하지 않음
+  if (!section) return
+
+  gsap.registerPlugin(ScrollTrigger)
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+  if (reduceMotion) return
+
+  ctx = gsap.context(() => {
+    /* =====================================================
+       INTRO
+    ====================================================== */
+
+    const introTimeline = gsap.timeline({
+      scrollTrigger: {
+        trigger: section,
+        start: 'top 76%',
+        once: true
+      }
+    })
+
+    if (eyebrowRef.value) {
+      introTimeline.from(eyebrowRef.value, {
+        opacity: 0,
+        y: 18,
+        duration: 0.65,
+        ease: 'power3.out'
+      })
+    }
+
+    if (titleRef.value) {
+      introTimeline.from(
+        titleRef.value,
+        {
+          opacity: 0,
+          y: 38,
+          duration: 0.9,
+          ease: 'power3.out'
+        },
+        '-=0.38'
+      )
+    }
+
+    if (introContentRef.value) {
+      introTimeline.from(
+        introContentRef.value,
+        {
+          opacity: 0,
+          y: 32,
+          duration: 0.85,
+          ease: 'power3.out'
+        },
+        '-=0.5'
+      )
+    }
+
+    /* =====================================================
+       KEY MESSAGE
+    ====================================================== */
+
+    const key = keyRef.value
+
+    if (key) {
+      gsap.from(key, {
+        opacity: 0,
+        y: 45,
+        duration: 0.95,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: key,
+          start: 'top 84%',
+          once: true
+        }
+      })
+    }
+
+    /* =====================================================
+       SYMPTOM HEADER
+    ====================================================== */
+
+    const symptomHead = symptomHeadRef.value
+
+    if (symptomHead) {
+      gsap.from(symptomHead, {
+        opacity: 0,
+        y: 35,
+        duration: 0.85,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: symptomHead,
+          start: 'top 84%',
+          once: true
+        }
+      })
+    }
+
+    /* =====================================================
+       SYMPTOMS
+    ====================================================== */
+
+    const symptoms = symptomsRef.value
+
+    if (symptoms) {
+      const symptomItems = symptoms.querySelectorAll<HTMLElement>('li')
+
+      if (symptomItems.length) {
+        gsap.from(symptomItems, {
+          opacity: 0,
+          y: 28,
+          duration: 0.65,
+          stagger: 0.075,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: symptoms,
+            start: 'top 84%',
+            once: true
+          }
+        })
+      }
+    }
+
+    /* =====================================================
+       REASON AREA
+    ====================================================== */
+
+    const reasonArea = reasonAreaRef.value
+
+    if (reasonArea) {
+      gsap.from(reasonArea, {
+        opacity: 0,
+        x: 45,
+        duration: 1,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: reasonArea,
+          start: 'top 84%',
+          once: true
+        }
+      })
+    }
+
+    const reasons = reasonsRef.value
+
+    if (reasons) {
+      const reasonItems = reasons.querySelectorAll<HTMLElement>('.prostate-cancer-intro__reason')
+
+      if (reasonItems.length) {
+        gsap.from(reasonItems, {
+          opacity: 0,
+          x: 20,
+          duration: 0.6,
+          stagger: 0.1,
+          delay: 0.2,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: reasons,
+            start: 'top 82%',
+            once: true
+          }
+        })
+      }
+    }
+
+    /* =====================================================
+       BOTTOM
+    ====================================================== */
+
+    const bottom = bottomRef.value
+
+    if (bottom) {
+      gsap.from(bottom, {
+        opacity: 0,
+        y: 25,
+        duration: 0.8,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: bottom,
+          start: 'top 90%',
+          once: true
+        }
+      })
+    }
+  }, section)
+})
+
+onBeforeUnmount(() => {
+  ctx?.revert()
+  ctx = null
+})
+</script>
+
 <style scoped lang="scss">
 .prostate-cancer-intro {
   position: relative;
@@ -238,10 +460,6 @@
   background: #ffffff;
   color: #1d2e40;
 }
-
-/* ========================================================
-   INNER
-======================================================== */
 
 .prostate-cancer-intro__inner {
   position: relative;
@@ -325,7 +543,7 @@
 }
 
 /* ========================================================
-   KEY MESSAGE
+   KEY
 ======================================================== */
 
 .prostate-cancer-intro__key {
@@ -403,13 +621,8 @@
 .prostate-cancer-intro__check {
   display: grid;
   grid-template-columns: minmax(0, 1.22fr) minmax(390px, 0.78fr);
-  gap: 0;
   margin-top: 100px;
 }
-
-/* ========================================================
-   SECTION HEADER
-======================================================== */
 
 .prostate-cancer-intro__section-head {
   display: flex;
@@ -731,7 +944,7 @@
 }
 
 /* ========================================================
-   LAPTOP DOWN
+   LAPTOP
 ======================================================== */
 
 @include laptop-down {
@@ -788,7 +1001,6 @@
     gap: 9px;
     margin-bottom: 16px;
     font-size: 9px;
-    letter-spacing: 0.15em;
   }
 
   .prostate-cancer-intro__eyebrow-line {
@@ -797,12 +1009,10 @@
 
   .prostate-cancer-intro__title {
     font-size: 36px;
-    line-height: 1.32;
   }
 
   .prostate-cancer-intro__intro-lead {
     font-size: 20px;
-    line-height: 1.55;
   }
 
   .prostate-cancer-intro__intro-description {
@@ -812,13 +1022,7 @@
       font-size: 14px;
       line-height: 1.8;
     }
-
-    p + p {
-      margin-top: 13px;
-    }
   }
-
-  /* KEY */
 
   .prostate-cancer-intro__key {
     display: block;
@@ -831,29 +1035,9 @@
     margin-bottom: 23px;
   }
 
-  .prostate-cancer-intro__key-content {
-    > span {
-      margin-bottom: 9px;
-      font-size: 8px;
-    }
-
-    p {
-      max-width: 280px;
-      font-size: 18px;
-      line-height: 1.65;
-    }
+  .prostate-cancer-intro__key-content p {
+    font-size: 18px;
   }
-
-  .prostate-cancer-intro__key-mark {
-    right: -10px;
-    bottom: -10px;
-
-    span {
-      font-size: 70px;
-    }
-  }
-
-  /* CHECK */
 
   .prostate-cancer-intro__check {
     margin-top: 54px;
@@ -868,26 +1052,13 @@
     margin-bottom: 30px;
   }
 
-  .prostate-cancer-intro__section-number {
-    margin-bottom: 14px;
-    font-size: 9px;
-  }
-
-  .prostate-cancer-intro__section-eyebrow {
-    font-size: 8px;
-    margin-bottom: 10px;
-  }
-
   .prostate-cancer-intro__section-head h3 {
     font-size: 25px;
-    line-height: 1.5;
   }
 
   .prostate-cancer-intro__section-description {
-    max-width: none;
     margin-top: 18px;
     font-size: 13px;
-    line-height: 1.75;
   }
 
   .prostate-cancer-intro__symptoms {
@@ -903,15 +1074,8 @@
 
     p {
       font-size: 14px;
-      line-height: 1.7;
     }
   }
-
-  .prostate-cancer-intro__symptom-number {
-    font-size: 9px;
-  }
-
-  /* REASON */
 
   .prostate-cancer-intro__reason-area {
     margin-left: calc(var(--container-padding, 20px) * -1);
@@ -919,57 +1083,22 @@
     padding: 42px 20px 38px;
   }
 
-  .prostate-cancer-intro__reason-top {
-    > span {
-      margin-bottom: 27px;
-      font-size: 9px;
-    }
-
-    > p {
-      margin-bottom: 10px;
-      font-size: 8px;
-    }
-
-    h3 {
-      font-size: 25px;
-      line-height: 1.5;
-    }
-  }
-
-  .prostate-cancer-intro__reasons {
-    margin-top: 31px;
+  .prostate-cancer-intro__reason-top h3 {
+    font-size: 25px;
   }
 
   .prostate-cancer-intro__reason {
     grid-template-columns: 30px minmax(0, 1fr);
     gap: 10px;
-    padding: 20px 0;
-
-    > span {
-      font-size: 9px;
-    }
 
     strong {
       font-size: 14px;
-      line-height: 1.55;
     }
-
-    p {
-      margin-top: 5px;
-      font-size: 13px;
-      line-height: 1.7;
-    }
-  }
-
-  .prostate-cancer-intro__reason-bottom {
-    margin-top: 27px;
 
     p {
       font-size: 13px;
     }
   }
-
-  /* BOTTOM */
 
   .prostate-cancer-intro__bottom {
     display: block;
@@ -983,7 +1112,6 @@
   }
 
   .prostate-cancer-intro__bottom p {
-    max-width: 300px;
     text-align: left;
     font-size: 15px;
   }
@@ -991,7 +1119,15 @@
   .prostate-cancer-intro__bottom-en {
     display: block;
     margin-top: 17px;
-    font-size: 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .prostate-cancer-intro *,
+  .prostate-cancer-intro *::before,
+  .prostate-cancer-intro *::after {
+    animation: none !important;
+    transition: none !important;
   }
 }
 </style>
