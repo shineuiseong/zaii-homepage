@@ -299,15 +299,15 @@ onBeforeUnmount(() => {
   position: relative;
 
   width: 100%;
-  max-width: 1320px;
+  max-width: $container-width;
 
   margin: 0 auto;
 
-  background: #ffffff;
+  background: $color-white;
 
-  border: 1px solid #dce5eb;
+  border: 1px solid $color-border;
 
-  box-shadow: 0 15px 38px rgba(25, 50, 70, 0.07);
+  box-shadow: $shadow-md;
 }
 
 /* ========================================================
@@ -318,19 +318,14 @@ onBeforeUnmount(() => {
   position: relative;
 
   display: grid;
-
-  /*
-   * PC에서는 7개 칸 정확하게 균등 분배
-   */
   grid-template-columns: repeat(7, minmax(0, 1fr));
 
   width: 100%;
-
   min-height: 84px;
 
   overflow: hidden;
 
-  background: #ffffff;
+  background: $color-white;
 
   scrollbar-width: none;
 
@@ -355,9 +350,9 @@ onBeforeUnmount(() => {
   min-width: 0;
   min-height: 84px;
 
-  padding: 0 14px;
+  padding: 0 12px;
 
-  color: #798893;
+  color: $text-muted;
 
   text-align: center;
   text-decoration: none;
@@ -367,7 +362,8 @@ onBeforeUnmount(() => {
     background 0.2s ease;
 
   /*
-   * 각 탭은 모두 동일한 하단 구조
+   * 모든 탭에 동일한 하단 영역을 확보하고
+   * active에서만 primary 컬러 노출
    */
   &::after {
     content: '';
@@ -382,22 +378,22 @@ onBeforeUnmount(() => {
 
     background: transparent;
 
-    transition: background 0.22s ease;
+    transition: background 0.2s ease;
   }
 
   &:hover {
-    color: #294e69;
+    color: $color-primary;
 
-    background: #f8fafb;
+    background: rgba($color-primary, 0.035);
   }
 
   &.is-active {
-    color: #173d5b;
+    color: $color-primary;
 
-    background: #fbfcfd;
+    background: rgba($color-primary, 0.025);
 
     &::after {
-      background: #377fb2;
+      background: $color-primary;
     }
 
     .hospital-sub-tabs__text {
@@ -447,14 +443,14 @@ onBeforeUnmount(() => {
 
   padding: 0;
 
-  border: 1px solid #d8e3ea;
+  border: 1px solid $color-gray-200;
   border-radius: 50%;
 
-  background: #ffffff;
+  background: $color-white;
 
-  color: #31516a;
+  color: $text-sub;
 
-  box-shadow: 0 7px 20px rgba(27, 49, 67, 0.12);
+  box-shadow: $shadow-sm;
 
   cursor: pointer;
 
@@ -463,17 +459,20 @@ onBeforeUnmount(() => {
   transition:
     opacity 0.2s ease,
     color 0.2s ease,
-    border-color 0.2s ease;
+    border-color 0.2s ease,
+    background 0.2s ease;
 
   &:hover:not(:disabled) {
-    color: #216594;
+    color: $color-primary;
 
-    border-color: #acc7da;
+    border-color: rgba($color-primary, 0.35);
+
+    background: rgba($color-primary, 0.04);
   }
 
   &:disabled,
   &.is-disabled {
-    opacity: 0.26;
+    opacity: 0.28;
 
     cursor: default;
   }
@@ -493,7 +492,7 @@ onBeforeUnmount(() => {
 
 @include desktop-down {
   .hospital-sub-tabs__wrap {
-    max-width: 1220px;
+    max-width: 1160px;
   }
 
   .hospital-sub-tabs__nav {
@@ -519,9 +518,9 @@ onBeforeUnmount(() => {
   .hospital-sub-tabs {
     margin-top: 0;
 
-    background: #ffffff;
+    background: $color-white;
 
-    border-bottom: 1px solid #e3e9ed;
+    border-bottom: 1px solid $color-border;
   }
 
   .hospital-sub-tabs__container {
@@ -562,9 +561,6 @@ onBeforeUnmount(() => {
   }
 
   .hospital-sub-tabs__link {
-    /*
-     * 태블릿부터는 모두 동일한 고정폭
-     */
     flex: 0 0 188px;
 
     width: 188px;
@@ -615,22 +611,20 @@ onBeforeUnmount(() => {
 
   .hospital-sub-tabs__text {
     font-size: 15px;
-
     line-height: 1.4;
   }
 
-  /*
-   * 모바일은 양쪽 화살표 항상 노출
-   */
   .hospital-sub-tabs__arrow {
     display: inline-flex;
 
     width: 38px;
     height: 38px;
 
-    background: #ffffff;
+    background: $color-white;
 
-    color: #294d66;
+    color: $color-primary;
+
+    border-color: rgba($color-primary, 0.24);
   }
 
   .hospital-sub-tabs__arrow--left {

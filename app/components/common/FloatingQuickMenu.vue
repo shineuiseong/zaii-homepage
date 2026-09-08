@@ -147,7 +147,6 @@ function scrollToTop() {
 
 .quick-menu {
   position: fixed;
-
   z-index: 1200;
 }
 
@@ -191,22 +190,21 @@ function scrollToTop() {
 
   padding: 8px 5px;
 
-  border: 1px solid rgba(15, 23, 42, 0.07);
+  border: 1px solid rgba($color-gray-900, 0.07);
 
   border-radius: 15px;
 
-  background: rgba(255, 255, 255, 0.98);
+  background: rgba($color-white, 0.98);
 
-  color: #151922;
+  color: $text-main;
 
   text-decoration: none;
 
   box-shadow:
-    0 9px 22px rgba(15, 23, 42, 0.07),
-    0 2px 5px rgba(15, 23, 42, 0.035);
+    0 9px 22px rgba($color-gray-900, 0.07),
+    0 2px 5px rgba($color-gray-900, 0.035);
 
   backdrop-filter: blur(10px);
-
   -webkit-backdrop-filter: blur(10px);
 
   cursor: pointer;
@@ -224,13 +222,13 @@ function scrollToTop() {
 .quick-menu__item:hover {
   transform: translateY(-2px);
 
-  border-color: rgba(13, 87, 198, 0.18);
+  border-color: rgba($color-primary, 0.2);
 
-  background: #f9fbff;
+  background: rgba($color-primary, 0.035);
 
   box-shadow:
-    0 11px 25px rgba(15, 23, 42, 0.09),
-    0 3px 7px rgba(13, 87, 198, 0.04);
+    0 11px 25px rgba($color-gray-900, 0.09),
+    0 3px 7px rgba($color-primary, 0.05);
 }
 
 /* ========================================================
@@ -245,11 +243,13 @@ function scrollToTop() {
   width: 31px;
   height: 31px;
 
-  color: #0d57c6;
+  color: $color-primary;
 
   flex: 0 0 auto;
 
-  transition: transform 0.18s ease;
+  transition:
+    transform 0.18s ease,
+    color 0.18s ease;
 }
 
 .quick-menu__icon {
@@ -260,6 +260,8 @@ function scrollToTop() {
 }
 
 .quick-menu__item:hover .quick-menu__icon-box {
+  color: $color-primary-hover;
+
   transform: translateY(-1px);
 }
 
@@ -270,7 +272,7 @@ function scrollToTop() {
 .quick-menu__text {
   display: block;
 
-  color: #151922;
+  color: $text-main;
 
   font-size: 12px;
   font-weight: 750;
@@ -286,18 +288,26 @@ function scrollToTop() {
   transition: color 0.18s ease;
 }
 
+.quick-menu__item:hover .quick-menu__text {
+  color: $color-primary-hover;
+}
+
 /* ========================================================
    ACTIVE
 ======================================================== */
 
 .quick-menu__item--active {
-  border-color: rgba(13, 87, 198, 0.18);
+  border-color: rgba($color-primary, 0.22);
 
-  background: linear-gradient(180deg, #ffffff 0%, #f5f9ff 100%);
+  background: linear-gradient(180deg, $color-white 0%, rgba($color-primary, 0.045) 100%);
+}
+
+.quick-menu__item--active .quick-menu__icon-box {
+  color: $color-primary;
 }
 
 .quick-menu__item--active .quick-menu__text {
-  color: #0d57c6;
+  color: $color-primary;
 }
 
 .quick-menu__item--active::before {
@@ -306,10 +316,10 @@ function scrollToTop() {
   top: 0;
   left: 50%;
 
-  width: 22px;
-  height: 1px;
+  width: 24px;
+  height: 2px;
 
-  background: #0d57c6;
+  background: $color-primary;
 
   transform: translateX(-50%);
 
@@ -327,7 +337,7 @@ function scrollToTop() {
 
   padding: 7px 5px;
 
-  border: 1px solid rgba(15, 23, 42, 0.07);
+  border: 1px solid rgba($color-gray-900, 0.07);
 
   font-family: inherit;
 }
@@ -338,13 +348,19 @@ function scrollToTop() {
 
   stroke-width: 1.7;
 
-  color: #111827;
+  color: $text-main;
+
+  transition: color 0.18s ease;
+}
+
+.quick-menu__item--top:hover .quick-menu__top-icon {
+  color: $color-primary;
 }
 
 .quick-menu__top-text {
   display: block;
 
-  color: #737b88;
+  color: $text-muted;
 
   font-size: 8px;
   font-weight: 800;
@@ -352,6 +368,12 @@ function scrollToTop() {
   line-height: 1;
 
   letter-spacing: 0.14em;
+
+  transition: color 0.18s ease;
+}
+
+.quick-menu__item--top:hover .quick-menu__top-text {
+  color: $color-primary;
 }
 
 /* ========================================================
@@ -482,9 +504,6 @@ function scrollToTop() {
   .quick-menu__mobile {
     position: fixed;
 
-    /*
-     * 화면 좌우/하단에 완전히 붙임
-     */
     left: 0;
     right: 0;
     bottom: 0;
@@ -495,31 +514,23 @@ function scrollToTop() {
 
     grid-template-columns: repeat(4, minmax(0, 1fr));
 
-    /*
-     * 메뉴 사이 빈 공간 없음
-     */
     gap: 0;
 
-    /*
-     * iPhone 홈 인디케이터 영역은
-     * 외부 여백이 아니라 내부 영역으로 확보
-     */
     padding: 0 0 env(safe-area-inset-bottom);
 
     border: 0;
 
-    border-top: 1px solid rgba(15, 23, 42, 0.1);
+    border-top: 1px solid rgba($color-gray-900, 0.1);
 
     border-radius: 0;
 
-    background: rgba(255, 255, 255, 0.98);
+    background: rgba($color-white, 0.98);
 
     box-shadow:
-      0 -6px 24px rgba(15, 23, 42, 0.09),
-      0 -1px 3px rgba(15, 23, 42, 0.03);
+      0 -6px 24px rgba($color-gray-900, 0.09),
+      0 -1px 3px rgba($color-gray-900, 0.03);
 
     backdrop-filter: blur(16px);
-
     -webkit-backdrop-filter: blur(16px);
 
     opacity: 1;
@@ -559,10 +570,6 @@ function scrollToTop() {
 
     min-width: 0;
 
-    /*
-     * 기존 58px → 72px
-     * 터치 영역을 넉넉하게 확보
-     */
     height: 72px;
 
     flex-direction: column;
@@ -577,7 +584,7 @@ function scrollToTop() {
 
     background: transparent;
 
-    color: #252b34;
+    color: $text-main;
 
     text-decoration: none;
 
@@ -589,15 +596,12 @@ function scrollToTop() {
     -webkit-tap-highlight-color: transparent;
   }
 
-  /*
-   * 메뉴 사이에 얇은 구분선
-   */
   .quick-menu__mobile-item:not(:first-child) {
-    border-left: 1px solid rgba(15, 23, 42, 0.07);
+    border-left: 1px solid rgba($color-gray-900, 0.07);
   }
 
   .quick-menu__mobile-item:active {
-    background: #f4f7fb;
+    background: rgba($color-primary, 0.055);
 
     transform: scale(0.97);
   }
@@ -612,9 +616,13 @@ function scrollToTop() {
 
     flex: 0 0 auto;
 
-    color: #0d57c6;
+    color: $color-primary;
 
     stroke-width: 1.9;
+
+    transition:
+      color 0.18s ease,
+      transform 0.18s ease;
   }
 
   /* ======================================================
@@ -626,13 +634,9 @@ function scrollToTop() {
 
     max-width: 100%;
 
-    color: #252b34;
+    color: $text-main;
 
-    /*
-     * 기존 9.5px → 13px
-     */
     font-size: 13px;
-
     font-weight: 700;
 
     line-height: 1.2;
@@ -651,17 +655,17 @@ function scrollToTop() {
   ====================================================== */
 
   .quick-menu__mobile-item--active {
-    background: #f1f6fe;
+    background: rgba($color-primary, 0.06);
 
-    color: #0d57c6;
+    color: $color-primary;
   }
 
   .quick-menu__mobile-item--active .quick-menu__mobile-icon {
-    color: #0d57c6;
+    color: $color-primary;
   }
 
   .quick-menu__mobile-item--active span {
-    color: #0d57c6;
+    color: $color-primary;
   }
 
   .quick-menu__mobile-item--active::after {
@@ -670,12 +674,12 @@ function scrollToTop() {
     top: 0;
     left: 50%;
 
-    width: 34px;
+    width: 36px;
     height: 3px;
 
     border-radius: 0 0 3px 3px;
 
-    background: #0d57c6;
+    background: $color-primary;
 
     transform: translateX(-50%);
 
@@ -701,9 +705,6 @@ function scrollToTop() {
   }
 
   .quick-menu__mobile-item {
-    /*
-     * 작은 휴대폰에서도 너무 작아지지 않게
-     */
     height: 68px;
 
     gap: 5px;
