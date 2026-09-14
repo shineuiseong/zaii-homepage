@@ -136,6 +136,7 @@ function scrollToTop() {
 
 <style scoped lang="scss">
 @use 'sass:color';
+
 /* ========================================================
    ROOT
 ======================================================== */
@@ -171,13 +172,12 @@ function scrollToTop() {
   position: relative;
 
   display: flex;
-
-  width: 88px;
-  height: 88px;
-
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  width: 88px;
+  height: 88px;
 
   gap: 6px;
 
@@ -186,12 +186,8 @@ function scrollToTop() {
   overflow: hidden;
 
   border: 1px solid rgba($color-gray-900, 0.07);
-
   border-radius: 15px;
 
-  /*
-   * 항상 화이트 유지
-   */
   background: $color-white;
 
   color: $text-main;
@@ -202,9 +198,6 @@ function scrollToTop() {
     0 9px 22px rgba($color-gray-900, 0.07),
     0 2px 5px rgba($color-gray-900, 0.035);
 
-  /*
-   * 배경색 영향 받지 않게 blur 제거
-   */
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
 
@@ -213,7 +206,8 @@ function scrollToTop() {
   transition:
     border-color 0.2s ease,
     background 0.2s ease,
-    box-shadow 0.2s ease;
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
 
   -webkit-tap-highlight-color: transparent;
 
@@ -236,6 +230,8 @@ function scrollToTop() {
 
     transform: scaleY(0.55);
 
+    transform-origin: center;
+
     transition:
       opacity 0.2s ease,
       transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
@@ -243,16 +239,12 @@ function scrollToTop() {
 }
 
 /* ========================================================
-   HOVER
+   DESKTOP HOVER
 ======================================================== */
 
 .quick-menu__item:hover {
   border-color: rgba($color-primary, 0.2);
 
-  /*
-   * 검게/진하게 안 바뀌고
-   * 아주 살짝만 primary tint
-   */
   background: color.mix($color-primary, $color-white, 4%);
 
   box-shadow:
@@ -264,55 +256,6 @@ function scrollToTop() {
 
     transform: scaleY(1);
   }
-}
-
-.quick-menu__item:hover .quick-menu__icon-box {
-  color: $color-primary-hover;
-}
-
-.quick-menu__item:hover .quick-menu__text {
-  color: $color-primary-hover;
-}
-
-/* ========================================================
-   ACTIVE
-======================================================== */
-
-.quick-menu__item--active {
-  /*
-   * active도 화이트 기반
-   */
-  background: color.mix($color-primary, $color-white, 5%);
-
-  border-color: rgba($color-primary, 0.24);
-
-  box-shadow: 0 10px 24px rgba($color-gray-900, 0.07);
-
-  &::after {
-    opacity: 1;
-
-    transform: scaleY(1);
-  }
-}
-
-.quick-menu__item--active .quick-menu__icon-box {
-  color: $color-primary;
-}
-
-.quick-menu__item--active .quick-menu__text {
-  color: $color-primary;
-
-  font-weight: 800;
-}
-
-/*
- * active 상태에 hover해도
- * 절대 어두운 배경으로 변경하지 않음
- */
-.quick-menu__item--active:hover {
-  background: color.mix($color-primary, $color-white, 7%);
-
-  border-color: rgba($color-primary, 0.3);
 }
 
 /* ========================================================
@@ -383,9 +326,13 @@ function scrollToTop() {
 ======================================================== */
 
 .quick-menu__item--active {
-  border-color: rgba($color-primary, 0.24);
+  border-color: rgba($color-primary, 0.22);
 
-  background: linear-gradient(180deg, $color-white 0%, rgba($color-primary, 0.055) 100%);
+  background: color.mix($color-primary, $color-white, 4%);
+
+  box-shadow:
+    0 10px 24px rgba($color-gray-900, 0.07),
+    0 2px 7px rgba($color-primary, 0.035);
 
   &::after {
     opacity: 1;
@@ -400,7 +347,19 @@ function scrollToTop() {
 
 .quick-menu__item--active .quick-menu__text {
   color: $color-primary;
+
   font-weight: 800;
+}
+
+.quick-menu__item--active:hover {
+  border-color: rgba($color-primary, 0.28);
+
+  background: color.mix($color-primary, $color-white, 6%);
+}
+
+.quick-menu__item--active:hover .quick-menu__icon-box,
+.quick-menu__item--active:hover .quick-menu__text {
+  color: $color-primary-hover;
 }
 
 /* ========================================================
@@ -415,6 +374,8 @@ function scrollToTop() {
   padding: 7px 5px;
 
   border: 1px solid rgba($color-gray-900, 0.07);
+
+  background: $color-white;
 
   font-family: inherit;
 
@@ -434,6 +395,10 @@ function scrollToTop() {
   transition:
     color 0.2s ease,
     transform 0.2s ease;
+}
+
+.quick-menu__item--top:hover {
+  background: color.mix($color-primary, $color-white, 3%);
 }
 
 .quick-menu__item--top:hover .quick-menu__top-icon {
@@ -737,7 +702,7 @@ function scrollToTop() {
   ====================================================== */
 
   .quick-menu__mobile-item--active {
-    background: rgba($color-primary, 0.06);
+    background: rgba($color-primary, 0.055);
 
     color: $color-primary;
   }
@@ -748,6 +713,8 @@ function scrollToTop() {
 
   .quick-menu__mobile-item--active span {
     color: $color-primary;
+
+    font-weight: 800;
   }
 
   .quick-menu__mobile-item--active::after {
