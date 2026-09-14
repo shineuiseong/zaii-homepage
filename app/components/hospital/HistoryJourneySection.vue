@@ -1145,8 +1145,8 @@ onBeforeUnmount(() => {
 }
 
 /* ========================================================
-     MOBILE
-  ======================================================== */
+   MOBILE
+======================================================== */
 
 @include mobile {
   .history-journey {
@@ -1157,6 +1157,10 @@ onBeforeUnmount(() => {
     top: 48px;
     right: -10px;
     font-size: 72px;
+  }
+
+  .history-journey__timeline-index {
+    display: none;
   }
 
   .history-journey__eyebrow {
@@ -1183,6 +1187,10 @@ onBeforeUnmount(() => {
     line-height: 1.8;
   }
 
+  /* ======================================================
+     STATS
+  ====================================================== */
+
   .history-journey__stats {
     margin-top: 48px;
   }
@@ -1198,6 +1206,10 @@ onBeforeUnmount(() => {
       font-size: 15px;
     }
   }
+
+  /* ======================================================
+     SECTIONS
+  ====================================================== */
 
   .history-journey__timeline-section,
   .history-journey__special {
@@ -1216,6 +1228,10 @@ onBeforeUnmount(() => {
     font-size: 13px;
   }
 
+  /* ======================================================
+     TIMELINE
+  ====================================================== */
+
   .history-journey__timeline-period span {
     font-size: 22px;
   }
@@ -1228,46 +1244,97 @@ onBeforeUnmount(() => {
     font-size: 14px;
   }
 
-  /*
-      모바일에서도 이미지가 화면 너비 전체로 커지지 않게 제한.
-      정사각형 230px 기준.
-    */
+  /* ======================================================
+     CARE
+  ====================================================== */
+
   .history-journey__care-grid {
-    gap: 44px;
+    grid-template-columns: 1fr;
+
+    gap: 54px;
   }
 
   .history-journey__care-card {
     display: block;
+
+    width: 100%;
+
+    min-width: 0;
   }
 
+  /*
+   * 모바일에서는 이미지가 카드 너비를
+   * 완전히 사용하도록 변경.
+   *
+   * 기존 width: 230px 제거.
+   */
   .history-journey__care-image {
-    width: 230px;
-    max-width: 100%;
+    width: 100%;
+
+    max-width: none;
+
     aspect-ratio: 1 / 1;
+
+    overflow: hidden;
+  }
+
+  .history-journey__care-image img {
+    display: block;
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
   }
 
   .history-journey__care-number {
-    top: 15px;
-    right: 15px;
+    top: 16px;
+
+    right: 16px;
+
+    font-size: 10px;
   }
 
   .history-journey__care-content {
-    max-width: 100%;
-    padding-top: 20px;
+    width: 100%;
+
+    max-width: none;
+
+    padding-top: 22px;
+  }
+
+  .history-journey__care-eyebrow {
+    margin-bottom: 11px;
   }
 
   .history-journey__care-content h4 {
     font-size: 22px;
+
+    line-height: 1.45;
   }
 
   .history-journey__care-content p {
-    max-width: 400px;
+    width: 100%;
+
+    max-width: none;
+
+    margin-top: 14px;
+
     font-size: 14px;
+
+    line-height: 1.8;
   }
+
+  /* ======================================================
+     TODAY
+  ====================================================== */
 
   .history-journey__today {
     margin-top: 70px;
+
     margin-left: calc(var(--container-padding, 20px) * -1);
+
     margin-right: calc(var(--container-padding, 20px) * -1);
   }
 
@@ -1289,7 +1356,9 @@ onBeforeUnmount(() => {
 
   .history-journey__today-right p {
     margin-top: 20px;
+
     font-size: 14px;
+
     line-height: 1.8;
   }
 }
