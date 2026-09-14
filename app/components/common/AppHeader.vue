@@ -15,9 +15,7 @@
       HEADER
     ================================================== -->
     <div class="container header-inner">
-      <!-- =================================================
-        LOGO
-      ================================================== -->
+      <!-- LOGO -->
       <NuxtLink to="/" class="header-logo" @mouseenter="closeDesktopMega">
         <img src="/images/logo.svg" alt="자이비뇨의학과" class="header-logo__image" />
       </NuxtLink>
@@ -63,34 +61,16 @@
     </div>
 
     <!-- =================================================
-      DESKTOP MEGA MENU
-    ================================================== -->
+  DESKTOP MEGA MENU
+================================================== -->
     <transition name="mega-fade">
       <div v-if="desktopMegaOpen" class="mega-menu">
         <div class="container mega-menu__layout">
-          <!--
-            상단 로고 column과 동일한 공간
-          -->
           <div class="mega-menu__logo-space" />
 
-          <!--
-            상단 GNB와 정확히 같은 column 수 / 간격 사용
-          -->
           <div class="mega-menu__columns">
             <div v-for="item in visibleMenu" :key="item.key" class="mega-column">
-              <NuxtLink
-                :to="item.link"
-                class="mega-column__title"
-                :class="{
-                  'is-current': isTopMenuCurrent(item)
-                }"
-              >
-                {{ item.label }}
-              </NuxtLink>
-
-              <!-- =================================================
-                CHILD MENU
-              ================================================== -->
+              <!-- CHILDREN -->
               <ul v-if="item.children?.length" class="mega-column__list">
                 <li v-for="sub in item.children" :key="sub.link">
                   <NuxtLink
@@ -105,28 +85,23 @@
                 </li>
               </ul>
 
-              <!-- =================================================
-                SINGLE MENU
-              ================================================== -->
-              <ul v-else-if="item.megaLabel" class="mega-column__list">
+              <!-- DIRECT MENU -->
+              <ul v-else class="mega-column__list">
                 <li>
                   <NuxtLink
                     :to="item.link"
                     class="mega-column__link"
                     :class="{
-                      'is-current': isSubCurrent(item.link)
+                      'is-current': isTopMenuCurrent(item)
                     }"
                   >
-                    {{ item.megaLabel }}
+                    {{ item.label }}
                   </NuxtLink>
                 </li>
               </ul>
             </div>
           </div>
 
-          <!--
-            오른쪽 온라인 상담 column과 동일한 공간
-          -->
           <div class="mega-menu__action-space" />
         </div>
       </div>
@@ -148,9 +123,7 @@
         'is-open': mobileMenuOpen
       }"
     >
-      <!-- =================================================
-        DRAWER HEADER
-      ================================================== -->
+      <!-- DRAWER HEADER -->
       <div class="mobile-drawer__header">
         <NuxtLink to="/" class="mobile-drawer__logo" @click="handleCloseMobileMenu">
           <img src="/images/logo.svg" alt="자이비뇨의학과" />
@@ -170,11 +143,9 @@
         DRAWER BODY
       ================================================== -->
       <div class="mobile-drawer__body">
-        <!-- =================================================
-          INTRO
-        ================================================== -->
+        <!-- INTRO -->
         <div class="mobile-menu-intro">
-          <span> ZAII UROLOGY </span>
+          <span>ZAII UROLOGY</span>
 
           <strong> 자이비뇨의학과 병원 </strong>
 
@@ -194,9 +165,7 @@
               'is-current': isTopMenuCurrent(item)
             }"
           >
-            <!-- =================================================
-              CHILDREN
-            ================================================== -->
+            <!-- CHILDREN -->
             <template v-if="item.children?.length">
               <div class="mobile-menu-row">
                 <button
@@ -244,9 +213,7 @@
               </transition>
             </template>
 
-            <!-- =================================================
-              DIRECT
-            ================================================== -->
+            <!-- DIRECT -->
             <template v-else>
               <NuxtLink
                 :to="item.link"
@@ -268,7 +235,7 @@
         <div class="mobile-contact">
           <a href="tel:0262075678">
             <span>
-              <small> 진료문의 </small>
+              <small>진료문의</small>
 
               <strong> 02-6207-5678 </strong>
             </span>
@@ -276,7 +243,7 @@
 
           <a href="tel:01026386034">
             <span>
-              <small> 상담문의 </small>
+              <small>상담문의</small>
 
               <strong> 010-2638-6034 </strong>
             </span>
@@ -305,19 +272,7 @@ type MenuItem = {
   key: string
   label: string
   link: string
-
-  /*
-   * false면
-   * PC / Mega / Mobile에서 전부 숨김.
-   */
   enabled?: boolean
-
-  /*
-   * 하위메뉴가 없는 경우
-   * Mega Menu에서 보여줄 안내문
-   */
-  megaLabel?: string
-
   children?: MenuChild[]
 }
 
@@ -346,14 +301,27 @@ const menu: MenuItem[] = [
 
     label: '병원소개',
 
+    /*
+     * 상단 병원소개 클릭 시
+     * 병원 발자취 페이지로 이동
+     */
     link: '/hospital/history',
 
     enabled: true,
 
+    /*
+     * 병원소개 하위 메뉴는
+     * 정확히 아래 5개만 표시
+     */
     children: [
       {
         label: '병원 발자취',
         link: '/hospital/history'
+      },
+
+      {
+        label: '자이의 유로리프트',
+        link: '/hospital/urolift'
       },
 
       {
@@ -369,11 +337,6 @@ const menu: MenuItem[] = [
       {
         label: '병원 둘러보기',
         link: '/hospital/tour'
-      },
-
-      {
-        label: '오시는 길',
-        link: '/hospital/location'
       }
     ]
   },
@@ -392,7 +355,7 @@ const menu: MenuItem[] = [
 
     children: [
       {
-        label: '전립선비대증',
+        label: '전립선비대증 이란',
         link: '/prostate'
       },
 
@@ -410,12 +373,6 @@ const menu: MenuItem[] = [
 
   /* =====================================================
     03. 언론
-
-    현재 비활성화.
-
-    나중에 다시 사용하려면
-    enabled: true
-    하나만 바꾸면 됨.
   ===================================================== */
   {
     key: 'media',
@@ -442,11 +399,9 @@ const menu: MenuItem[] = [
 
     label: '오시는 길',
 
-    link: '/hospital/location',
+    link: '/location',
 
-    enabled: true,
-
-    megaLabel: '위치 및 교통 안내'
+    enabled: true
   },
 
   /* =====================================================
@@ -484,75 +439,22 @@ const menu: MenuItem[] = [
 
     link: '/prostate-cancer',
 
-    enabled: true,
-
-    megaLabel: '신속검사 안내'
+    enabled: true
   }
-
-  /* =====================================================
-    남성수술
-
-    나중에 추가할 때 아래처럼
-    enabled: true만 넣으면 자동으로
-    GNB 간격이 다시 균등 분배됨.
-  ===================================================== */
-
-  /*
-  {
-    key: 'male',
-
-    label: '남성수술',
-
-    link: '/filler-penis-enlargement',
-
-    enabled: true,
-
-    children: [
-      {
-        label: '필러 음경확대술',
-        link: '/filler-penis-enlargement'
-      }
-    ]
-  }
-  */
 ]
 
 /* ========================================================
   VISIBLE MENU
 ======================================================== */
 
-/*
- * enabled === false만 제외.
- *
- * enabled를 생략하면
- * 기본적으로 표시된다.
- */
 const visibleMenu = computed(() => {
-  return menu.filter((item) => {
-    return item.enabled !== false
-  })
+  return menu.filter((item) => item.enabled !== false)
 })
 
 /* ========================================================
   DYNAMIC GRID
 ======================================================== */
 
-/*
- * 핵심.
- *
- * 메뉴 개수를 JS에서 자동 계산해서
- *
- * 5개면
- * repeat(5, minmax(0, 1fr))
- *
- * 6개면
- * repeat(6, minmax(0, 1fr))
- *
- * 로 자동 변경된다.
- *
- * 따라서 메뉴 추가/삭제/순서변경을 해도
- * CSS를 다시 수정할 필요 없음.
- */
 const headerStyle = computed(() => {
   return {
     '--gnb-count': String(Math.max(visibleMenu.value.length, 1))
@@ -570,6 +472,18 @@ const mobileSubmenuOpen = ref<number | null>(null)
 const isScrolled = ref(false)
 
 const { mobileMenuOpen, openMobileMenu, closeMobileMenu } = useMobileUi()
+
+/* ========================================================
+  NORMALIZE PATH
+======================================================== */
+
+function normalizePath(path: string) {
+  if (!path || path === '/') {
+    return '/'
+  }
+
+  return path.replace(/\/+$/, '')
+}
 
 /* ========================================================
   HOME
@@ -594,18 +508,6 @@ const isOverlayHeader = computed(() => {
 const isSolidHeader = computed(() => {
   return !isOverlayHeader.value
 })
-
-/* ========================================================
-  NORMALIZE PATH
-======================================================== */
-
-function normalizePath(path: string) {
-  if (!path || path === '/') {
-    return '/'
-  }
-
-  return path.replace(/\/+$/, '')
-}
 
 /* ========================================================
   PATH MATCH
@@ -641,40 +543,67 @@ function isTopMenuCurrent(item: MenuItem) {
   const current = normalizePath(route.path)
 
   /* =====================================================
+    병원소개
+
+    유로리프트는 병원소개 메뉴 안에서
+    링크는 제공하지만,
+    /urolift 페이지에서 상단 병원소개까지
+    활성화시키지는 않는다.
+
+    /hospital 계열만 병원소개 활성.
+  ===================================================== */
+
+  if (item.key === 'hospital') {
+    return current === '/hospital' || current.startsWith('/hospital/')
+  }
+
+  /* =====================================================
+    전립선비대증
+  ===================================================== */
+
+  if (item.key === 'prostate') {
+    return (
+      current === '/prostate' ||
+      current.startsWith('/prostate/') ||
+      current === '/urolift' ||
+      current.startsWith('/urolift/') ||
+      current === '/rezum' ||
+      current.startsWith('/rezum/')
+    )
+  }
+
+  /* =====================================================
     오시는 길
   ===================================================== */
 
-  if (current === normalizePath('/hospital/location')) {
-    return item.key === 'location'
+  if (item.key === 'location') {
+    return current === '/location'
   }
 
   /* =====================================================
-    전립선암 신속검사
+    상담·안내
   ===================================================== */
 
-  if (current === normalizePath('/prostate-cancer')) {
-    return item.key === 'prostate-cancer'
+  if (item.key === 'consultation') {
+    return (
+      current === '/consultation' ||
+      current.startsWith('/consultation/') ||
+      current === '/guide' ||
+      current.startsWith('/guide/')
+    )
   }
 
   /* =====================================================
-    상담
+    전립선암
   ===================================================== */
 
-  if (current === normalizePath('/consultation')) {
-    return item.key === 'consultation'
+  if (item.key === 'prostate-cancer') {
+    return current === '/prostate-cancer' || current.startsWith('/prostate-cancer/')
   }
 
   /* =====================================================
-    CHILD
+    FALLBACK
   ===================================================== */
-
-  if (
-    item.children?.some((sub) => {
-      return isSubCurrent(sub.link)
-    })
-  ) {
-    return true
-  }
 
   return isSameOrChildPath(item.link, route.path)
 }
@@ -716,19 +645,7 @@ function handleOpenMobileMenu() {
 
   openMobileMenu()
 
-  /*
-   * visibleMenu 기준으로 index를 찾는다.
-   *
-   * 비활성화된 메뉴 때문에
-   * index가 어긋나는 문제 방지.
-   */
-  const foundIndex = visibleMenu.value.findIndex((item) => {
-    if (isTopMenuCurrent(item)) {
-      return true
-    }
-
-    return item.children?.some((sub) => isSubCurrent(sub.link))
-  })
+  const foundIndex = visibleMenu.value.findIndex((item) => isTopMenuCurrent(item))
 
   const foundItem = visibleMenu.value[foundIndex]
 
@@ -804,18 +721,12 @@ watch(
 let desktopMediaQuery: MediaQueryList | null = null
 
 function handleDesktopMediaChange(event: MediaQueryListEvent | MediaQueryList) {
-  /*
-   * Desktop -> Mobile
-   */
   if (!event.matches) {
     desktopMegaOpen.value = false
 
     return
   }
 
-  /*
-   * Mobile -> Desktop
-   */
   desktopMegaOpen.value = false
 
   if (mobileMenuOpen.value) {
@@ -862,31 +773,10 @@ onBeforeUnmount(() => {
 ======================================================== */
 
 .header {
-  --header-height: 88px;
-
-  /*
-   * 로고 영역.
-   *
-   * 실제 logo.svg의 표시 width와는 별개.
-   * 이 영역을 기준으로 GNB 전체 시작점이 결정된다.
-   */
+  --header-height: 94px;
   --header-logo-column: 300px;
-
-  /*
-   * 오른쪽 온라인상담 영역
-   */
   --header-action-column: 160px;
-
-  /*
-   * logo / gnb / action 사이 gap
-   */
   --header-column-gap: 28px;
-
-  /*
-   * Vue에서 자동 주입.
-   *
-   * 현재 언론이 꺼져 있으므로 5.
-   */
   --gnb-count: 5;
 }
 
@@ -917,7 +807,6 @@ onBeforeUnmount(() => {
   left: 0;
 
   width: 100%;
-
   height: var(--header-height);
 
   z-index: 1000;
@@ -1020,7 +909,6 @@ onBeforeUnmount(() => {
   justify-self: start;
 
   width: 196px;
-
   height: 44px;
 
   min-width: 0;
@@ -1032,7 +920,6 @@ onBeforeUnmount(() => {
   display: block;
 
   width: 100%;
-
   height: 100%;
 
   object-fit: contain;
@@ -1044,17 +931,9 @@ onBeforeUnmount(() => {
     opacity 0.2s ease;
 }
 
-/* ========================================================
-  OVERLAY LOGO
-======================================================== */
-
 .header--overlay .header-logo__image {
   filter: brightness(0) invert(1);
 }
-
-/* ========================================================
-  SOLID LOGO
-======================================================== */
 
 .header.header--mega-open .header-logo__image,
 .header.header--mobile-open .header-logo__image {
@@ -1073,24 +952,6 @@ onBeforeUnmount(() => {
   min-width: 0;
 }
 
-/* ========================================================
-  DYNAMIC GNB GRID
-======================================================== */
-
-/*
- * 핵심 변경.
- *
- * 기존:
- *
- * 1.1fr 1.15fr 0.72fr ...
- *
- * 이런 식으로 메뉴별 폭을 직접 지정했기 때문에
- * 순서를 바꾸거나 메뉴를 삭제하면
- * 간격이 뒤틀렸다.
- *
- * 이제 모든 메뉴가 동일한 width를 가진다.
- */
-
 .gnb-menu {
   display: grid;
 
@@ -1099,7 +960,6 @@ onBeforeUnmount(() => {
   align-items: stretch;
 
   width: 100%;
-
   height: var(--header-height);
 }
 
@@ -1127,19 +987,15 @@ onBeforeUnmount(() => {
   justify-content: center;
 
   width: 100%;
-
   height: var(--header-height);
 
-  /*
-   * 메뉴마다 동일한 내부 여백.
-   */
-  padding: 0 clamp(6px, 0.75vw, 14px);
+  padding: 0 clamp(8px, 0.9vw, 16px);
 
   color: #171b24;
 
-  font-size: 16px;
+  font-size: 18px;
 
-  font-weight: 700;
+  font-weight: 750;
 
   line-height: 1.2;
 
@@ -1168,33 +1024,23 @@ onBeforeUnmount(() => {
   height: 100%;
 }
 
-/* ========================================================
-  DEFAULT ACTIVE
-======================================================== */
-
 .gnb-item:hover .gnb-link,
 .gnb-item.is-current .gnb-link {
   color: $color-primary;
 }
 
 /* ========================================================
-  ACTIVE LINE
+  GNB ACTIVE LINE
 ======================================================== */
 
 .gnb-link::after {
   position: absolute;
 
-  /*
-   * 동일한 column 기준으로
-   * 68% 정도 길이의 line.
-   */
-  right: 16%;
-
+  right: 11%;
   bottom: -1px;
+  left: 11%;
 
-  left: 16%;
-
-  height: 2px;
+  height: 3px;
 
   background: $color-primary;
 
@@ -1287,9 +1133,9 @@ onBeforeUnmount(() => {
 
   justify-content: center;
 
-  height: 42px;
+  height: 44px;
 
-  padding: 0 18px;
+  padding: 0 20px;
 
   border: 1px solid rgba(13, 87, 198, 0.13);
 
@@ -1299,7 +1145,7 @@ onBeforeUnmount(() => {
 
   color: #173f79;
 
-  font-size: 14px;
+  font-size: 15px;
 
   font-weight: 700;
 
@@ -1317,10 +1163,6 @@ onBeforeUnmount(() => {
     color 0.2s ease;
 }
 
-/* ========================================================
-  OVERLAY CONSULT
-======================================================== */
-
 .header--overlay .header-consult {
   border-color: rgba(255, 255, 255, 0.44);
 
@@ -1332,10 +1174,6 @@ onBeforeUnmount(() => {
 
   -webkit-backdrop-filter: blur(6px);
 }
-
-/* ========================================================
-  MEGA CONSULT
-======================================================== */
 
 .header.header--mega-open .header-consult {
   border-color: rgba(13, 87, 198, 0.13);
@@ -1376,8 +1214,6 @@ onBeforeUnmount(() => {
 
   background: #fff;
 
-  border-top: 0;
-
   border-bottom: 1px solid rgba(15, 23, 42, 0.07);
 
   box-shadow:
@@ -1385,18 +1221,14 @@ onBeforeUnmount(() => {
     0 26px 50px rgba(15, 23, 42, 0.035);
 }
 
-/* ========================================================
-  MEGA LAYOUT
-======================================================== */
-
 .mega-menu__layout {
   align-items: start;
 
-  min-height: 300px;
+  min-height: 340px;
 
-  padding-top: 34px;
+  padding-top: 38px;
 
-  padding-bottom: 38px;
+  padding-bottom: 44px;
 }
 
 .mega-menu__logo-space {
@@ -1407,18 +1239,6 @@ onBeforeUnmount(() => {
   grid-column: 3;
 }
 
-/* ========================================================
-  DYNAMIC MEGA COLUMNS
-======================================================== */
-
-/*
- * GNB와 완전히 동일한 repeat().
- *
- * 이게 핵심.
- *
- * 위 메뉴를 추가/삭제/순서 변경해도
- * 아래 메뉴가 항상 정확히 같은 X축에 위치.
- */
 .mega-menu__columns {
   grid-column: 2;
 
@@ -1438,10 +1258,7 @@ onBeforeUnmount(() => {
 .mega-column {
   min-width: 0;
 
-  /*
-   * 모든 column 동일한 padding
-   */
-  padding: 0 clamp(6px, 0.75vw, 14px);
+  padding: 0 clamp(8px, 0.9vw, 16px);
 
   text-align: center;
 }
@@ -1459,13 +1276,13 @@ onBeforeUnmount(() => {
 
   justify-content: center;
 
-  min-height: 24px;
+  min-height: 28px;
 
-  margin-bottom: 25px;
+  margin-bottom: 30px;
 
   color: #171b24;
 
-  font-size: 15px;
+  font-size: 17px;
 
   font-weight: 800;
 
@@ -1488,7 +1305,7 @@ onBeforeUnmount(() => {
 }
 
 /* ========================================================
-  TITLE ACTIVE
+  MEGA TITLE LINE
 ======================================================== */
 
 .mega-column__title::after {
@@ -1496,11 +1313,11 @@ onBeforeUnmount(() => {
 
   left: 50%;
 
-  bottom: -9px;
+  bottom: -11px;
 
-  width: 24px;
+  width: 42px;
 
-  height: 1px;
+  height: 2px;
 
   background: $color-primary;
 
@@ -1513,6 +1330,7 @@ onBeforeUnmount(() => {
   transition: opacity 0.18s ease;
 }
 
+.mega-column__title:hover::after,
 .mega-column__title.is-current::after {
   opacity: 1;
 }
@@ -1528,7 +1346,7 @@ onBeforeUnmount(() => {
 
   align-items: center;
 
-  gap: 16px;
+  gap: 19px;
 }
 
 /* ========================================================
@@ -1536,17 +1354,25 @@ onBeforeUnmount(() => {
 ======================================================== */
 
 .mega-column__link {
-  display: inline-block;
+  position: relative;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
 
   max-width: 100%;
 
-  color: #4c5564;
+  padding-bottom: 6px;
 
-  font-size: 14px;
+  color: #3f4652;
 
-  font-weight: 500;
+  font-size: 16px;
 
-  line-height: 1.45;
+  font-weight: 550;
+
+  line-height: 1.5;
 
   letter-spacing: -0.035em;
 
@@ -1556,17 +1382,57 @@ onBeforeUnmount(() => {
 
   word-break: keep-all;
 
-  transition: color 0.18s ease;
+  transition:
+    color 0.18s ease,
+    font-weight 0.18s ease;
+}
+
+.mega-column__link::after {
+  position: absolute;
+
+  right: 0;
+
+  bottom: 0;
+
+  left: 0;
+
+  height: 2px;
+
+  background: $color-primary;
+
+  opacity: 0;
+
+  transform: scaleX(0);
+
+  transform-origin: center;
+
+  transition:
+    opacity 0.18s ease,
+    transform 0.2s ease;
+
+  content: '';
 }
 
 .mega-column__link:hover {
   color: $color-primary;
 }
 
+.mega-column__link:hover::after {
+  opacity: 1;
+
+  transform: scaleX(1);
+}
+
 .mega-column__link.is-current {
   color: $color-primary;
 
-  font-weight: 700;
+  font-weight: 750;
+}
+
+.mega-column__link.is-current::after {
+  opacity: 1;
+
+  transform: scaleX(1);
 }
 
 /* ========================================================
@@ -1707,10 +1573,6 @@ onBeforeUnmount(() => {
   border-bottom: 1px solid #edf0f3;
 }
 
-/* ========================================================
-  MOBILE DRAWER LOGO
-======================================================== */
-
 .mobile-drawer__logo {
   display: flex;
 
@@ -1732,10 +1594,6 @@ onBeforeUnmount(() => {
 
   object-position: left center;
 }
-
-/* ========================================================
-  MOBILE CLOSE
-======================================================== */
 
 .mobile-drawer__close {
   @include button-reset;
@@ -1831,10 +1689,6 @@ onBeforeUnmount(() => {
   background: rgba(13, 87, 198, 0.025);
 }
 
-/* ========================================================
-  MOBILE ROW
-======================================================== */
-
 .mobile-menu-row {
   display: flex;
 
@@ -1870,10 +1724,6 @@ onBeforeUnmount(() => {
 .mobile-menu-link.is-current {
   color: $color-primary;
 }
-
-/* ========================================================
-  MOBILE TOGGLE
-======================================================== */
 
 .mobile-submenu-toggle {
   @include button-reset;
@@ -2064,9 +1914,7 @@ onBeforeUnmount(() => {
 @include desktop-down {
   .header {
     --header-logo-column: 240px;
-
     --header-action-column: 130px;
-
     --header-column-gap: 18px;
   }
 
@@ -2077,17 +1925,27 @@ onBeforeUnmount(() => {
   }
 
   .gnb-link {
-    padding: 0 6px;
+    padding: 0 5px;
 
-    font-size: 14px;
+    font-size: 16px;
+
+    font-weight: 750;
   }
 
   .gnb-link::after {
-    right: 14%;
+    right: 10%;
 
-    left: 14%;
+    left: 10%;
 
-    height: 1px;
+    height: 2px;
+  }
+
+  .mega-menu__layout {
+    min-height: 320px;
+
+    padding-top: 34px;
+
+    padding-bottom: 40px;
   }
 
   .mega-column {
@@ -2095,15 +1953,25 @@ onBeforeUnmount(() => {
   }
 
   .mega-column__title {
-    font-size: 13px;
+    margin-bottom: 27px;
+
+    font-size: 15px;
+  }
+
+  .mega-column__title::after {
+    bottom: -10px;
+
+    width: 36px;
+
+    height: 2px;
   }
 
   .mega-column__link {
-    font-size: 12px;
+    font-size: 14px;
   }
 
   .mega-column__list {
-    gap: 14px;
+    gap: 16px;
   }
 
   .header-consult {

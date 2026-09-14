@@ -24,10 +24,10 @@
 
       <!-- 오시는 길 -->
       <NuxtLink
-        to="/hospital/location"
+        to="/location"
         class="quick-menu__item"
         :class="{
-          'quick-menu__item--active': isActive('/hospital/location')
+          'quick-menu__item--active': isActive('/location')
         }"
       >
         <span class="quick-menu__icon-box">
@@ -90,10 +90,10 @@
 
       <!-- 오시는 길 -->
       <NuxtLink
-        to="/hospital/location"
+        to="/location"
         class="quick-menu__mobile-item"
         :class="{
-          'quick-menu__mobile-item--active': isActive('/hospital/location')
+          'quick-menu__mobile-item--active': isActive('/location')
         }"
       >
         <Icon name="lucide:map" class="quick-menu__mobile-icon" />
