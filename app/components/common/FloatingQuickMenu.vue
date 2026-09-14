@@ -135,6 +135,7 @@ function scrollToTop() {
 </script>
 
 <style scoped lang="scss">
+@use 'sass:color';
 /* ========================================================
    ROOT
 ======================================================== */
@@ -252,7 +253,7 @@ function scrollToTop() {
    * 검게/진하게 안 바뀌고
    * 아주 살짝만 primary tint
    */
-  background: mix($color-primary, $color-white, 4%);
+  background: color.mix($color-primary, $color-white, 4%);
 
   box-shadow:
     0 12px 26px rgba($color-gray-900, 0.08),
@@ -281,7 +282,7 @@ function scrollToTop() {
   /*
    * active도 화이트 기반
    */
-  background: mix($color-primary, $color-white, 5%);
+  background: color.mix($color-primary, $color-white, 5%);
 
   border-color: rgba($color-primary, 0.24);
 
@@ -309,7 +310,7 @@ function scrollToTop() {
  * 절대 어두운 배경으로 변경하지 않음
  */
 .quick-menu__item--active:hover {
-  background: mix($color-primary, $color-white, 7%);
+  background: color.mix($color-primary, $color-white, 7%);
 
   border-color: rgba($color-primary, 0.3);
 }
