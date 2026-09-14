@@ -1,24 +1,24 @@
 <template>
   <section ref="sectionRef" class="doctor-section">
     <!-- =====================================================
-           Background
-      ====================================================== -->
+         Background
+    ====================================================== -->
     <div class="doctor-bg" />
 
     <!-- =====================================================
-           Decorative typography
-      ====================================================== -->
+         Decorative typography
+    ====================================================== -->
     <div class="doctor-watermark" aria-hidden="true">ZAII</div>
 
     <!-- =====================================================
-           Content
-      ====================================================== -->
+         Content
+    ====================================================== -->
     <div class="doctor-inner">
       <!-- =========================
-             Left
-        ========================== -->
+           Left
+      ========================== -->
       <div ref="introRef" class="doctor-intro">
-        <span class="doctor-eyebrow"> 의료진 소개 </span>
+        <span class="doctor-eyebrow">의료진 소개</span>
 
         <h2 class="doctor-heading">
           환자의 건강을
@@ -55,8 +55,8 @@
       </div>
 
       <!-- =========================
-             Doctor
-        ========================== -->
+           Doctor
+      ========================== -->
       <div ref="doctorVisualRef" class="doctor-visual">
         <div class="doctor-glow" />
 
@@ -71,8 +71,8 @@
       </div>
 
       <!-- =========================
-             Career
-        ========================== -->
+           Career
+      ========================== -->
       <div ref="careerRef" class="doctor-career">
         <div class="career-heading">
           <div class="career-heading-text">
@@ -104,8 +104,8 @@
     </div>
 
     <!-- =====================================================
-           Bottom line
-      ====================================================== -->
+         Bottom line
+    ====================================================== -->
     <div ref="lineRef" class="doctor-bottom-line">
       <span />
     </div>
@@ -116,8 +116,8 @@
 import { nextTick, onBeforeUnmount, onMounted, ref } from 'vue'
 
 /* =========================================================
-     Data
-  ========================================================= */
+   Data
+========================================================= */
 
 const careers = [
   {
@@ -147,8 +147,8 @@ const careers = [
 ] as const
 
 /* =========================================================
-     Refs
-  ========================================================= */
+   Refs
+========================================================= */
 
 const sectionRef = ref<HTMLElement | null>(null)
 
@@ -163,8 +163,8 @@ const careerRef = ref<HTMLElement | null>(null)
 const lineRef = ref<HTMLElement | null>(null)
 
 /* =========================================================
-     GSAP
-  ========================================================= */
+   GSAP
+========================================================= */
 
 let gsap: (typeof import('gsap'))['default'] | null = null
 
@@ -175,8 +175,8 @@ let timeline: ReturnType<(typeof import('gsap'))['default']['timeline']> | null 
 let hasAnimated = false
 
 /* =========================================================
-     Animation
-  ========================================================= */
+   Animation
+========================================================= */
 
 function prepareAnimation() {
   if (!gsap) {
@@ -376,8 +376,8 @@ function playAnimation() {
 }
 
 /* =========================================================
-     Lifecycle
-  ========================================================= */
+   Lifecycle
+========================================================= */
 
 onMounted(async () => {
   const module = await import('gsap')
@@ -423,10 +423,10 @@ onBeforeUnmount(() => {
 })
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 /* =========================================================
-     Section
-  ========================================================= */
+   SECTION
+========================================================= */
 
 .doctor-section {
   position: relative;
@@ -442,8 +442,8 @@ onBeforeUnmount(() => {
 }
 
 /* =========================================================
-     Background
-  ========================================================= */
+   BACKGROUND
+========================================================= */
 
 .doctor-bg {
   position: absolute;
@@ -456,8 +456,8 @@ onBeforeUnmount(() => {
 }
 
 /* =========================================================
-     Watermark
-  ========================================================= */
+   WATERMARK
+========================================================= */
 
 .doctor-watermark {
   position: absolute;
@@ -485,18 +485,13 @@ onBeforeUnmount(() => {
 }
 
 /* =========================================================
-     Inner
-  ========================================================= */
+   INNER
+========================================================= */
 
 .doctor-inner {
   position: relative;
 
   z-index: 2;
-
-  width: min(100%, 1920px);
-  height: 100%;
-
-  margin: 0 auto;
 
   display: grid;
 
@@ -504,11 +499,16 @@ onBeforeUnmount(() => {
     minmax(390px, 0.9fr)
     minmax(380px, 0.72fr)
     minmax(550px, 1.15fr);
+
+  width: min(100%, 1920px);
+  height: 100%;
+
+  margin: 0 auto;
 }
 
 /* =========================================================
-     Left intro
-  ========================================================= */
+   INTRO
+========================================================= */
 
 .doctor-intro {
   position: relative;
@@ -553,13 +553,13 @@ onBeforeUnmount(() => {
 }
 
 .doctor-name {
-  margin-top: 46px;
-
   display: flex;
 
   align-items: baseline;
 
   gap: 12px;
+
+  margin-top: 46px;
 }
 
 .doctor-name strong {
@@ -595,21 +595,21 @@ onBeforeUnmount(() => {
 }
 
 /* =========================================================
-     More
-  ========================================================= */
+   MORE
+========================================================= */
 
 .doctor-more {
-  width: fit-content;
-
-  margin-top: 38px;
-
-  padding-bottom: 9px;
-
   display: flex;
 
   align-items: center;
 
+  width: fit-content;
+
   gap: 28px;
+
+  margin-top: 38px;
+
+  padding-bottom: 9px;
 
   border-bottom: 1px solid rgba(23, 35, 52, 0.35);
 
@@ -643,8 +643,8 @@ onBeforeUnmount(() => {
 }
 
 /* =========================================================
-     Doctor visual
-  ========================================================= */
+   DOCTOR VISUAL
+========================================================= */
 
 .doctor-visual {
   position: relative;
@@ -690,12 +690,11 @@ onBeforeUnmount(() => {
   bottom: 0;
 
   width: min(640px, 42vw);
-
   height: 94%;
 
-  transform: translateX(-50%);
-
   overflow: hidden;
+
+  transform: translateX(-50%);
 
   clip-path: inset(100% 0 0 0);
 
@@ -721,8 +720,8 @@ onBeforeUnmount(() => {
 }
 
 /* =========================================================
-     Career
-  ========================================================= */
+   CAREER
+========================================================= */
 
 .doctor-career {
   position: relative;
@@ -735,8 +734,8 @@ onBeforeUnmount(() => {
 }
 
 /* =========================================================
-     Career heading
-  ========================================================= */
+   CAREER HEADING
+========================================================= */
 
 .career-heading {
   margin-bottom: 27px;
@@ -786,11 +785,12 @@ onBeforeUnmount(() => {
 }
 
 /* =========================================================
-     Career list
-  ========================================================= */
+   CAREER LIST
+========================================================= */
 
 .career-list {
   margin: 0;
+
   padding: 0;
 
   list-style: none;
@@ -799,13 +799,13 @@ onBeforeUnmount(() => {
 .career-item {
   position: relative;
 
-  min-height: 108px;
-
   display: grid;
 
   grid-template-columns: 68px minmax(0, 1fr);
 
   align-items: center;
+
+  min-height: 108px;
 
   gap: 25px;
 
@@ -843,8 +843,8 @@ onBeforeUnmount(() => {
 }
 
 /* =========================================================
-     Career number
-  ========================================================= */
+   CAREER NUMBER
+========================================================= */
 
 .career-number {
   position: relative;
@@ -881,8 +881,8 @@ onBeforeUnmount(() => {
 }
 
 /* =========================================================
-     Career content
-  ========================================================= */
+   CAREER CONTENT
+========================================================= */
 
 .career-content {
   min-width: 0;
@@ -923,17 +923,17 @@ onBeforeUnmount(() => {
 }
 
 /* =========================================================
-     Bottom line
-  ========================================================= */
+   BOTTOM LINE
+========================================================= */
 
 .doctor-bottom-line {
   position: absolute;
 
   z-index: 10;
 
-  left: 0;
   right: 0;
   bottom: 0;
+  left: 0;
 
   height: 3px;
 }
@@ -952,10 +952,10 @@ onBeforeUnmount(() => {
 }
 
 /* =========================================================
-     Tablet
-  ========================================================= */
+   DESKTOP DOWN
+========================================================= */
 
-@media (max-width: 1400px) {
+@include desktop-down {
   .doctor-inner {
     grid-template-columns:
       minmax(340px, 0.9fr)
@@ -964,8 +964,9 @@ onBeforeUnmount(() => {
   }
 
   .doctor-intro {
-    padding-left: 48px;
     padding-right: 20px;
+
+    padding-left: 48px;
   }
 
   .doctor-heading {
@@ -973,8 +974,9 @@ onBeforeUnmount(() => {
   }
 
   .doctor-career {
-    padding-left: 42px;
     padding-right: 42px;
+
+    padding-left: 42px;
   }
 
   .career-content p {
@@ -982,7 +984,11 @@ onBeforeUnmount(() => {
   }
 }
 
-@media (max-width: 1180px) {
+/* =========================================================
+   LAPTOP DOWN
+========================================================= */
+
+@include laptop-down {
   .doctor-section {
     height: 830px;
   }
@@ -995,8 +1001,9 @@ onBeforeUnmount(() => {
   }
 
   .doctor-intro {
-    padding-left: 32px;
     padding-right: 18px;
+
+    padding-left: 32px;
   }
 
   .doctor-heading {
@@ -1008,9 +1015,9 @@ onBeforeUnmount(() => {
   }
 
   .career-item {
-    min-height: 102px;
+    grid-template-columns: 55px minmax(0, 1fr);
 
-    grid-template-columns: 55px 1fr;
+    min-height: 102px;
 
     gap: 18px;
   }
@@ -1033,10 +1040,10 @@ onBeforeUnmount(() => {
 }
 
 /* =========================================================
-     Mobile
-  ========================================================= */
+   MOBILE
+========================================================= */
 
-@media (max-width: 767px) {
+@include mobile {
   .doctor-section {
     height: auto;
 
@@ -1055,11 +1062,14 @@ onBeforeUnmount(() => {
     display: flex;
 
     flex-direction: column;
+
+    width: 100%;
+    height: auto;
   }
 
   /* =========================
-       Intro
-    ========================== */
+     INTRO
+  ========================== */
 
   .doctor-intro {
     min-height: 390px;
@@ -1098,30 +1108,62 @@ onBeforeUnmount(() => {
   }
 
   /* =========================
-       Image
-    ========================== */
+     IMAGE
+  ========================== */
 
   .doctor-visual {
+    position: relative;
+
+    width: 100%;
     height: 420px;
 
     margin-top: -100px;
+
+    overflow: hidden;
   }
 
   .doctor-image-mask {
-    width: 430px;
-    max-width: 118vw;
+    left: 50%;
+    bottom: 0;
+
+    width: min(430px, 118vw);
+    max-width: none;
 
     height: 100%;
+
+    transform: translateX(-50%);
+  }
+
+  .doctor-image {
+    left: 50%;
+    bottom: 0;
+
+    width: 100%;
+    height: 100%;
+
+    transform: translateX(-50%);
+
+    object-fit: contain;
+
+    /*
+     * 모바일에서 인물 중심을 조금 오른쪽으로 보정.
+     * 원본 이미지 여백 때문에 50%보다 53%가 자연스러움.
+     */
+    object-position: 53% 100%;
   }
 
   .doctor-glow {
+    left: 50%;
+
     width: 330px;
     height: 330px;
+
+    transform: translateX(-50%);
   }
 
   /* =========================
-       Career
-    ========================== */
+     CAREER
+  ========================== */
 
   .doctor-career {
     padding: 56px 22px 72px;
@@ -1152,9 +1194,9 @@ onBeforeUnmount(() => {
   }
 
   .career-item {
-    min-height: 105px;
+    grid-template-columns: 48px minmax(0, 1fr);
 
-    grid-template-columns: 48px 1fr;
+    min-height: 105px;
 
     gap: 15px;
   }
@@ -1187,18 +1229,25 @@ onBeforeUnmount(() => {
     padding-left: 0;
   }
 
+  /* =========================
+     WATERMARK
+  ========================== */
+
   .doctor-watermark {
     top: 170px;
+    left: 50%;
 
     font-size: 160px;
 
     color: rgba(25, 56, 91, 0.025);
+
+    transform: translateX(-50%);
   }
 }
 
 /* =========================================================
-     Small Mobile
-  ========================================================= */
+   SMALL MOBILE
+========================================================= */
 
 @media (max-width: 420px) {
   .doctor-heading {
@@ -1210,11 +1259,19 @@ onBeforeUnmount(() => {
   }
 
   .doctor-image-mask {
-    width: 400px;
+    left: 50%;
+
+    width: min(400px, 116vw);
+
+    transform: translateX(-50%);
+  }
+
+  .doctor-image {
+    object-position: 53% 100%;
   }
 
   .career-item {
-    grid-template-columns: 42px 1fr;
+    grid-template-columns: 42px minmax(0, 1fr);
 
     gap: 12px;
   }
@@ -1229,8 +1286,8 @@ onBeforeUnmount(() => {
 }
 
 /* =========================================================
-     Reduced Motion
-  ========================================================= */
+   REDUCED MOTION
+========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
   .doctor-image-mask {
