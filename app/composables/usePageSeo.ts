@@ -1,23 +1,27 @@
+// composables/usePageSeo.ts
+
 type UsePageSeoOptions = {
   title: string
   description: string
   path?: string
-  keywords?: string
+
   ogType?: 'website' | 'article'
+
   ogTitle?: string
   ogDescription?: string
   ogImage?: string
+
   twitterTitle?: string
   twitterDescription?: string
   twitterImage?: string
+
   robots?: string
 }
 
 export function usePageSeo({
   title,
   description,
-  path = '',
-  keywords,
+  path = '/',
   ogType = 'article',
   ogTitle,
   ogDescription,
@@ -28,43 +32,63 @@ export function usePageSeo({
   robots = 'index, follow'
 }: UsePageSeoOptions) {
   const config = useRuntimeConfig()
-  const siteUrl = config.public.siteUrl || ''
 
-  const normalizedPath = path ? (path.startsWith('/') ? path : `/${path}`) : ''
+  const siteUrl = String(config.public.siteUrl || 'https://zaii.kr').replace(/\/$/, '')
 
-  const defaultImage = siteUrl ? `${siteUrl}/og-image.png` : '/og-image.png'
+  const normalizedPath = !path || path === '/' ? '/' : path.startsWith('/') ? path : `/${path}`
+
+  const canonicalUrl = normalizedPath === '/' ? `${siteUrl}/` : `${siteUrl}${normalizedPath}`
+
+  const defaultImage = `${siteUrl}/images/og-image.png`
 
   const resolvedOgImage = ogImage || defaultImage
+
   const resolvedTwitterImage = twitterImage || resolvedOgImage
-  const canonicalUrl = siteUrl && normalizedPath ? `${siteUrl}${normalizedPath}` : ''
+
+  const resolvedOgTitle = ogTitle || title
+
+  const resolvedOgDescription = ogDescription || description
+
+  const resolvedTwitterTitle = twitterTitle || resolvedOgTitle
+
+  const resolvedTwitterDescription = twitterDescription || resolvedOgDescription
 
   useSeoMeta({
     title,
-    description,
-    ...(keywords ? { keywords } : {}),
 
-    ogTitle: ogTitle || title,
-    ogDescription: ogDescription || description,
-    ogImage: resolvedOgImage,
+    description,
+
+    robots,
+
     ogType,
+
+    ogTitle: resolvedOgTitle,
+
+    ogDescription: resolvedOgDescription,
+
+    ogImage: resolvedOgImage,
+
+    ogUrl: canonicalUrl,
+
     ogLocale: 'ko_KR',
 
-    twitterCard: 'summary_large_image',
-    twitterTitle: twitterTitle || ogTitle || title,
-    twitterDescription: twitterDescription || ogDescription || description,
-    twitterImage: resolvedTwitterImage,
+    ogSiteName: '자이비뇨의학과병원',
 
-    robots
+    twitterCard: 'summary_large_image',
+
+    twitterTitle: resolvedTwitterTitle,
+
+    twitterDescription: resolvedTwitterDescription,
+
+    twitterImage: resolvedTwitterImage
   })
 
   useHead({
-    link: canonicalUrl
-      ? [
-          {
-            rel: 'canonical',
-            href: canonicalUrl
-          }
-        ]
-      : []
+    link: [
+      {
+        rel: 'canonical',
+        href: canonicalUrl
+      }
+    ]
   })
 }

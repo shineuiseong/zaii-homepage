@@ -12,16 +12,16 @@
     @mouseleave="closeDesktopMega"
   >
     <!-- =================================================
-      HEADER
+         HEADER
     ================================================== -->
     <div class="container header-inner">
       <!-- LOGO -->
       <NuxtLink to="/" class="header-logo" @mouseenter="closeDesktopMega">
-        <img src="/images/logo.svg" alt="자이비뇨의학과" class="header-logo__image" />
+        <img src="/images/logo.svg" alt="자이비뇨의학과병원" class="header-logo__image" />
       </NuxtLink>
 
       <!-- =================================================
-        DESKTOP GNB
+           DESKTOP GNB
       ================================================== -->
       <nav class="gnb" aria-label="주요 메뉴" @mouseenter="openDesktopMega">
         <ul class="gnb-menu">
@@ -43,7 +43,7 @@
       </nav>
 
       <!-- =================================================
-        RIGHT
+           RIGHT
       ================================================== -->
       <div class="header-actions" @mouseenter="openDesktopMega">
         <NuxtLink to="/consultation" class="header-consult"> 온라인 상담 </NuxtLink>
@@ -61,10 +61,13 @@
     </div>
 
     <!-- =================================================
-  DESKTOP MEGA MENU
-================================================== -->
+         DESKTOP MEGA MENU
+
+         v-show:
+         닫혀 있어도 링크가 DOM/SSR HTML에 유지됨
+    ================================================== -->
     <transition name="mega-fade">
-      <div v-if="desktopMegaOpen" class="mega-menu">
+      <div v-show="desktopMegaOpen" class="mega-menu">
         <div class="container mega-menu__layout">
           <div class="mega-menu__logo-space" />
 
@@ -108,14 +111,16 @@
     </transition>
 
     <!-- =================================================
-      MOBILE OVERLAY
+         MOBILE OVERLAY
+
+         이건 SEO 링크가 없으므로 v-if 그대로 사용
     ================================================== -->
     <transition name="mobile-overlay-fade">
       <div v-if="mobileMenuOpen" class="mobile-menu-overlay" @click="handleCloseMobileMenu" />
     </transition>
 
     <!-- =================================================
-      MOBILE DRAWER
+         MOBILE DRAWER
     ================================================== -->
     <aside
       class="mobile-drawer"
@@ -126,7 +131,7 @@
       <!-- DRAWER HEADER -->
       <div class="mobile-drawer__header">
         <NuxtLink to="/" class="mobile-drawer__logo" @click="handleCloseMobileMenu">
-          <img src="/images/logo.svg" alt="자이비뇨의학과" />
+          <img src="/images/logo.svg" alt="자이비뇨의학과병원" />
         </NuxtLink>
 
         <button
@@ -140,20 +145,20 @@
       </div>
 
       <!-- =================================================
-        DRAWER BODY
+           DRAWER BODY
       ================================================== -->
       <div class="mobile-drawer__body">
         <!-- INTRO -->
         <div class="mobile-menu-intro">
-          <span>ZAII UROLOGY</span>
+          <span> ZAII UROLOGY </span>
 
-          <strong> 자이비뇨의학과 병원 </strong>
+          <strong> 자이비뇨의학과병원 </strong>
 
           <p>전립선과 남성 건강을 위한 전문 진료</p>
         </div>
 
         <!-- =================================================
-          MOBILE MENU
+             MOBILE MENU
         ================================================== -->
         <ul class="mobile-menu-list">
           <li
@@ -195,8 +200,12 @@
                 </button>
               </div>
 
+              <!--
+                v-show:
+                메뉴가 닫혀 있어도 하위 NuxtLink가 DOM에 유지됨
+              -->
               <transition name="mobile-submenu-slide">
-                <ul v-if="mobileSubmenuOpen === i" class="mobile-submenu">
+                <ul v-show="mobileSubmenuOpen === i" class="mobile-submenu">
                   <li v-for="sub in item.children" :key="sub.link">
                     <NuxtLink
                       :to="sub.link"
@@ -230,12 +239,12 @@
         </ul>
 
         <!-- =================================================
-          CONTACT
+             CONTACT
         ================================================== -->
         <div class="mobile-contact">
           <a href="tel:0262075678">
             <span>
-              <small>진료문의</small>
+              <small> 진료문의 </small>
 
               <strong> 02-6207-5678 </strong>
             </span>
@@ -243,7 +252,7 @@
 
           <a href="tel:01026386034">
             <span>
-              <small>상담문의</small>
+              <small> 상담문의 </small>
 
               <strong> 010-2638-6034 </strong>
             </span>
@@ -260,7 +269,7 @@ import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { useMobileUi } from '~/composables/useMobileUi'
 
 /* ========================================================
-  TYPES
+   TYPES
 ======================================================== */
 
 type MenuChild = {
@@ -277,42 +286,34 @@ type MenuItem = {
 }
 
 /* ========================================================
-  ROUTE
+   ROUTE
 ======================================================== */
 
 const route = useRoute()
 
 /* ========================================================
-  BREAKPOINT
+   BREAKPOINT
 ======================================================== */
 
 const DESKTOP_MEDIA_QUERY = '(min-width: 1025px)'
 
 /* ========================================================
-  MENU
+   MENU
 ======================================================== */
 
 const menu: MenuItem[] = [
   /* =====================================================
-    01. 병원소개
+     01. 병원소개
   ===================================================== */
   {
     key: 'hospital',
 
     label: '병원소개',
 
-    /*
-     * 상단 병원소개 클릭 시
-     * 병원 발자취 페이지로 이동
-     */
     link: '/hospital/history',
 
     enabled: true,
 
-    /*
-     * 병원소개 하위 메뉴는
-     * 정확히 아래 5개만 표시
-     */
     children: [
       {
         label: '병원 발자취',
@@ -342,7 +343,7 @@ const menu: MenuItem[] = [
   },
 
   /* =====================================================
-    02. 전립선비대증
+     02. 전립선비대증
   ===================================================== */
   {
     key: 'prostate',
@@ -372,7 +373,7 @@ const menu: MenuItem[] = [
   },
 
   /* =====================================================
-    03. 언론
+     03. 언론
   ===================================================== */
   {
     key: 'media',
@@ -392,7 +393,7 @@ const menu: MenuItem[] = [
   },
 
   /* =====================================================
-    04. 오시는 길
+     04. 오시는 길
   ===================================================== */
   {
     key: 'location',
@@ -405,7 +406,7 @@ const menu: MenuItem[] = [
   },
 
   /* =====================================================
-    05. 상담·안내
+     05. 상담·안내
   ===================================================== */
   {
     key: 'consultation',
@@ -430,7 +431,7 @@ const menu: MenuItem[] = [
   },
 
   /* =====================================================
-    06. 전립선암 신속검사
+     06. 전립선암 신속검사
   ===================================================== */
   {
     key: 'prostate-cancer',
@@ -444,7 +445,7 @@ const menu: MenuItem[] = [
 ]
 
 /* ========================================================
-  VISIBLE MENU
+   VISIBLE MENU
 ======================================================== */
 
 const visibleMenu = computed(() => {
@@ -452,7 +453,7 @@ const visibleMenu = computed(() => {
 })
 
 /* ========================================================
-  DYNAMIC GRID
+   DYNAMIC GRID
 ======================================================== */
 
 const headerStyle = computed(() => {
@@ -462,7 +463,7 @@ const headerStyle = computed(() => {
 })
 
 /* ========================================================
-  STATE
+   STATE
 ======================================================== */
 
 const desktopMegaOpen = ref(false)
@@ -474,7 +475,7 @@ const isScrolled = ref(false)
 const { mobileMenuOpen, openMobileMenu, closeMobileMenu } = useMobileUi()
 
 /* ========================================================
-  NORMALIZE PATH
+   NORMALIZE PATH
 ======================================================== */
 
 function normalizePath(path: string) {
@@ -486,7 +487,7 @@ function normalizePath(path: string) {
 }
 
 /* ========================================================
-  HOME
+   HOME
 ======================================================== */
 
 const isHome = computed(() => {
@@ -494,7 +495,7 @@ const isHome = computed(() => {
 })
 
 /* ========================================================
-  OVERLAY HEADER
+   OVERLAY HEADER
 ======================================================== */
 
 const isOverlayHeader = computed(() => {
@@ -502,7 +503,7 @@ const isOverlayHeader = computed(() => {
 })
 
 /* ========================================================
-  SOLID HEADER
+   SOLID HEADER
 ======================================================== */
 
 const isSolidHeader = computed(() => {
@@ -510,7 +511,7 @@ const isSolidHeader = computed(() => {
 })
 
 /* ========================================================
-  PATH MATCH
+   PATH MATCH
 ======================================================== */
 
 function isSameOrChildPath(target: string, current: string) {
@@ -528,7 +529,7 @@ function isSameOrChildPath(target: string, current: string) {
 }
 
 /* ========================================================
-  SUB CURRENT
+   SUB CURRENT
 ======================================================== */
 
 function isSubCurrent(link: string) {
@@ -536,21 +537,14 @@ function isSubCurrent(link: string) {
 }
 
 /* ========================================================
-  TOP CURRENT
+   TOP CURRENT
 ======================================================== */
 
 function isTopMenuCurrent(item: MenuItem) {
   const current = normalizePath(route.path)
 
   /* =====================================================
-    병원소개
-
-    유로리프트는 병원소개 메뉴 안에서
-    링크는 제공하지만,
-    /urolift 페이지에서 상단 병원소개까지
-    활성화시키지는 않는다.
-
-    /hospital 계열만 병원소개 활성.
+     병원소개
   ===================================================== */
 
   if (item.key === 'hospital') {
@@ -558,7 +552,7 @@ function isTopMenuCurrent(item: MenuItem) {
   }
 
   /* =====================================================
-    전립선비대증
+     전립선비대증
   ===================================================== */
 
   if (item.key === 'prostate') {
@@ -573,7 +567,7 @@ function isTopMenuCurrent(item: MenuItem) {
   }
 
   /* =====================================================
-    오시는 길
+     오시는 길
   ===================================================== */
 
   if (item.key === 'location') {
@@ -581,7 +575,7 @@ function isTopMenuCurrent(item: MenuItem) {
   }
 
   /* =====================================================
-    상담·안내
+     상담·안내
   ===================================================== */
 
   if (item.key === 'consultation') {
@@ -594,7 +588,7 @@ function isTopMenuCurrent(item: MenuItem) {
   }
 
   /* =====================================================
-    전립선암
+     전립선암
   ===================================================== */
 
   if (item.key === 'prostate-cancer') {
@@ -602,14 +596,14 @@ function isTopMenuCurrent(item: MenuItem) {
   }
 
   /* =====================================================
-    FALLBACK
+     FALLBACK
   ===================================================== */
 
   return isSameOrChildPath(item.link, route.path)
 }
 
 /* ========================================================
-  DESKTOP OPEN
+   DESKTOP OPEN
 ======================================================== */
 
 function openDesktopMega() {
@@ -621,7 +615,7 @@ function openDesktopMega() {
 }
 
 /* ========================================================
-  DESKTOP CLOSE
+   DESKTOP CLOSE
 ======================================================== */
 
 function closeDesktopMega() {
@@ -629,7 +623,7 @@ function closeDesktopMega() {
 }
 
 /* ========================================================
-  MOBILE RESET
+   MOBILE RESET
 ======================================================== */
 
 function resetMobileSubmenu() {
@@ -637,7 +631,7 @@ function resetMobileSubmenu() {
 }
 
 /* ========================================================
-  MOBILE OPEN
+   MOBILE OPEN
 ======================================================== */
 
 function handleOpenMobileMenu() {
@@ -653,7 +647,7 @@ function handleOpenMobileMenu() {
 }
 
 /* ========================================================
-  MOBILE CLOSE
+   MOBILE CLOSE
 ======================================================== */
 
 function handleCloseMobileMenu() {
@@ -663,7 +657,7 @@ function handleCloseMobileMenu() {
 }
 
 /* ========================================================
-  MOBILE TOGGLE
+   MOBILE TOGGLE
 ======================================================== */
 
 function handleToggleMobileMenu() {
@@ -677,7 +671,7 @@ function handleToggleMobileMenu() {
 }
 
 /* ========================================================
-  MOBILE SUB MENU
+   MOBILE SUB MENU
 ======================================================== */
 
 function toggleMobileSubmenu(index: number) {
@@ -685,7 +679,7 @@ function toggleMobileSubmenu(index: number) {
 }
 
 /* ========================================================
-  SCROLL
+   SCROLL
 ======================================================== */
 
 function handleScroll() {
@@ -697,7 +691,7 @@ function handleScroll() {
 }
 
 /* ========================================================
-  ROUTE WATCH
+   ROUTE WATCH
 ======================================================== */
 
 watch(
@@ -715,7 +709,7 @@ watch(
 )
 
 /* ========================================================
-  RESPONSIVE
+   RESPONSIVE
 ======================================================== */
 
 let desktopMediaQuery: MediaQueryList | null = null
@@ -737,7 +731,7 @@ function handleDesktopMediaChange(event: MediaQueryListEvent | MediaQueryList) {
 }
 
 /* ========================================================
-  MOUNT
+   MOUNT
 ======================================================== */
 
 onMounted(() => {
@@ -755,7 +749,7 @@ onMounted(() => {
 })
 
 /* ========================================================
-  UNMOUNT
+   UNMOUNT
 ======================================================== */
 
 onBeforeUnmount(() => {
