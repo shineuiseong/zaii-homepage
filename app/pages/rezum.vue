@@ -21,21 +21,32 @@ import { usePageSeo } from '~/composables/usePageSeo'
 const config = useRuntimeConfig()
 const siteUrl = config.public.siteUrl || 'https://zaii.kr'
 const pageUrl = `${siteUrl}/rezum`
-const pageTitle = '리줌 수술 | 전립선비대증 치료 | 자이비뇨의학과'
+const pageTitle = '리줌 수술 | 전립선비대증 치료'
+
 const pageDescription =
-  '리줌(Rezūm)은 수증기를 이용해 전립선비대증을 치료하는 최소침습 시술입니다. 절개 없이 빠른 회복이 가능한 리줌 수술을 자이비뇨의학과에서 안전하게 시행합니다.'
+  '리줌(Rezūm)은 수증기를 이용해 전립선비대증을 치료하는 최소침습 시술입니다. 자이비뇨의학과병원은 환자의 상태를 확인한 후 리줌 치료 여부와 적합한 치료 방법을 안내합니다.'
 const pageImage = `${siteUrl}/images/og-image.png`
 
 usePageSeo({
   title: pageTitle,
+
   description: pageDescription,
+
   path: '/rezum',
-  keywords:
-    '리줌, rezum, 리줌수술, 전립선비대증 수술, 리줌 비용, 리줌 효과, 전립선비대증 치료, 수증기 치료',
-  ogDescription: '수증기를 이용한 전립선비대증 치료, 리줌 시술. 절개 없이 빠른 회복.',
-  twitterTitle: '리줌 수술 | 자이비뇨의학과',
-  twitterDescription: '전립선비대증 치료, 리줌 수술로 빠르게 개선하세요.',
+
+  ogType: 'website',
+
+  ogTitle: '리줌 수술 | 전립선비대증 치료 | 자이비뇨의학과병원',
+
+  ogDescription:
+    '수증기를 이용한 전립선비대증 치료, 리줌(Rezūm) 시술 안내. 환자의 상태에 맞는 치료 방법을 상담합니다.',
+
   ogImage: pageImage,
+
+  twitterTitle: '리줌 수술 | 전립선비대증 치료 | 자이비뇨의학과병원',
+
+  twitterDescription: '전립선비대증 치료를 위한 리줌(Rezūm) 수증기 시술 안내.',
+
   twitterImage: pageImage
 })
 

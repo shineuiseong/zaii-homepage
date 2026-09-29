@@ -33,9 +33,10 @@ import { usePageSeo } from '~/composables/usePageSeo'
 const config = useRuntimeConfig()
 const siteUrl = config.public.siteUrl || 'https://zaii.kr'
 const pageUrl = `${siteUrl}/urolift`
-const pageTitle = '유로리프트 시술 | 전립선비대증 치료 | 자이비뇨의학과'
+const pageTitle = '유로리프트 시술 | 전립선비대증 치료'
+
 const pageDescription =
-  '유로리프트(UroLift)는 절개 없이 전립선비대증을 개선하는 최소침습 치료입니다. 자이비뇨의학과에서 안전하고 빠른 유로리프트 시술을 제공합니다.'
+  '유로리프트(UroLift)는 전립선 조직을 절개하지 않고 전립선을 결찰해 요도를 넓히는 전립선비대증 치료 방법입니다. 자이비뇨의학과병원은 환자의 상태를 확인한 후 유로리프트 시술 여부와 적합한 치료 방법을 안내합니다.'
 const pageImage = `${siteUrl}/images/og-image.png`
 
 const sectionItems = [
@@ -49,14 +50,24 @@ const sectionItems = [
 
 usePageSeo({
   title: pageTitle,
+
   description: pageDescription,
+
   path: '/urolift',
-  keywords:
-    '유로리프트, Urolift, 전립선비대증 시술, 전립선결찰술, 유로리프트 비용, 유로리프트 효과, 전립선비대증 치료',
-  ogDescription: '절개 없이 전립선비대증을 개선하는 유로리프트 시술. 빠른 회복과 안전한 치료.',
-  twitterTitle: '유로리프트 시술 | 자이비뇨의학과',
-  twitterDescription: '전립선비대증 치료, 유로리프트 시술로 빠르게 개선하세요.',
+
+  ogType: 'website',
+
+  ogTitle: '유로리프트 시술 | 전립선비대증 치료 | 자이비뇨의학과병원',
+
+  ogDescription:
+    '전립선 조직을 절개하지 않고 요도를 넓히는 유로리프트(UroLift) 시술 안내. 환자의 상태에 맞는 전립선비대증 치료 방법을 상담합니다.',
+
   ogImage: pageImage,
+
+  twitterTitle: '유로리프트 시술 | 전립선비대증 치료 | 자이비뇨의학과병원',
+
+  twitterDescription: '전립선비대증 치료를 위한 유로리프트(UroLift) 시술과 치료 과정을 안내합니다.',
+
   twitterImage: pageImage
 })
 

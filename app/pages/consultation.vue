@@ -30,44 +30,52 @@
     ====================================================== -->
     <section class="consultation-content">
       <div class="consultation-content__inner">
-        <!-- =========================
-             Information
-        ========================== -->
-        <aside class="consultation-info">
-          <p class="consultation-info__eyebrow">상담 안내</p>
+        <!-- =================================================
+             LEFT / MOBILE TOP + BOTTOM
+        ================================================== -->
+        <div class="consultation-sidebar">
+          <!-- =========================
+               Information
+          ========================== -->
+          <aside class="consultation-info">
+            <p class="consultation-info__eyebrow">상담 안내</p>
 
-          <h2>
-            간편하게 접수하고
-            <br />
-            상담받으세요.
-          </h2>
+            <h2>
+              간편하게 접수하고
+              <br />
+              상담받으세요.
+            </h2>
 
-          <p class="consultation-info__description">
-            상담 신청 내용을 확인한 후
-            <br />
-            입력하신 연락처로 안내해 드립니다.
-          </p>
+            <p class="consultation-info__description">
+              상담 신청 내용을 확인한 후
+              <br />
+              입력하신 연락처로 안내해 드립니다.
+            </p>
+          </aside>
 
+          <!-- =========================
+               Guide
+          ========================== -->
           <div class="consultation-guide">
             <div class="consultation-guide__item">
-              <span> 온라인 상담 </span>
+              <span>온라인 상담</span>
 
-              <strong> 24시간 접수 가능 </strong>
+              <strong>24시간 접수 가능</strong>
             </div>
 
             <div class="consultation-guide__item">
-              <span> 대표번호 </span>
+              <span>대표번호</span>
 
               <a href="tel:0262075678"> 02-6207-5678 </a>
             </div>
 
             <div class="consultation-guide__item">
-              <span> 상담 내용 </span>
+              <span>상담 내용</span>
 
-              <strong> 증상 및 진료 문의 </strong>
+              <strong>증상 및 진료 문의</strong>
             </div>
           </div>
-        </aside>
+        </div>
 
         <!-- =========================
              Form
@@ -84,19 +92,22 @@
 import { defineBreadcrumb, defineWebPage, useSchemaOrg } from '#imports'
 
 import ConsultationForm from '~/components/forms/ConsultationForm.vue'
-
 import { usePageSeo } from '~/composables/usePageSeo'
 
 const config = useRuntimeConfig()
 
-const siteUrl = config.public.siteUrl || 'https://zaii.kr'
+const siteUrl = String(config.public.siteUrl || 'https://zaii.kr').replace(/\/$/, '')
 
 const pageUrl = `${siteUrl}/consultation`
 
-const pageTitle = '온라인상담 | 자이비뇨의학과병원'
+/* ========================================================
+   SEO
+======================================================== */
+
+const pageTitle = '온라인상담'
 
 const pageDescription =
-  '자이비뇨의학과병원 온라인상담 페이지입니다. 성함과 연락처, 상담 내용을 남겨주시면 확인 후 상담을 도와드립니다.'
+  '자이비뇨의학과병원 온라인상담 페이지입니다. 성함과 연락처, 상담 내용을 남겨주시면 확인 후 입력하신 연락처로 상담을 도와드립니다.'
 
 const pageImage = `${siteUrl}/images/og-image.png`
 
@@ -107,19 +118,25 @@ usePageSeo({
 
   path: '/consultation',
 
-  keywords:
-    '자이비뇨의학과병원, 온라인상담, 비뇨의학과 상담, 전립선비대증 상담, 유로리프트 상담, 리줌 상담',
+  ogType: 'website',
 
-  ogDescription: '성함과 연락처, 상담 내용을 남겨주시면 확인 후 상담을 도와드립니다.',
+  ogTitle: '온라인상담 | 자이비뇨의학과병원',
 
-  twitterTitle: pageTitle,
-
-  twitterDescription: '온라인으로 간편하게 상담을 신청해 보세요.',
+  ogDescription:
+    '자이비뇨의학과병원 온라인상담. 성함과 연락처, 상담 내용을 남겨주시면 확인 후 상담을 도와드립니다.',
 
   ogImage: pageImage,
 
+  twitterTitle: '온라인상담 | 자이비뇨의학과병원',
+
+  twitterDescription: '온라인으로 간편하게 상담을 신청해 보세요.',
+
   twitterImage: pageImage
 })
+
+/* ========================================================
+   SCHEMA.ORG
+======================================================== */
 
 useSchemaOrg([
   defineWebPage({
@@ -127,7 +144,7 @@ useSchemaOrg([
 
     url: pageUrl,
 
-    name: pageTitle,
+    name: '온라인상담 | 자이비뇨의학과병원',
 
     description: pageDescription,
 
@@ -139,7 +156,6 @@ useSchemaOrg([
 
     primaryImageOfPage: {
       '@type': 'ImageObject',
-
       contentUrl: pageImage
     }
   }),
@@ -150,17 +166,13 @@ useSchemaOrg([
     itemListElement: [
       {
         position: 1,
-
         name: '홈',
-
         item: `${siteUrl}/`
       },
 
       {
         position: 2,
-
         name: '온라인상담',
-
         item: pageUrl
       }
     ]
@@ -175,11 +187,9 @@ useSchemaOrg([
 
 .consultation-page {
   width: 100%;
-
   min-height: 100vh;
 
   background: #f7f9fb;
-
   color: #172334;
 }
 
@@ -190,11 +200,10 @@ useSchemaOrg([
 .consultation-hero {
   position: relative;
 
-  height: 410px;
-
   display: flex;
-
   align-items: center;
+
+  height: 410px;
 
   overflow: hidden;
 
@@ -234,7 +243,6 @@ useSchemaOrg([
   color: rgba(121, 176, 221, 0.95);
 
   font-size: 13px;
-
   font-weight: 450;
 
   letter-spacing: 0.08em;
@@ -246,7 +254,6 @@ useSchemaOrg([
   color: #ffffff;
 
   font-size: clamp(42px, 4vw, 62px);
-
   font-weight: 300;
 
   line-height: 1.18;
@@ -266,7 +273,6 @@ useSchemaOrg([
   color: rgba(255, 255, 255, 0.55);
 
   font-size: 15px;
-
   font-weight: 300;
 
   line-height: 1.8;
@@ -285,7 +291,6 @@ useSchemaOrg([
   color: rgba(255, 255, 255, 0.025);
 
   font-size: clamp(260px, 25vw, 500px);
-
   font-weight: 700;
 
   line-height: 1;
@@ -306,19 +311,33 @@ useSchemaOrg([
 }
 
 .consultation-content__inner {
-  width: min(1200px, calc(100% - 80px));
-
-  margin: 0 auto;
-
   display: grid;
 
   grid-template-columns:
     minmax(280px, 0.7fr)
     minmax(0, 1.3fr);
 
+  align-items: start;
+
   gap: clamp(70px, 8vw, 130px);
 
-  align-items: start;
+  width: min(1200px, calc(100% - 80px));
+
+  margin: 0 auto;
+}
+
+/* =========================================================
+   Sidebar
+========================================================= */
+
+.consultation-sidebar {
+  position: sticky;
+
+  top: 120px;
+
+  min-width: 0;
+
+  padding-top: 5px;
 }
 
 /* =========================================================
@@ -326,11 +345,7 @@ useSchemaOrg([
 ========================================================= */
 
 .consultation-info {
-  position: sticky;
-
-  top: 120px;
-
-  padding-top: 5px;
+  width: 100%;
 }
 
 .consultation-info__eyebrow {
@@ -339,7 +354,6 @@ useSchemaOrg([
   color: #3679b5;
 
   font-size: 12px;
-
   font-weight: 500;
 
   letter-spacing: 0.1em;
@@ -351,7 +365,6 @@ useSchemaOrg([
   color: #172334;
 
   font-size: 34px;
-
   font-weight: 450;
 
   line-height: 1.32;
@@ -365,7 +378,6 @@ useSchemaOrg([
   color: #828c97;
 
   font-size: 14px;
-
   font-weight: 350;
 
   line-height: 1.8;
@@ -376,53 +388,63 @@ useSchemaOrg([
 ========================================================= */
 
 .consultation-guide {
+  width: 100%;
+
   margin-top: 42px;
 
   border-top: 1px solid #dce2e8;
+
+  box-sizing: border-box;
 }
 
 .consultation-guide__item {
-  padding: 18px 0;
-
   display: flex;
 
   align-items: baseline;
-
   justify-content: space-between;
 
   gap: 20px;
 
+  width: 100%;
+
+  padding: 18px 0;
+
   border-bottom: 1px solid #dce2e8;
+
+  box-sizing: border-box;
 }
 
 .consultation-guide__item > span {
   color: #8d97a1;
 
   font-size: 12px;
-
   font-weight: 350;
+
+  white-space: nowrap;
 }
 
 .consultation-guide__item strong {
   color: #26384a;
 
   font-size: 14px;
-
   font-weight: 500;
 
   text-align: right;
+
+  word-break: keep-all;
 }
 
 .consultation-guide__item a {
   color: #245e94;
 
   font-size: 17px;
-
   font-weight: 600;
 
   text-decoration: none;
 
   font-variant-numeric: tabular-nums;
+
+  white-space: nowrap;
 }
 
 /* =========================================================
@@ -430,6 +452,7 @@ useSchemaOrg([
 ========================================================= */
 
 .consultation-form-area {
+  width: 100%;
   min-width: 0;
 
   padding: 46px 50px 50px;
@@ -439,6 +462,8 @@ useSchemaOrg([
   border-top: 2px solid #286cae;
 
   box-shadow: 0 18px 55px rgba(23, 42, 64, 0.05);
+
+  box-sizing: border-box;
 }
 
 /* =========================================================
@@ -460,6 +485,10 @@ useSchemaOrg([
 ========================================================= */
 
 @include mobile {
+  /* =======================================================
+     Hero
+  ======================================================= */
+
   .consultation-hero {
     height: 360px;
   }
@@ -493,34 +522,120 @@ useSchemaOrg([
     font-size: 220px;
   }
 
+  /* =======================================================
+     Content
+  ======================================================= */
+
   .consultation-content {
     padding: 60px 0 90px;
   }
 
   .consultation-content__inner {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: stretch;
+
+    gap: 0;
+
     width: calc(100% - 40px);
 
-    display: block;
+    margin: 0 auto;
   }
 
+  /*
+   * PC에서는 sidebar 안에
+   * 상담 안내 + 상담 정보가 같이 존재한다.
+   *
+   * 모바일에서는 wrapper를 layout에서 제거해
+   * 아래 3개를 독립적으로 정렬한다.
+   *
+   * 1. consultation-info
+   * 2. consultation-form-area
+   * 3. consultation-guide
+   */
+  .consultation-sidebar {
+    display: contents;
+  }
+
+  /* =======================================================
+     1. Info
+  ======================================================= */
+
   .consultation-info {
+    order: 1;
+
     position: static;
 
-    margin-bottom: 42px;
+    width: 100%;
+    min-width: 0;
+
+    margin: 0 0 38px;
+
+    box-sizing: border-box;
   }
 
   .consultation-info h2 {
     font-size: 28px;
   }
 
-  .consultation-guide {
-    margin-top: 30px;
+  .consultation-info__description {
+    font-size: 14px;
   }
 
+  /* =======================================================
+     2. Form
+  ======================================================= */
+
   .consultation-form-area {
+    order: 2;
+
+    width: 100%;
+    min-width: 0;
+
     padding: 30px 20px 34px;
 
     box-shadow: none;
+
+    box-sizing: border-box;
+  }
+
+  /* =======================================================
+     3. Guide
+  ======================================================= */
+
+  .consultation-guide {
+    order: 3;
+
+    width: 100%;
+    min-width: 0;
+
+    margin: 32px 0 0;
+
+    border-top: 1px solid #dce2e8;
+
+    box-sizing: border-box;
+  }
+
+  .consultation-guide__item {
+    width: 100%;
+
+    padding: 18px 0;
+
+    box-sizing: border-box;
+  }
+
+  .consultation-guide__item > span {
+    font-size: 12px;
+  }
+
+  .consultation-guide__item strong {
+    font-size: 14px;
+  }
+
+  .consultation-guide__item a {
+    font-size: 17px;
   }
 }
 </style>

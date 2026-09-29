@@ -32,19 +32,29 @@ const pageDescription =
 const pageImage = `${siteUrl}/images/og-image.png`
 
 usePageSeo({
-  title: pageTitle,
-  description: pageDescription,
+  title: '필러 음경확대술',
+
+  description:
+    '자이비뇨의학과병원의 필러 음경확대술은 자연스러운 볼륨 개선과 빠른 회복을 고려한 남성 확대 시술입니다. 개인별 상태를 확인한 후 적합한 필러와 시술 방법을 안내합니다.',
+
   path: '/filler-penis-enlargement',
-  keywords:
-    '필러 음경확대술, 성기확대, 음경확대, 필러 확대, 남성확대술, 자이비뇨의학과, 남성수술, 음경필러',
-  ogTitle: '필러 음경확대술 | 자이비뇨의학과',
-  ogDescription: '자연스러운 볼륨 개선과 빠른 회복을 고려한 자이비뇨의학과 필러 음경확대술.',
-  twitterTitle: '필러 음경확대술 | 자이비뇨의학과',
-  twitterDescription: '자연스러운 볼륨 개선과 빠른 회복을 고려한 자이비뇨의학과 필러 음경확대술.',
+
+  ogType: 'website',
+
+  ogTitle: '필러 음경확대술 | 자이비뇨의학과병원',
+
+  ogDescription:
+    '자연스러운 볼륨 개선과 빠른 회복을 고려한 자이비뇨의학과병원 필러 음경확대술. 개인별 상태에 맞는 상담과 시술 방법을 안내합니다.',
+
   ogImage: pageImage,
+
+  twitterTitle: '필러 음경확대술 | 자이비뇨의학과병원',
+
+  twitterDescription:
+    '자연스러운 볼륨 개선과 빠른 회복을 고려한 필러 음경확대술. 개인별 상태에 맞는 상담을 제공합니다.',
+
   twitterImage: pageImage
 })
-
 useSchemaOrg([
   defineWebPage({
     '@type': 'MedicalWebPage',

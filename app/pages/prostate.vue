@@ -29,9 +29,10 @@ import { usePageSeo } from '~/composables/usePageSeo'
 const config = useRuntimeConfig()
 const siteUrl = config.public.siteUrl || 'https://zaii.kr'
 const pageUrl = `${siteUrl}/prostate`
-const pageTitle = '전립선비대증 증상·치료 | 리줌·유로리프트 | 자이비뇨의학과'
+const pageTitle = '전립선비대증 증상·치료 | 리줌·유로리프트'
+
 const pageDescription =
-  '전립선비대증의 증상, 자가진단, 검사, 치료방법을 안내합니다. 자이비뇨의학과는 리줌(Rezūm), 유로리프트(UroLift) 등 최소침습 치료와 비수술적 치료를 제공합니다.'
+  '전립선비대증의 증상, 자가진단, 검사, 치료방법을 안내합니다. 자이비뇨의학과병원은 리줌(Rezūm), 유로리프트(UroLift) 등 전립선비대증 치료 방법을 제공합니다.'
 const pageImage = `${siteUrl}/images/og-image.png`
 
 const sectionItems = [
@@ -44,18 +45,26 @@ const sectionItems = [
 
 usePageSeo({
   title: pageTitle,
+
   description: pageDescription,
+
   path: '/prostate',
-  keywords:
-    '전립선비대증, 전립선비대증 증상, 전립선비대증 치료, 전립선비대증 자가진단, 전립선 검사, 리줌, 유로리프트, 배뇨장애, 전립선비대증 병원',
+
+  ogType: 'website',
+
+  ogTitle: '전립선비대증 증상·치료 | 리줌·유로리프트 | 자이비뇨의학과병원',
+
   ogDescription:
-    '전립선비대증 증상, 자가진단, 검사와 치료방법 안내. 리줌·유로리프트 등 최소침습 치료 제공.',
-  twitterTitle: '전립선비대증 증상·치료 | 자이비뇨의학과',
-  twitterDescription: '전립선비대증 증상부터 검사, 치료까지 한 번에 안내합니다.',
+    '전립선비대증 증상, 자가진단, 검사와 치료방법 안내. 리줌·유로리프트 등 전립선비대증 치료를 제공합니다.',
+
   ogImage: pageImage,
+
+  twitterTitle: '전립선비대증 증상·치료 | 자이비뇨의학과병원',
+
+  twitterDescription: '전립선비대증 증상부터 자가진단, 검사, 리줌·유로리프트 치료까지 안내합니다.',
+
   twitterImage: pageImage
 })
-
 useSchemaOrg([
   defineWebPage({
     '@type': 'MedicalWebPage',
