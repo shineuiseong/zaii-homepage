@@ -5,6 +5,8 @@
 
   <DoctorSection />
 
+  <HospitalVideoSection />
+
   <RecordSection />
 
   <SpaceSection />
@@ -17,6 +19,7 @@ import { defineBreadcrumb, defineWebPage, useSchemaOrg } from '#imports'
 
 import MainHero from '~/components/hero/MainHero.vue'
 import ContactInfoSection from '~/components/main/ContactInfoSection.vue'
+import HospitalVideoSection from '~/components/main/HospitalVideoSection.vue'
 import DoctorSection from '~/components/main/DoctorSection.vue'
 import RecordSection from '~/components/main/RecordSection.vue'
 import SpaceSection from '~/components/main/SpaceSection.vue'
