@@ -45,6 +45,7 @@ export default defineNuxtConfig({
 
     description:
       '자이비뇨의학과병원은 서울 서초구 비뇨기과병원으로 전립선비대증, 배뇨장애, 요로결석 등 비뇨의학과 진료를 제공하며 리줌(Rezūm), 유로리프트(UroLift) 등 전립선비대증 치료를 시행합니다.',
+
     defaultLocale: 'ko'
   },
 
@@ -188,6 +189,50 @@ export default defineNuxtConfig({
         {
           rel: 'manifest',
           href: '/site.webmanifest'
+        }
+      ],
+
+      /* ======================================================
+         GOOGLE TAG MANAGER
+      ====================================================== */
+
+      script: [
+        {
+          key: 'google-tag-manager',
+          tagPosition: 'head',
+          innerHTML: `
+            (function(w,d,s,l,i){
+              w[l]=w[l]||[];
+              w[l].push({
+                'gtm.start': new Date().getTime(),
+                event: 'gtm.js'
+              });
+
+              var f=d.getElementsByTagName(s)[0],
+                  j=d.createElement(s),
+                  dl=l!='dataLayer'?'&l='+l:'';
+
+              j.async=true;
+              j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+
+              f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','GTM-P9HD6DXT');
+          `
+        }
+      ],
+
+      noscript: [
+        {
+          key: 'google-tag-manager-noscript',
+          tagPosition: 'bodyOpen',
+          innerHTML: `
+            <iframe
+              src="https://www.googletagmanager.com/ns.html?id=GTM-P9HD6DXT"
+              height="0"
+              width="0"
+              style="display:none;visibility:hidden"
+            ></iframe>
+          `
         }
       ]
     }
