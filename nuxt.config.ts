@@ -93,7 +93,8 @@ export default defineNuxtConfig({
   ======================================================== */
 
   sitemap: {
-    autoLastmod: true
+    autoLastmod: true,
+    exclude: ['/non-benefit-fee']
   },
 
   /* ========================================================
