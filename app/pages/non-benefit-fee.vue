@@ -1,13 +1,19 @@
 <template>
   <div class="non-benefit-page">
+    <!-- =====================================================
+         HERO
+    ====================================================== -->
     <section class="non-benefit-hero section">
       <div class="container non-benefit-hero__inner">
         <p class="non-benefit-hero__eyebrow">NON-BENEFIT FEE GUIDE</p>
+
         <h1 class="non-benefit-hero__title">자이비뇨의학과 비급여 항목공지</h1>
+
         <p class="non-benefit-hero__desc">
           의료법 제 45조 제 1항 및 제 2항과 동법 시행규칙 제 42조의 제1항, 제2항, 제3항에 의하여
           비급여 진료비용을 고지합니다.
         </p>
+
         <p class="non-benefit-hero__desc">
           행위료는 단일 개별 항목의 비용으로 사용 갯수에 따라 달라질 수 있으며 치료재료대의 경우
           상황이나 상태에 따라 사용 개수가 달라질 수 있습니다. 이밖에도 치료재료 및 약제가 필요한
@@ -16,16 +22,25 @@
       </div>
     </section>
 
+    <!-- =====================================================
+         NON-BENEFIT TABLE
+    ====================================================== -->
     <section class="non-benefit-table section">
       <div class="container">
         <div class="non-benefit-table__head">
           <h2 class="non-benefit-table__title">비급여 진료비 안내</h2>
+
           <p class="non-benefit-table__unit">(단위 : 원)</p>
         </div>
 
+        <!-- =========================
+             FEE SECTIONS
+        ========================== -->
         <div v-for="section in feeSections" :key="section.title" class="fee-section">
           <div class="fee-section__title-wrap">
-            <h3 class="fee-section__title">{{ section.title }}</h3>
+            <h3 class="fee-section__title">
+              {{ section.title }}
+            </h3>
           </div>
 
           <div class="fee-table-wrap">
@@ -35,6 +50,7 @@
                 <col class="fee-table__col-name" />
                 <col class="fee-table__col-price" />
               </colgroup>
+
               <tbody>
                 <template v-for="item in section.items" :key="`${section.title}-${item.group}`">
                   <tr
@@ -69,6 +85,10 @@
 </template>
 
 <script setup lang="ts">
+/* =====================================================
+   TYPES
+===================================================== */
+
 type FeeRow = {
   name: string
   price: string
@@ -84,131 +104,187 @@ type FeeSection = {
   items: FeeItemGroup[]
 }
 
+/* =====================================================
+   HELPERS
+===================================================== */
+
+const createFeeSection = (title: string, rows: FeeRow[]): FeeSection => ({
+  title,
+  items: rows.map((row) => ({
+    group: row.name,
+    rows: [row]
+  }))
+})
+
+/* =====================================================
+   NON-BENEFIT FEE DATA
+===================================================== */
+
 const feeSections: FeeSection[] = [
-  {
-    title: '제증명수수료',
-    items: [
-      {
-        group: '진단서',
-        rows: [{ name: '진단서', price: '20,000' }]
-      },
-      {
-        group: '입퇴원확인서',
-        rows: [{ name: '입퇴원확인서', price: '3,000' }]
-      },
-      {
-        group: '통원확인서',
-        rows: [{ name: '통원확인서', price: '3,000' }]
-      },
-      {
-        group: '소견서',
-        rows: [{ name: '소견서', price: '30,000' }]
-      },
-      {
-        group: '상세소견서(보험관련)',
-        rows: [{ name: '상세소견서(보험관련)', price: '10,000' }]
-      },
-      {
-        group: '소견서(보험사양식)',
-        rows: [{ name: '소견서(보험사양식)', price: '500,000' }]
-      },
-      {
-        group: '수술확인서',
-        rows: [{ name: '수술확인서', price: '1,000' }]
-      },
-      {
-        group: '영상복사',
-        rows: [{ name: '영상복사', price: '20,000' }]
-      },
-      {
-        group: '제증명사본1-5장',
-        rows: [{ name: '제증명사본1-5장', price: '(장당) 1,000' }]
-      },
-      {
-        group: '제증명사본6매이상',
-        rows: [{ name: '제증명사본6매이상', price: '(장당) 100' }]
-      },
-      {
-        group: '진단서재발행',
-        rows: [{ name: '진단서재발행', price: '1,000' }]
-      },
-      {
-        group: '진료확인서',
-        rows: [{ name: '진료확인서', price: '3,000' }]
-      },
-      {
-        group: '소견서재발행',
-        rows: [{ name: '소견서재발행', price: '2,000' }]
-      }
-    ]
-  },
-  {
-    title: '치료재료대',
-    items: [
-      {
-        group: '압박용밴드',
-        rows: [{ name: '압박용밴드', price: '50,000' }]
-      },
-      {
-        group: 'Urorift system',
-        rows: [{ name: 'Urorift system', price: '3,000,000' }]
-      },
-      {
-        group: 'REZUM DELIVERY DEVICE',
-        rows: [{ name: 'REZUM DELIVERY DEVICE', price: '8,000,000' }]
-      }
-    ]
-  },
-  {
-    title: '처치 및 수술료',
-    items: [
-      {
-        group: '이식형 결찰사를 이용한 전립선 결찰',
-        rows: [{ name: '이식형 결찰사를 이용한 전립선 결찰', price: '3,000,000' }]
-      },
-      {
-        group: '수증기를 이용한 경요도적 전립선 절제술',
-        rows: [
-          {
-            name: '수증기를 이용한 경요도적 전립선 절제술',
-            price: '5,000,000'
-          }
-        ]
-      }
-    ]
-  },
-  {
-    title: '약제비',
-    items: [
-      {
-        group: '네비도주사바이알',
-        rows: [{ name: '네비도주사바이알', price: '500,000' }]
-      },
-      {
-        group: '아르믹스주',
-        rows: [{ name: '아르믹스주', price: '300,000' }]
-      },
-      {
-        group: '파노펜주',
-        rows: [{ name: '파노펜주', price: '500,000' }]
-      },
-      {
-        group: '레드업주',
-        rows: [{ name: '레드업주', price: '150,000' }]
-      },
-      {
-        group: '인카인겔',
-        rows: [{ name: '인카인겔', price: '70,000' }]
-      }
-    ]
-  }
+  // =====================================================
+  // 제증명수수료
+  // =====================================================
+  createFeeSection('제증명수수료', [
+    {
+      name: '진단서',
+      price: '20,000'
+    },
+    {
+      name: '입퇴원확인서',
+      price: '3,000'
+    },
+    {
+      name: '통원확인서',
+      price: '3,000'
+    },
+    {
+      name: '소견서',
+      price: '30,000'
+    },
+    {
+      name: '상세소견서(보험관련)',
+      price: '10,000'
+    },
+    {
+      name: '소견서(보험사양식)',
+      price: '500,000'
+    },
+    {
+      name: '수술확인서',
+      price: '1,000'
+    },
+    {
+      name: '영상복사',
+      price: '20,000'
+    },
+    {
+      name: '제증명사본1-5장',
+      price: '(장당) 1,000'
+    },
+    {
+      name: '제증명사본6매이상',
+      price: '(장당) 100'
+    },
+    {
+      name: '제증명재발행',
+      price: '1,000'
+    },
+    {
+      name: '진료확인서',
+      price: '3,000'
+    }
+  ]),
+
+  // =====================================================
+  // 치료재료대
+  // =====================================================
+  createFeeSection('치료재료대', [
+    {
+      name: '압박용밴드',
+      price: '50,000'
+    },
+    {
+      name: 'Urorift system',
+      price: '3,000,000'
+    },
+    {
+      name: 'REZUM DELIVERY DEVICE',
+      price: '8,000,000'
+    },
+    {
+      name: '쎌리 바디워머',
+      price: '400,000'
+    },
+    {
+      name: 'BNGFIX',
+      price: '100,000'
+    },
+    {
+      name: 'D-skin cover 10g',
+      price: '200,000'
+    },
+    {
+      name: '이지픽스엠',
+      price: '150,000'
+    },
+    {
+      name: 'SPOTFIX',
+      price: '50,000'
+    },
+    {
+      name: '넥스힐 크린패드 뉴세트',
+      price: '100,000'
+    }
+  ]),
+
+  // =====================================================
+  // 처치 및 수술료
+  // =====================================================
+  createFeeSection('처치 및 수술료', [
+    {
+      name: '이식형 결찰사를 이용한 전립선 결찰',
+      price: '3,000,000'
+    },
+    {
+      name: '수증기를 이용한 경요도적 전립선 절제술',
+      price: '5,000,000'
+    }
+  ]),
+
+  // =====================================================
+  // 초음파검사료
+  // =====================================================
+  createFeeSection('초음파검사료 (유도초음파)', [
+    {
+      name: '수술 중 초음파',
+      price: '800,000'
+    }
+  ]),
+
+  // =====================================================
+  // 약제비
+  // =====================================================
+  createFeeSection('약제비', [
+    {
+      name: '네비도주사바이알',
+      price: '500,000'
+    },
+    {
+      name: '예나스테론',
+      price: '1,000'
+    },
+    {
+      name: '아르믹스주',
+      price: '300,000'
+    },
+    {
+      name: '파노펜주',
+      price: '300,000'
+    },
+    {
+      name: '레드업',
+      price: '150,000'
+    },
+    {
+      name: '인카인겔',
+      price: '70,000'
+    }
+  ])
 ]
 </script>
 
 <style scoped lang="scss">
+/* ========================================================
+   PAGE
+======================================================== */
+
 .non-benefit-page {
   background: #fff;
 }
+
+/* ========================================================
+   HERO
+======================================================== */
 
 .non-benefit-hero {
   padding-bottom: 32px;
@@ -220,17 +296,21 @@ const feeSections: FeeSection[] = [
 
 .non-benefit-hero__eyebrow {
   margin: 0 0 10px;
+
   font-size: 13px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
+
   color: $text-muted;
 }
 
 .non-benefit-hero__title {
   margin: 0;
+
   font-size: 46px;
   line-height: 1.2;
   font-weight: 800;
+
   color: $text-main;
   word-break: keep-all;
 }
@@ -238,11 +318,17 @@ const feeSections: FeeSection[] = [
 .non-benefit-hero__desc {
   max-width: 980px;
   margin: 18px auto 0;
+
   font-size: 17px;
   line-height: 1.8;
+
   color: $text-sub;
   word-break: keep-all;
 }
+
+/* ========================================================
+   TABLE SECTION
+======================================================== */
 
 .non-benefit-table {
   padding-top: 0;
@@ -252,25 +338,35 @@ const feeSections: FeeSection[] = [
   display: flex;
   align-items: end;
   justify-content: space-between;
+
   gap: 16px;
+
   margin-bottom: 28px;
   padding-bottom: 14px;
+
   border-bottom: 2px solid rgba(15, 63, 120, 0.18);
 }
 
 .non-benefit-table__title {
   margin: 0;
+
   font-size: 34px;
   line-height: 1.2;
   font-weight: 800;
+
   color: $text-main;
 }
 
 .non-benefit-table__unit {
   margin: 0;
+
   font-size: 15px;
   color: $text-muted;
 }
+
+/* ========================================================
+   FEE SECTION
+======================================================== */
 
 .fee-section + .fee-section {
   margin-top: 48px;
@@ -282,24 +378,37 @@ const feeSections: FeeSection[] = [
 
 .fee-section__title {
   margin: 0;
+
   font-size: 30px;
   line-height: 1.2;
   font-weight: 800;
+
   color: $text-main;
 }
 
+/* ========================================================
+   TABLE
+======================================================== */
+
 .fee-table-wrap {
   overflow: hidden;
+
   border: 1px solid #d8e1ec;
   border-radius: 18px;
+
   background: #fff;
 }
 
 .fee-table {
   width: 100%;
+
   border-collapse: collapse;
   table-layout: fixed;
 }
+
+/* =========================
+   COLUMN WIDTH
+========================= */
 
 .fee-table__col-category {
   width: 27%;
@@ -313,6 +422,10 @@ const feeSections: FeeSection[] = [
   width: 30%;
 }
 
+/* =========================
+   ROW
+========================= */
+
 .fee-table tbody tr:not(:last-child) {
   border-bottom: 1px solid #e7edf5;
 }
@@ -320,33 +433,58 @@ const feeSections: FeeSection[] = [
 .fee-table th,
 .fee-table td {
   padding: 22px 24px;
+
   font-size: 17px;
   line-height: 1.6;
+
   vertical-align: middle;
 }
 
+/* =========================
+   GROUP
+========================= */
+
 .fee-table__group {
   background: linear-gradient(180deg, #2f6fb8 0%, #24599a 100%);
+
   color: #ffffff;
+
   font-weight: 800;
   text-align: center;
+
   word-break: keep-all;
 }
+
+/* =========================
+   NAME
+========================= */
 
 .fee-table__name {
   background: #f8fbff;
+
   color: $text-main;
   font-weight: 600;
+
   word-break: keep-all;
 }
 
+/* =========================
+   PRICE
+========================= */
+
 .fee-table__price {
   text-align: right;
+
   color: $text-main;
   font-weight: 700;
+
   font-variant-numeric: tabular-nums;
   word-break: keep-all;
 }
+
+/* ========================================================
+   DESKTOP DOWN
+======================================================== */
 
 @include desktop-down {
   .non-benefit-hero__title {
@@ -368,6 +506,10 @@ const feeSections: FeeSection[] = [
   }
 }
 
+/* ========================================================
+   LAPTOP DOWN
+======================================================== */
+
 @include laptop-down {
   .non-benefit-hero__title {
     font-size: 34px;
@@ -380,6 +522,7 @@ const feeSections: FeeSection[] = [
   .non-benefit-table__head {
     flex-direction: column;
     align-items: start;
+
     margin-bottom: 22px;
   }
 
@@ -414,6 +557,10 @@ const feeSections: FeeSection[] = [
   }
 }
 
+/* ========================================================
+   MOBILE
+======================================================== */
+
 @include mobile {
   .non-benefit-hero__eyebrow {
     font-size: 12px;
@@ -426,8 +573,10 @@ const feeSections: FeeSection[] = [
 
   .non-benefit-hero__desc {
     margin-top: 14px;
+
     font-size: 15px;
     line-height: 1.7;
+
     text-align: left;
   }
 
@@ -447,9 +596,15 @@ const feeSections: FeeSection[] = [
     font-size: 22px;
   }
 
+  /* =========================
+     MOBILE TABLE SCROLL
+  ========================= */
+
   .fee-table-wrap {
     overflow-x: auto;
+
     -webkit-overflow-scrolling: touch;
+
     border-radius: 14px;
   }
 
