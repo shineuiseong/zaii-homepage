@@ -387,7 +387,7 @@ const slides: HeroSlide[] = [
 
     secondary: {
       label: '진료 안내',
-      href: '/hospital/guide'
+      href: '/guide'
     },
 
     desktopPosition: 'center center',
